@@ -3,30 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beneficio Exclusivo</title>
+    <title>¡Ganaste tu Cupón!</title>
     
+    <!-- Importación de Tipografía Inter para máxima claridad estética -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- ⚙️ CONFIGURACIÓN DE IMÁGENES -->
     <style>
         :root {
-            /* Enlace a tu imagen de fondo liquidmetal1.jpg */
             --url-fondo: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/3f5d7644563755d7a2bb47d96ecf092263996bb1/liquidmetal1.jpg');
-            
-            /* Enlace a tu nueva imagen de perfil redonda perfilpagina.jpg */
             --url-logo: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/7f2d1647b13d68568328332375ad1d7c3d75ab0b/perfilpagina.jpg');
         }
     </style>
 
+    <!-- 🎨 ESTILOS GENERALES Y ANIMACIONES (LIQUID GLASS PRO) -->
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
         body {
-            /* Capa blanca muy suave arriba del metal para dar el look luminoso */
-            background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), var(--url-fondo);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)), var(--url-fondo);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -39,29 +42,24 @@
             padding: 24px;
         }
 
-        /* Tarjeta Principal - Efecto Liquid Glass Ultra Transparente */
         .card {
             width: 100%;
             max-width: 390px;
             text-align: center;
             padding: 40px 24px 32px 24px;
-            
-            /* Vidrio pulido muy transparente con desenfoque profundo */
-            background: rgba(255, 255, 255, 0.22); 
+            background: rgba(255, 255, 255, 0.25); 
             backdrop-filter: blur(35px) saturate(220%);
             -webkit-backdrop-filter: blur(35px) saturate(220%);
-            
             border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), 
                         inset 0 1px 1px rgba(255, 255, 255, 0.4);
         }
 
-        /* Logo Circular Ajustado */
         .brand-logo {
-            width: 84px;
-            height: 84px;
-            margin: 0 auto 20px auto;
+            width: 86px;
+            height: 86px;
+            margin: 0 auto 16px auto;
             border-radius: 50%;
             background-image: var(--url-logo);
             background-size: cover;
@@ -71,47 +69,81 @@
             box-shadow: 0 6px 16px rgba(0,0,0,0.1);
         }
 
+        /* Rediseño de la etiqueta superior: "Cupo Limitado" visual */
         .header-tag {
+            display: inline-block;
             font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #515154;
-            margin-bottom: 12px;
+            letter-spacing: 1.5px;
+            color: #ff3b30; /* Rojo Apple */
+            background: rgba(255, 59, 48, 0.12);
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 59, 48, 0.2);
         }
 
         h1 {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
             color: #000000;
         }
 
         .subtitle {
-            font-size: 14px;
+            font-size: 14.5px;
             color: #2c2c2e;
-            font-weight: 500;
-            margin-bottom: 32px;
-            line-height: 1.45;
+            font-weight: 600;
+            margin-bottom: 28px;
+            line-height: 1.5;
         }
 
-        /* Recuadro del Premio - Cristal Interno Mínimo */
+        /* Contador de cupos dinámico con punto "Live" parpadeante */
+        .live-counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #ff9500; /* Naranja de advertencia Apple */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+            background-color: #ff3b30;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.4; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.4; }
+        }
+
+        /* Recuadro del Premio */
         .promo-box {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             padding: 24px 20px;
-            border-radius: 20px;
-            margin-bottom: 32px;
+            border-radius: 22px;
+            margin-bottom: 28px;
             border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02);
         }
 
         .promo-title {
-            font-size: 42px;
+            font-size: 44px;
             font-weight: 900;
-            letter-spacing: -1.5px;
+            letter-spacing: -2px;
             color: #000000;
             line-height: 1.1;
         }
@@ -119,7 +151,7 @@
         .promo-subtitle {
             font-size: 13px;
             color: #0066cc;
-            font-weight: 700;
+            font-weight: 800;
             margin-top: 8px;
             text-transform: uppercase;
             letter-spacing: 1.2px;
@@ -129,37 +161,62 @@
             display: flex;
             flex-direction: column;
             gap: 14px;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
 
-        /* Botones */
+        /* Estructura base de botones */
         .btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 52px;
-            border-radius: 14px;
+            height: 54px;
+            border-radius: 16px;
             font-size: 15px;
             font-weight: 700;
             text-decoration: none;
+            position: relative;
+            overflow: hidden; /* Necesario para que el destello no se salga del botón */
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Botón Sólido Oscuro */
+        /* Botón Primario con efecto de luz infinita (Shimmer) */
         .btn-primary {
             background-color: #1d1d1f;
             color: #ffffff;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+        }
+
+        /* Animación del rayo de luz brillante */
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: skewX(-20deg);
+            animation: shine 2.5s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -150%; }
+            100% { left: 150%; }
         }
 
         .btn-primary:active {
             background-color: #000000;
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
-        /* Botón Secundario - Cristal Esmerilado */
+        /* Botón Secundario Líquido */
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.3);
             color: #1d1d1f;
             border: 1px solid rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(10px);
@@ -168,7 +225,7 @@
 
         .btn-secondary:active {
             background-color: rgba(255, 255, 255, 0.5);
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
         .terms-box {
@@ -193,7 +250,7 @@
         li {
             font-size: 12px;
             color: #3a3a3c;
-            font-weight: 500;
+            font-weight: 600;
             line-height: 1.5;
             margin-bottom: 8px;
             position: relative;
@@ -211,11 +268,20 @@
 <body>
 
     <div class="card">
+        <!-- Logo Circular -->
         <div class="brand-logo"></div>
 
-        <div class="header-tag">Beneficio Exclusivo</div>
-        <h1>¡Felicidades!</h1>
-        <p class="subtitle">Has recibido un beneficio especial para canjear en nuestra sucursal al presentar tu flyer.</p>
+        <!-- Tag de escasez visual -->
+        <div class="header-tag">Cupo Limitado</div>
+        
+        <h1>¡Ganaste un cupón! 🎉</h1>
+        <p class="subtitle">Preséntate a nuestra sucursal con el flyer y aplicas de una vez a nuestra promoción, fren.</p>
+
+        <!-- Sección de cupos en vivo con animación -->
+        <div class="live-counter">
+            <div class="live-dot"></div>
+            <span>Solo quedan 25 cupos disponibles</span>
+        </div>
 
         <div class="promo-box">
             <div class="promo-title">15% OFF</div>
@@ -223,6 +289,7 @@
         </div>
 
         <div class="cta-container">
+            <!-- Botón con destello de luz interactivo -->
             <a href="https://www.instagram.com/tecnotradepty/" class="btn btn-primary" target="_blank">
                 👉 Reclamar en Instagram
             </a>
