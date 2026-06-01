@@ -29,12 +29,12 @@
         }
 
         body {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), var(--url-fondo);
+            background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), var(--url-fondo);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-color: #ffffff;
-            color: #1d1d1f;
+            color: #ffffff; /* Todo el texto base cambia a blanco */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -48,13 +48,13 @@
             max-width: 390px;
             text-align: center;
             padding: 40px 24px 32px 24px;
-            background: rgba(255, 255, 255, 0.15); 
+            background: rgba(255, 255, 255, 0.12); 
             backdrop-filter: blur(10px) saturate(160%);
             -webkit-backdrop-filter: blur(10px) saturate(160%);
             border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15), 
-                        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2), 
+                        inset 0 1px 2px rgba(255, 255, 255, 0.2);
         }
 
         .brand-logo {
@@ -67,7 +67,7 @@
             background-position: center;
             border: 2px solid rgba(255, 255, 255, 0.9);
             display: block;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
         }
 
         /* Burbuja Verde iMessage */
@@ -84,13 +84,13 @@
             box-shadow: 0 4px 10px rgba(52, 199, 89, 0.3);
         }
 
-        /* TÍTULO MODIFICADO: Blanco Puro con Animación de entrada Pop */
+        /* Título Blanco con Animación Pop */
         h1 {
             font-size: 30px;
             font-weight: 700;
             letter-spacing: -0.5px;
             margin-bottom: 12px;
-            color: #ffffff; /* Texto en blanco */
+            color: #ffffff; 
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
             animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
             opacity: 0;
@@ -111,23 +111,23 @@
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
-        /* --- 🚨 ENCUADRE DE BORDES LÁSER FILTRADOS --- */
+        /* --- 🚨 ENCUADRE DE BORDES LÁSER BLINDADO (SOLO EN EL CONTORNO) --- */
         .laser-glow-wrapper {
             position: relative;
             border-radius: 14px;
             margin-bottom: 24px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            background: #111112; /* Bloqueador base del contador */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            background: #111112; 
             padding: 1px; 
             overflow: hidden;
             z-index: 1;
         }
 
+        /* Solución de aislamiento total para el cuadro grande del premio */
         .laser-glow-wrapper.large {
             border-radius: 22px;
             margin-bottom: 28px;
-            background: rgba(255, 255, 255, 0.25); /* Bloqueador base del cupón */
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            background: #1e1e20; /* Color oscuro sólido para bloquear la filtración de luz interna */
         }
 
         .laser-line {
@@ -150,7 +150,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Centro del Contador (Tapa por completo la luz interior) */
+        /* Centro del Contador */
         .counter-box {
             display: flex;
             align-items: center;
@@ -178,15 +178,15 @@
             display: inline-block;
         }
 
-        /* Centro del Premio - CORREGIDO: Bloqueo de luz total para que solo brille el borde */
+        /* Centro del Premio - Solución Definitiva al Destello Interno */
         .promo-box {
-            background: rgba(30, 30, 32, 0.85); /* Fondo oscuro esmerilado que absorbe el destello interno */
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: rgba(30, 30, 32, 0.96); /* Opacidad al 96% para estrangular la luz trasera */
             padding: 24px 20px;
             border-radius: 21px;
             width: 100%;
             height: 100%;
+            position: relative;
+            z-index: 2;
         }
 
         .promo-title {
@@ -195,16 +195,17 @@
             letter-spacing: -1px;
             color: #ffffff; 
             line-height: 1.1;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
         }
 
         .promo-subtitle {
             font-size: 14px;
-            color: #2f96ff; /* Azul brillante optimizado para fondo oscuro */
+            color: #ffffff; /* Modificado a blanco puro */
             font-weight: 700;
             margin-top: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
         /* Botones de acción */
@@ -265,32 +266,33 @@
         }
 
         .btn-primary {
-            background-color: #1d1d1f;
-            color: #ffffff;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            background-color: #ffffff; /* Invertido a blanco para destacar masivamente */
+            color: #1d1d1f;
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.1);
         }
 
         .btn-primary:active {
-            background-color: #000000;
+            background-color: #e5e5ea;
             transform: scale(0.97);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.35);
-            color: #1d1d1f;
-            border: 1px solid rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff; /* Texto en blanco */
+            border: 1px solid rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
         }
 
         .btn-secondary:active {
-            background-color: rgba(255, 255, 255, 0.55);
+            background-color: rgba(255, 255, 255, 0.4);
             transform: scale(0.97);
         }
 
+        /* --- 📝 SECCIÓN TÉRMINOS MODIFICADOS A BLANCO PURO --- */
         .terms-box {
             text-align: left;
-            border-top: 1px solid rgba(0, 0, 0, 0.12);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding-top: 20px;
         }
 
@@ -299,8 +301,9 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: #1d1d1f;
+            color: #ffffff; /* Título de condiciones en blanco */
             margin-bottom: 10px;
+            opacity: 0.9;
         }
 
         ul {
@@ -309,19 +312,20 @@
 
         li {
             font-size: 12.5px;
-            color: #1d1d1f;
-            font-weight: 600;
+            color: #ffffff; /* Lista en blanco puro */
+            font-weight: 500;
             line-height: 1.5;
             margin-bottom: 8px;
             position: relative;
             padding-left: 14px;
+            opacity: 0.85;
         }
 
         li::before {
             content: "•";
             position: absolute;
             left: 0;
-            color: #0066cc;
+            color: #34c759; /* Viñeta verde iMessage para contrastar con estética limpia */
         }
     </style>
 </head>
@@ -334,7 +338,7 @@
         <!-- iMessage Tag Verde -->
         <div class="header-tag">Cupo Limitado</div>
         
-        <!-- Título blanco animado con efecto Pop -->
+        <!-- Título blanco animado Pop -->
         <h1>¡Ganaste un cupón! 🎉</h1>
         <p class="subtitle">Preséntate a nuestra sucursal con el flyer y aplicas de una vez a nuestra promoción, fren.</p>
 
@@ -347,7 +351,7 @@
             </div>
         </div>
 
-        <!-- CONTENEDOR PREMIO: Borde láser CORREGIDO y pulido -->
+        <!-- CONTENEDOR PREMIO: Aislamiento total de destello interno -->
         <div class="laser-glow-wrapper large">
             <div class="laser-line"></div>
             <div class="promo-box">
@@ -365,6 +369,7 @@
             </a>
         </div>
 
+        <!-- Términos y condiciones actualizados completamente a blanco -->
         <div class="terms-box">
             <div class="terms-title">Condiciones de la promoción</div>
             <ul>
