@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Ganaste tu Cupón!</title>
     
-    <!-- Importación de Tipografía Fredoka (Redondeada, amigable y con personalidad) -->
+    <!-- Importación de Tipografía Fredoka -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
         }
     </style>
 
-    <!-- 🎨 ESTILOS GENERALES Y ANIMACIONES (LIQUID GLASS PURIFICADO) -->
+    <!-- 🎨 ESTILOS GENERALES Y ANIMACIONES AVANZADAS -->
     <style>
         * {
             box-sizing: border-box;
@@ -29,7 +29,8 @@
         }
 
         body {
-            background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--url-fondo);
+            /* Filtro de fondo ligeramente más oscuro para mejorar el contraste de los nuevos textos blancos */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), var(--url-fondo);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -42,23 +43,19 @@
             padding: 24px;
         }
 
-        /* Tarjeta Principal - Cristal Líquido Puro (Menos borroso, más transparente y cristalino) */
+        /* Tarjeta Principal */
         .card {
             width: 100%;
             max-width: 390px;
             text-align: center;
             padding: 40px 24px 32px 24px;
-            
-            /* Ajuste Liquid Glass: Se redujo el blur de 35px a 10px y se equilibró el fondo */
-            background: rgba(255, 255, 255, 0.18); 
+            background: rgba(255, 255, 255, 0.15); 
             backdrop-filter: blur(10px) saturate(160%);
             -webkit-backdrop-filter: blur(10px) saturate(160%);
-            
             border-radius: 30px;
-            /* Borde blanco nítido y fino para imitar el reflejo de la luz en la esquina del vidrio */
-            border: 1px solid rgba(255, 255, 255, 0.65);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06), 
-                        inset 0 1px 2px rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15), 
+                        inset 0 1px 2px rgba(255, 255, 255, 0.3);
         }
 
         .brand-logo {
@@ -71,10 +68,10 @@
             background-position: center;
             border: 2px solid rgba(255, 255, 255, 0.9);
             display: block;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
         }
 
-        /* Burbuja Verde Estilo iMessage */
+        /* Burbuja Verde iMessage */
         .header-tag {
             display: inline-block;
             font-size: 13px;
@@ -85,86 +82,129 @@
             padding: 8px 18px;
             border-radius: 20px;
             margin-bottom: 18px;
-            box-shadow: 0 4px 10px rgba(52, 199, 89, 0.2);
+            box-shadow: 0 4px 10px rgba(52, 199, 89, 0.3);
         }
 
         h1 {
             font-size: 30px;
             font-weight: 700;
             letter-spacing: -0.5px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: #000000;
-            text-shadow: 0 1px 1px rgba(255,255,255,0.4);
+            text-shadow: 0 1px 2px rgba(255,255,255,0.6);
         }
 
+        /* Texto solicitado: Blanco puro y en negrita gruesa */
         .subtitle {
-            font-size: 15px;
-            color: #1d1d1f;
-            font-weight: 600;
+            font-size: 15.5px;
+            color: #ffffff;
+            font-weight: 700; /* Texto bien grueso */
             margin-bottom: 24px;
             line-height: 1.5;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Sombra para legibilidad total */
         }
 
-        /* Recuadro Contador de Cupos Líquido Pequeño */
-        .counter-box {
+        /* --- 🚨 CONTENEDORES CON EFECTO BORDE LÁSER GIRATORIO --- */
+        .laser-glow-wrapper {
+            position: relative;
             display: inline-flex;
+            overflow: hidden;
+            padding: 1px; /* Espacio para que el hilo de luz se vea delgado */
+            border-radius: 14px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .laser-glow-wrapper.large {
+            display: block;
+            border-radius: 22px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* El haz de luz giratorio en el fondo del borde */
+        .laser-glow-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 70%,
+                rgba(255, 255, 255, 0.8) 90%,
+                transparent 100%
+            );
+            animation: rotateLaser 4s linear infinite;
+        }
+
+        @keyframes rotateLaser {
+            100% { transform: rotate(300deg); }
+        }
+
+        /* Nuevo Cuadro del Contador: Negro translúcido, letras blancas */
+        .counter-box {
+            position: relative;
+            z-index: 2;
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            background: rgba(0, 0, 0, 0.75); /* Negro sólido translúcido */
             padding: 10px 20px;
-            border-radius: 14px;
-            margin-bottom: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+            border-radius: 13px; /* 1px menos que el wrapper para ajustar el borde */
+            width: 100%;
         }
 
         .counter-text {
             font-size: 13px;
             font-weight: 600;
-            color: #ff9500; 
+            color: #ffffff; /* Letras blancas */
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .counter-number {
             font-weight: 700;
-            color: #ff3b30; 
+            color: #ff3b30; /* El número parpadea en rojo vivo */
             transition: all 0.3s ease;
             display: inline-block;
         }
 
-        /* Recuadro del Premio */
+        /* Nuevo Recuadro del Premio con Borde Láser */
         .promo-box {
-            background: rgba(255, 255, 255, 0.25);
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.22);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             padding: 24px 20px;
-            border-radius: 22px;
-            margin-bottom: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.01);
+            border-radius: 21px;
+            width: 100%;
         }
 
+        /* Texto del Premio modificado a Blanco Puro */
         .promo-title {
-            font-size: 44px;
+            font-size: 46px;
             font-weight: 700;
             letter-spacing: -1px;
-            color: #000000;
+            color: #ffffff; /* Texto en blanco */
             line-height: 1.1;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .promo-subtitle {
             font-size: 14px;
-            color: #0066cc;
-            font-weight: 600;
+            color: #0071e3; /* Azul Apple de alto impacto */
+            font-weight: 700;
             margin-top: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            text-shadow: 0 1px 1px rgba(255,255,255,0.2);
         }
 
+        /* Botones de acción */
         .cta-container {
             display: flex;
             flex-direction: column;
@@ -172,7 +212,6 @@
             margin-bottom: 28px;
         }
 
-        /* Estructura base de botones */
         .btn {
             display: flex;
             align-items: center;
@@ -187,7 +226,7 @@
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Efecto de destello de luz compartido */
+        /* Brillo de luz de lado a lado (Shimmer) */
         .btn::after {
             content: '';
             position: absolute;
@@ -222,7 +261,6 @@
             100% { left: 150%; }
         }
 
-        /* Botón Primario Oscuro */
         .btn-primary {
             background-color: #1d1d1f;
             color: #ffffff;
@@ -234,7 +272,6 @@
             transform: scale(0.97);
         }
 
-        /* Botón Secundario Cristalino */
         .btn-secondary {
             background: rgba(255, 255, 255, 0.35);
             color: #1d1d1f;
@@ -250,7 +287,7 @@
 
         .terms-box {
             text-align: left;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.12);
             padding-top: 20px;
         }
 
@@ -259,7 +296,7 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: #48484a;
+            color: #1d1d1f;
             margin-bottom: 10px;
         }
 
@@ -291,21 +328,28 @@
         <!-- Logo Circular -->
         <div class="brand-logo"></div>
 
-        <!-- Tag Estilo iMessage Verde -->
+        <!-- iMessage Tag Verde -->
         <div class="header-tag">Cupo Limitado</div>
         
         <h1>¡Ganaste un cupón! 🎉</h1>
+        
+        <!-- Texto Modificado: Blanco y en negrita gruesa -->
         <p class="subtitle">Preséntate a nuestra sucursal con el flyer y aplicas de una vez a nuestra promoción, fren.</p>
 
-        <!-- Recuadro del Contador Vivo Estilo Glass -->
-        <div class="counter-box">
-            <span class="counter-text">Cupos restantes:</span>
-            <span id="liveCounter" class="counter-number">37</span>
+        <!-- CONTENEDOR NUEVO: Borde láser animado alrededor del contador negro -->
+        <div class="laser-glow-wrapper">
+            <div class="counter-box">
+                <span class="counter-text">Cupos restantes:</span>
+                <span id="liveCounter" class="counter-number">37</span>
+            </div>
         </div>
 
-        <div class="promo-box">
-            <div class="promo-title">15% OFF</div>
-            <div class="promo-subtitle">En Reparación de Pantalla y Tapa Trasera</div>
+        <!-- CONTENEDOR NUEVO: Borde láser animado alrededor del premio -->
+        <div class="laser-glow-wrapper large">
+            <div class="promo-box">
+                <div class="promo-title">15% OFF</div>
+                <div class="promo-subtitle">En Reparación de Pantalla y Tapa Trasera</div>
+            </div>
         </div>
 
         <div class="cta-container">
@@ -327,7 +371,7 @@
         </div>
     </div>
 
-    <!-- LÓGICA DEL CONTADOR -->
+    <!-- LÓGICA DEL CONTADOR EN CAÍDA VIVA -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const counterElement = document.getElementById("liveCounter");
