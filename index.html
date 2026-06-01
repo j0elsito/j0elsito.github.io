@@ -29,7 +29,6 @@
         }
 
         body {
-            /* Filtro de fondo ligeramente más oscuro para mejorar el contraste de los nuevos textos blancos */
             background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), var(--url-fondo);
             background-size: cover;
             background-position: center;
@@ -94,37 +93,36 @@
             text-shadow: 0 1px 2px rgba(255,255,255,0.6);
         }
 
-        /* Texto solicitado: Blanco puro y en negrita gruesa */
         .subtitle {
             font-size: 15.5px;
             color: #ffffff;
-            font-weight: 700; /* Texto bien grueso */
+            font-weight: 700;
             margin-bottom: 24px;
             line-height: 1.5;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Sombra para legibilidad total */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
-        /* --- 🚨 CONTENEDORES CON EFECTO BORDE LÁSER GIRATORIO --- */
+        /* --- 🚨 NUEVO SISTEMA DE BORDES LÁSER FILTRADOS (SOLO EN EL CONTORNO EXTERIOR) --- */
         .laser-glow-wrapper {
             position: relative;
-            display: inline-flex;
-            overflow: hidden;
-            padding: 1px; /* Espacio para que el hilo de luz se vea delgado */
             border-radius: 14px;
             margin-bottom: 24px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: rgba(0, 0, 0, 0.75); /* Fondo base del contador */
+            padding: 1px; /* El grosor exacto de la línea del borde */
+            overflow: hidden;
+            z-index: 1;
         }
 
         .laser-glow-wrapper.large {
-            display: block;
             border-radius: 22px;
             margin-bottom: 28px;
+            background: rgba(255, 255, 255, 0.22); /* Fondo base del cupón */
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
-        /* El haz de luz giratorio en el fondo del borde */
-        .laser-glow-wrapper::before {
-            content: '';
+        /* Capa animada que genera el láser rotativo */
+        .laser-line {
             position: absolute;
             top: -50%;
             left: -50%;
@@ -132,71 +130,70 @@
             height: 200%;
             background: conic-gradient(
                 from 0deg,
-                transparent 70%,
-                rgba(255, 255, 255, 0.8) 90%,
+                transparent 60%,
+                rgba(255, 255, 255, 1) 90%,
                 transparent 100%
             );
             animation: rotateLaser 4s linear infinite;
+            z-index: -1;
         }
 
         @keyframes rotateLaser {
-            100% { transform: rotate(300deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        /* Nuevo Cuadro del Contador: Negro translúcido, letras blancas */
+        /* Cuadro del Contador Interno (Cubre el centro para tapar la luz interna) */
         .counter-box {
-            position: relative;
-            z-index: 2;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            background: rgba(0, 0, 0, 0.75); /* Negro sólido translúcido */
+            background: #111112; /* Bloqueo de luz interno */
             padding: 10px 20px;
-            border-radius: 13px; /* 1px menos que el wrapper para ajustar el borde */
+            border-radius: 13px;
             width: 100%;
+            height: 100%;
         }
 
         .counter-text {
             font-size: 13px;
             font-weight: 600;
-            color: #ffffff; /* Letras blancas */
+            color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .counter-number {
             font-weight: 700;
-            color: #ff3b30; /* El número parpadea en rojo vivo */
+            color: #ff3b30;
             transition: all 0.3s ease;
             display: inline-block;
         }
 
-        /* Nuevo Recuadro del Premio con Borde Láser */
+        /* Recuadro del Premio Interno (Cubre el centro para tapar la luz interna) */
         .promo-box {
-            position: relative;
-            z-index: 2;
             background: rgba(255, 255, 255, 0.22);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 24px 20px;
             border-radius: 21px;
             width: 100%;
+            height: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Texto del Premio modificado a Blanco Puro */
         .promo-title {
             font-size: 46px;
             font-weight: 700;
             letter-spacing: -1px;
-            color: #ffffff; /* Texto en blanco */
+            color: #ffffff;
             line-height: 1.1;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .promo-subtitle {
             font-size: 14px;
-            color: #0071e3; /* Azul Apple de alto impacto */
+            color: #0071e3;
             font-weight: 700;
             margin-top: 8px;
             text-transform: uppercase;
@@ -332,20 +329,20 @@
         <div class="header-tag">Cupo Limitado</div>
         
         <h1>¡Ganaste un cupón! 🎉</h1>
-        
-        <!-- Texto Modificado: Blanco y en negrita gruesa -->
         <p class="subtitle">Preséntate a nuestra sucursal con el flyer y aplicas de una vez a nuestra promoción, fren.</p>
 
-        <!-- CONTENEDOR NUEVO: Borde láser animado alrededor del contador negro -->
+        <!-- CONTENEDOR CONTADOR: Borde láser limpio -->
         <div class="laser-glow-wrapper">
+            <div class="laser-line"></div>
             <div class="counter-box">
                 <span class="counter-text">Cupos restantes:</span>
                 <span id="liveCounter" class="counter-number">37</span>
             </div>
         </div>
 
-        <!-- CONTENEDOR NUEVO: Borde láser animado alrededor del premio -->
+        <!-- CONTENEDOR PREMIO: Borde láser limpio -->
         <div class="laser-glow-wrapper large">
+            <div class="laser-line"></div>
             <div class="promo-box">
                 <div class="promo-title">15% OFF</div>
                 <div class="promo-subtitle">En Reparación de Pantalla y Tapa Trasera</div>
@@ -362,7 +359,7 @@
         </div>
 
         <div class="terms-box">
-            <div class="terms-title">Condiciones de la promoción</div>
+            <div class="terms-title">Conditions de la promoción</div>
             <ul>
                 <li>Promoción limitada válida hasta el 15 de junio de 2026.</li>
                 <li>Exclusivo para personas que siguen nuestra cuenta de Instagram.</li>
