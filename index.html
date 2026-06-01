@@ -14,13 +14,13 @@
         }
 
         body {
-            /* Fondo de alta definición con tonos tecnológicos oscuros y luces neón sutiles para que el cristal resalte */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1601524909162-be87252be298?q=80&w=600&auto=format&fit=crop');
+            /* Fondo claro con enfoque en tecnología Apple limpia */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url('https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=1000&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-color: #0d0d0e;
-            color: #ffffff;
+            background-color: #ffffff;
+            color: #1d1d1f;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -28,43 +28,43 @@
             padding: 24px;
         }
 
-        /* Tarjeta Principal - Efecto Cristal Líquido Oscuro */
+        /* Tarjeta Principal - Efecto Liquid Glass Claro (Apple Style) */
         .card {
             width: 100%;
             max-width: 390px;
             text-align: center;
             padding: 40px 24px 32px 24px;
             
-            /* Ajustes clave para el efecto vidrio de Apple */
-            background: rgba(20, 20, 25, 0.6); 
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            /* Vidrio esmerilado blanco translúcido */
+            background: rgba(255, 255, 255, 0.45); 
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
             
-            border-radius: 28px;
-            /* Borde brillante muy fino que simula el reflejo del borde del vidrio */
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.7), 
-                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            /* Borde brillante muy sutil tipo cristal */
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.3);
         }
 
-        /* Logo de marca estilizado */
+        /* Foto de perfil proporcionada por el usuario */
         .brand-logo {
-            width: 76px;
-            height: 76px;
+            width: 80px;
+            height: 80px;
             margin: 0 auto 20px auto;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 2px solid rgba(255, 255, 255, 0.8);
             display: block;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         .header-tag {
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: rgba(255, 255, 255, 0.5);
+            color: #86868b;
             margin-bottom: 12px;
         }
 
@@ -73,44 +73,43 @@
             font-weight: 700;
             letter-spacing: -0.5px;
             margin-bottom: 8px;
-            color: #ffffff;
+            color: #1d1d1f;
         }
 
         .subtitle {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.65);
+            color: #515154;
             margin-bottom: 32px;
             line-height: 1.45;
         }
 
-        /* Recuadro del Premio - Cristal Líquido Interno */
+        /* Recuadro del Premio - Cristal Interno Mínimo */
         .promo-box {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             padding: 24px 20px;
             border-radius: 20px;
             margin-bottom: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02);
         }
 
         .promo-title {
-            font-size: 38px;
+            font-size: 40px;
             font-weight: 800;
-            letter-spacing: -1px;
-            color: #ffffff;
+            letter-spacing: -1.5px;
+            color: #000000;
             line-height: 1.1;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .promo-subtitle {
             font-size: 13px;
-            color: #2f96ff;
+            color: #0071e3; /* Azul clásico de Apple */
             font-weight: 600;
             margin-top: 8px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
         }
 
         .cta-container {
@@ -120,7 +119,7 @@
             margin-bottom: 32px;
         }
 
-        /* Botones Estilo iOS */
+        /* Botones */
         .btn {
             display: flex;
             align-items: center;
@@ -130,47 +129,47 @@
             font-size: 15px;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Botón Blanco Sólido Brillante */
+        /* Botón Sólido Oscuro de Acción Principal */
         .btn-primary {
-            background-color: #ffffff;
-            color: #000000;
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+            background-color: #1d1d1f;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .btn-primary:active {
-            background-color: #e5e5ea;
-            transform: scale(0.97);
+            background-color: #000000;
+            transform: scale(0.98);
         }
 
-        /* Botón Secundario - Cristal Esmerilado Activo */
+        /* Botón Secundario - Cristal Esmerilado de Alto Contraste */
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.04);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.4);
+            color: #1d1d1f;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .btn-secondary:active {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: scale(0.97);
+            background-color: rgba(255, 255, 255, 0.6);
+            transform: scale(0.98);
         }
 
         .terms-box {
             text-align: left;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
             padding-top: 20px;
         }
 
         .terms-title {
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: rgba(255, 255, 255, 0.4);
+            color: #86868b;
             margin-bottom: 10px;
         }
 
@@ -180,7 +179,7 @@
 
         li {
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
+            color: #6e6e73;
             line-height: 1.5;
             margin-bottom: 8px;
             position: relative;
@@ -191,19 +190,19 @@
             content: "•";
             position: absolute;
             left: 0;
-            color: #2f96ff; /* Detalle azul en las viñetas */
+            color: #0071e3; /* Viñeta azul destacada */
         }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <!-- Puedes cambiar esta URL por la de tu logo subido a GitHub (ej: src="logo.png") -->
-        <img class="brand-logo" src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=150&auto=format&fit=crop" alt="Logo">
+        <!-- Imagen de Perfil TecnoTrade -->
+        <img class="brand-logo" src="https://instagram.fpty1-1.fna.fbcdn.net/v/t51.82787-19/651153394_18060903530367758_6114560391983405389_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fpty1-1.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2gHsJG7NHyPBrqypZFq2Fpe0t69KPjfkZqdUp2gW9I_mbdYaR74GUfxFA4m334-m63Q&_nc_ohc=dOyVpUUjKOYQ7kNvwH_pGDb&_nc_gid=5uvJWIALy3otN6JRK3cN0Q&edm=AEYEu-QBAAAA&ccb=7-5&oh=00_Af9EF0muolC97FpwkTuF5VXms41Hfis9A_KNdkBoDK58xQ&oe=6A23B0B0&_nc_sid=ead929" alt="TecnoTrade Logo">
 
         <div class="header-tag">Beneficio Exclusivo</div>
         <h1>¡Felicidades!</h1>
-        <p class="subtitle">Has recibido un beneficio especial para canjear en nuestra sucursal al presentar el flyer.</p>
+        <p class="subtitle">Has recibido un beneficio especial para canjear en nuestra sucursal al presentar tu flyer.</p>
 
         <div class="promo-box">
             <div class="promo-title">15% OFF</div>
@@ -211,11 +210,11 @@
         </div>
 
         <div class="cta-container">
-            <!-- Recuerda cambiar "TU_USUARIO_AQUI" por tu cuenta de Instagram -->
+            <!-- Enlace oficial a Instagram TecnoTrade -->
             <a href="https://www.instagram.com/tecnotradepty/" class="btn btn-primary" target="_blank">
                 👉 Reclamar en Instagram
             </a>
-            <!-- Recuerda cambiar por tu enlace de Google Maps o Waze -->
+            <!-- Enlace oficial a Google Maps de la ubicación -->
             <a href="https://maps.app.goo.gl/2hAhZcQzJXttbKuZA" class="btn btn-secondary" target="_blank">
                 📍 Cómo llegar al local
             </a>
