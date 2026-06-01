@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TecnoTrade | Catálogo Premium</title>
+    <title>TecnoTrade | Catálogo iPhone</title>
     <style>
         :root {
             --text-color: #ffffff;
             --text-muted: #a0aec0;
             --accent-color: #A2C4ECE6;
-            --card-bg: rgba(255, 255, 255, 0.06);
+            --card-bg: rgba(255, 255, 255, 0.05);
             --border-color: rgba(255, 255, 255, 0.12);
             --whatsapp-color: #25D366;
             --instagram-color: #E1306C;
-            --promo-color: #38bdf8; 
+            --badge-bg: rgba(255, 255, 255, 0.1);
         }
 
         body {
@@ -33,7 +33,7 @@
         header {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 24px 20px;
+            padding: 30px 20px;
             text-align: center;
             border-bottom: 1px solid var(--border-color);
             background: rgba(0, 0, 0, 0.3);
@@ -44,19 +44,12 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            border-bottom-left-radius: 16px;
-            border-bottom-right-radius: 16px;
-        }
-
-        .brand-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
 
         .logo {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 800;
             letter-spacing: -1px;
             margin: 0;
@@ -69,7 +62,7 @@
             font-size: 14px;
             color: var(--text-muted);
             margin: 0;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
@@ -80,9 +73,9 @@
         }
 
         .social-btn {
-            padding: 6px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             text-decoration: none;
             color: white;
@@ -97,12 +90,13 @@
         .btn-ws { background-color: var(--whatsapp-color); }
         .btn-ig { background-color: var(--instagram-color); }
 
+        /* Cuadrícula de Catálogo */
         .catalog-container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 40px auto;
-            padding: 0 20px 60px 20px;
+            padding: 0 20px 80px 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
         }
 
@@ -119,88 +113,92 @@
         }
 
         .product-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
         }
 
-        .product-image-wrapper {
-            position: relative;
-            width: 100%;
-            padding-top: 100%;
-            background: rgba(255, 255, 255, 0.03);
+        .card-header-info {
+            padding: 24px 24px 10px 24px;
         }
 
-        .product-img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .promo-tag {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--promo-color);
-            color: #000;
-            font-size: 11px;
+        .series-title {
+            margin: 0;
+            font-size: 24px;
             font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 12px;
-            text-transform: uppercase;
+            letter-spacing: -0.5px;
         }
 
-        .product-info {
-            padding: 20px;
+        .series-status {
+            font-size: 12px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Lista de Variaciones dentro del producto */
+        .variants-list {
+            padding: 10px 24px 24px 24px;
             display: flex;
             flex-direction: column;
+            gap: 12px;
             flex-grow: 1;
-            gap: 8px;
         }
 
-        .product-title {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 600;
-            line-height: 1.4;
-        }
-
-        .product-description {
-            margin: 0;
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        .product-price-row {
+        .variant-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: auto;
-            padding-top: 15px;
-        }
-
-        .price {
-            font-size: 22px;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .btn-buy {
-            background: #fff;
-            color: #000;
-            text-decoration: none;
-            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 12px 16px;
             border-radius: 14px;
-            font-size: 13px;
-            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: background 0.2s;
         }
 
-        .btn-buy:hover {
+        .variant-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .variant-name {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .variant-price {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            background: var(--badge-bg);
+            padding: 4px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Botón de acción por tarjeta */
+        .card-footer {
+            padding: 0 24px 24px 24px;
+            margin-top: auto;
+        }
+
+        .btn-order {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
+            text-align: center;
+        }
+
+        .btn-order:hover {
             background: var(--accent-color);
         }
     </style>
@@ -208,10 +206,8 @@
 <body>
 
     <header>
-        <div class="brand-container">
-            <h1 class="logo">TecnoTrade</h1>
-        </div>
-        <p class="subtitle">Catálogo Premium</p>
+        <h1 class="logo">TecnoTrade</h1>
+        <p class="subtitle">Disponibilidad de iPhone</p>
         <div class="social-links">
             <a href="https://wa.me/tu_numero" class="social-btn btn-ws" target="_blank">WhatsApp</a>
             <a href="https://instagram.com/tu_usuario" class="social-btn btn-ig" target="_blank">Instagram</a>
@@ -219,21 +215,207 @@
     </header>
 
     <main class="catalog-container">
-        <!-- Tarjeta de ejemplo 1 -->
+
+        <!-- SERIE IPHONE 17 -->
         <div class="product-card">
-            <div class="product-image-wrapper">
-                <span class="promo-tag">Garantía</span>
-                <img class="product-img" src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500" alt="Smartphone">
+            <div class="card-header-info">
+                <span class="series-status">Último Lanzamiento</span>
+                <h2 class="series-title">iPhone Serie 17</h2>
             </div>
-            <div class="product-info">
-                <h3 class="product-title">Dispositivo Flagship</h3>
-                <p class="product-description">Pantalla de alta tasa de refresco, cámaras avanzadas y rendimiento premium.</p>
-                <div class="product-price-row">
-                    <span class="price">Consultar</span>
-                    <a href="https://wa.me/tu_numero" class="btn-buy">WhatsApp</a>
+            <div class="variants-list">
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 17</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 17 Slim / Air</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 17 Pro</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 17 Pro Max</span>
+                    <span class="variant-price">Consultar</span>
                 </div>
             </div>
+            <div class="card-footer">
+                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2017" class="btn-order" target="_blank">Cotizar Serie 17</a>
+            </div>
         </div>
+
+        <!-- SERIE IPHONE 16 -->
+        <div class="product-card">
+            <div class="card-header-info">
+                <span class="series-status">Destacado</span>
+                <h2 class="series-title">iPhone Serie 16</h2>
+            </div>
+            <div class="variants-list">
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 16</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 16 Plus</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 16 Pro</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 16 Pro Max</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2016" class="btn-order" target="_blank">Cotizar Serie 16</a>
+            </div>
+        </div>
+
+        <!-- SERIE IPHONE 13 -->
+        <!-- SERIE IPHONE 15 -->
+        <div class="product-card">
+            <div class="card-header-info">
+                <span class="series-status">Disponible</span>
+                <h2 class="series-title">iPhone Serie 15</h2>
+            </div>
+            <div class="variants-list">
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 15</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 15 Plus</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 15 Pro</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 15 Pro Max</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2015" class="btn-order" target="_blank">Cotizar Serie 15</a>
+            </div>
+        </div>
+
+        <!-- SERIE IPHONE 14 -->
+        <div class="product-card">
+            <div class="card-header-info">
+                <span class="series-status">Disponible</span>
+                <h2 class="series-title">iPhone Serie 14</h2>
+            </div>
+            <div class="variants-list">
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 14</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 14 Plus</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 14 Pro</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 14 Pro Max</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2014" class="btn-order" target="_blank">Cotizar Serie 14</a>
+            </div>
+        </div>
+
+        <!-- SERIE IPHONE 13 -->
+        <div class="product-card">
+            <div class="card-header-info">
+                <span class="series-status">Calidad / Precio</span>
+                <h2 class="series-title">iPhone Serie 13</h2>
+            </div>
+            <div class="variants-list">
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 13 Mini</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 13</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 13 Pro</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 13 Pro Max</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2013" class="btn-order" target="_blank">Cotizar Serie 13</a>
+            </div>
+        </div>
+
+        <!-- SERIE IPHONE 12 -->
+        <div class="product-card">
+            <div class="card-header-info">
+                <span class="series-status">Económico</span>
+                <h2 class="series-title">iPhone Serie 12</h2>
+            </div>
+            <div class="variants-list">
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 12 Mini</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 12</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 12 Pro</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 12 Pro Max</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2012" class="btn-order" target="_blank">Cotizar Serie 12</a>
+            </div>
+        </div>
+
+        <!-- SERIE IPHONE 11 -->
+        <div class="product-card">
+            <div class="card-header-info">
+                <span class="series-status">Económico</span>
+                <h2 class="series-title">iPhone Serie 11</h2>
+            </div>
+            <div class="variants-list">
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 11</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 11 Pro</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+                <div class="variant-item">
+                    <span class="variant-name">iPhone 11 Pro Max</span>
+                    <span class="variant-price">Consultar</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2011" class="btn-order" target="_blank">Cotizar Serie 11</a>
+            </div>
+        </div>
+
     </main>
 
 </body>
