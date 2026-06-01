@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Ganaste tu Cupón!</title>
     
-    <!-- Importación de Tipografía Inter para máxima claridad estética -->
+    <!-- Importación de Tipografía Fredoka (Redondeada, amigable y con personalidad) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- ⚙️ CONFIGURACIÓN DE IMÁGENES -->
     <style>
@@ -18,18 +18,18 @@
         }
     </style>
 
-    <!-- 🎨 ESTILOS GENERALES Y ANIMACIONES (LIQUID GLASS PRO) -->
+    <!-- 🎨 ESTILOS GENERALES Y ANIMACIONES (LIQUID GLASS PURIFICADO) -->
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Fredoka', -apple-system, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)), var(--url-fondo);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), var(--url-fondo);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -42,18 +42,23 @@
             padding: 24px;
         }
 
+        /* Tarjeta Principal - Cristal Líquido Puro (Menos borroso, más transparente y cristalino) */
         .card {
             width: 100%;
             max-width: 390px;
             text-align: center;
             padding: 40px 24px 32px 24px;
-            background: rgba(255, 255, 255, 0.25); 
-            backdrop-filter: blur(35px) saturate(220%);
-            -webkit-backdrop-filter: blur(35px) saturate(220%);
+            
+            /* Ajuste Liquid Glass: Se redujo el blur de 35px a 10px y se equilibró el fondo */
+            background: rgba(255, 255, 255, 0.18); 
+            backdrop-filter: blur(10px) saturate(160%);
+            -webkit-backdrop-filter: blur(10px) saturate(160%);
+            
             border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), 
-                        inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            /* Borde blanco nítido y fino para imitar el reflejo de la luz en la esquina del vidrio */
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06), 
+                        inset 0 1px 2px rgba(255, 255, 255, 0.5);
         }
 
         .brand-logo {
@@ -69,92 +74,95 @@
             box-shadow: 0 6px 16px rgba(0,0,0,0.1);
         }
 
-        /* Rediseño de la etiqueta superior: "Cupo Limitado" visual */
+        /* Burbuja Verde Estilo iMessage */
         .header-tag {
             display: inline-block;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #ff3b30; /* Rojo Apple */
-            background: rgba(255, 59, 48, 0.12);
-            padding: 6px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: #ffffff; 
+            background-color: #34c759; 
+            padding: 8px 18px;
             border-radius: 20px;
-            margin-bottom: 16px;
-            border: 1px solid rgba(255, 59, 48, 0.2);
+            margin-bottom: 18px;
+            box-shadow: 0 4px 10px rgba(52, 199, 89, 0.2);
         }
 
         h1 {
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: -1px;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
             margin-bottom: 10px;
             color: #000000;
+            text-shadow: 0 1px 1px rgba(255,255,255,0.4);
         }
 
         .subtitle {
-            font-size: 14.5px;
-            color: #2c2c2e;
+            font-size: 15px;
+            color: #1d1d1f;
             font-weight: 600;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             line-height: 1.5;
         }
 
-        /* Contador de cupos dinámico con punto "Live" parpadeante */
-        .live-counter {
-            display: flex;
+        /* Recuadro Contador de Cupos Líquido Pequeño */
+        .counter-box {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            color: #ff9500; /* Naranja de advertencia Apple */
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: 10px 20px;
+            border-radius: 14px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+        }
+
+        .counter-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: #ff9500; 
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 12px;
         }
 
-        .live-dot {
-            width: 7px;
-            height: 7px;
-            background-color: #ff3b30;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.9); opacity: 0.4; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(0.9); opacity: 0.4; }
+        .counter-number {
+            font-weight: 700;
+            color: #ff3b30; 
+            transition: all 0.3s ease;
+            display: inline-block;
         }
 
         /* Recuadro del Premio */
         .promo-box {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             padding: 24px 20px;
             border-radius: 22px;
             margin-bottom: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.01);
         }
 
         .promo-title {
             font-size: 44px;
-            font-weight: 900;
-            letter-spacing: -2px;
+            font-weight: 700;
+            letter-spacing: -1px;
             color: #000000;
             line-height: 1.1;
         }
 
         .promo-subtitle {
-            font-size: 13px;
+            font-size: 14px;
             color: #0066cc;
-            font-weight: 800;
+            font-weight: 600;
             margin-top: 8px;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
+            letter-spacing: 0.5px;
         }
 
         .cta-container {
@@ -171,37 +179,42 @@
             justify-content: center;
             height: 54px;
             border-radius: 16px;
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 600;
             text-decoration: none;
             position: relative;
-            overflow: hidden; /* Necesario para que el destello no se salga del botón */
+            overflow: hidden; 
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Botón Primario con efecto de luz infinita (Shimmer) */
-        .btn-primary {
-            background-color: #1d1d1f;
-            color: #ffffff;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
-        }
-
-        /* Animación del rayo de luz brillante */
-        .btn-primary::after {
+        /* Efecto de destello de luz compartido */
+        .btn::after {
             content: '';
             position: absolute;
             top: 0;
             left: -150%;
             width: 50%;
             height: 100%;
+            transform: skewX(-20deg);
+            animation: shine 2.8s infinite;
+        }
+
+        .btn-primary::after {
             background: linear-gradient(
                 90deg,
                 rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.35) 50%,
                 rgba(255, 255, 255, 0) 100%
             );
-            transform: skewX(-20deg);
-            animation: shine 2.5s infinite;
+        }
+
+        .btn-secondary::after {
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.45) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
         }
 
         @keyframes shine {
@@ -209,22 +222,29 @@
             100% { left: 150%; }
         }
 
+        /* Botón Primario Oscuro */
+        .btn-primary {
+            background-color: #1d1d1f;
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
         .btn-primary:active {
             background-color: #000000;
             transform: scale(0.97);
         }
 
-        /* Botón Secundario Líquido */
+        /* Botón Secundario Cristalino */
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.35);
             color: #1d1d1f;
             border: 1px solid rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .btn-secondary:active {
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.55);
             transform: scale(0.97);
         }
 
@@ -236,9 +256,9 @@
 
         .terms-title {
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             color: #48484a;
             margin-bottom: 10px;
         }
@@ -248,8 +268,8 @@
         }
 
         li {
-            font-size: 12px;
-            color: #3a3a3c;
+            font-size: 12.5px;
+            color: #1d1d1f;
             font-weight: 600;
             line-height: 1.5;
             margin-bottom: 8px;
@@ -271,16 +291,16 @@
         <!-- Logo Circular -->
         <div class="brand-logo"></div>
 
-        <!-- Tag de escasez visual -->
+        <!-- Tag Estilo iMessage Verde -->
         <div class="header-tag">Cupo Limitado</div>
         
         <h1>¡Ganaste un cupón! 🎉</h1>
         <p class="subtitle">Preséntate a nuestra sucursal con el flyer y aplicas de una vez a nuestra promoción, fren.</p>
 
-        <!-- Sección de cupos en vivo con animación -->
-        <div class="live-counter">
-            <div class="live-dot"></div>
-            <span>Solo quedan 25 cupos disponibles</span>
+        <!-- Recuadro del Contador Vivo Estilo Glass -->
+        <div class="counter-box">
+            <span class="counter-text">Cupos restantes:</span>
+            <span id="liveCounter" class="counter-number">37</span>
         </div>
 
         <div class="promo-box">
@@ -289,7 +309,6 @@
         </div>
 
         <div class="cta-container">
-            <!-- Botón con destello de luz interactivo -->
             <a href="https://www.instagram.com/tecnotradepty/" class="btn btn-primary" target="_blank">
                 👉 Reclamar en Instagram
             </a>
@@ -307,6 +326,29 @@
             </ul>
         </div>
     </div>
+
+    <!-- LÓGICA DEL CONTADOR -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const counterElement = document.getElementById("liveCounter");
+            let currentCupos = 37;
+
+            function updateNumber(newValue) {
+                counterElement.style.transform = "scale(0.8)";
+                counterElement.style.opacity = "0";
+                
+                setTimeout(() => {
+                    counterElement.textContent = newValue;
+                    counterElement.style.transform = "scale(1)";
+                    counterElement.style.opacity = "1";
+                }, 200);
+            }
+
+            setTimeout(() => { currentCupos = 36; updateNumber(currentCupos); }, 2000);  
+            setTimeout(() => { currentCupos = 35; updateNumber(currentCupos); }, 4500);  
+            setTimeout(() => { currentCupos = 34; updateNumber(currentCupos); }, 6500);  
+        });
+    </script>
 
 </body>
 </html>
