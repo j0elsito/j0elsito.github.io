@@ -14,6 +14,11 @@
         }
 
         body {
+            /* REEMPLAZA ESTE ENLACE POR TU IMAGEN DE FONDO */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('https://images.unsplash.com/photo-1616348436168-de43ad0db179?q=80&w=600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             background-color: #000000;
             color: #ffffff;
             display: flex;
@@ -27,24 +32,37 @@
             width: 100%;
             max-width: 390px;
             text-align: center;
-            padding: 40px 24px;
-            background: #1c1c1e;
+            padding: 32px 24px;
+            background: rgba(28, 28, 30, 0.75); /* Fondo translúcido tipo Apple */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            border: 1px solid #2c2c2e;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Contenedor para el Logo o Imagen de marca */
+        .brand-logo {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 16px auto;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: block;
         }
 
         .header-tag {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #8e8e93;
-            margin-bottom: 16px;
+            color: #a1a1a6;
+            margin-bottom: 12px;
         }
 
         h1 {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
             letter-spacing: -0.5px;
             margin-bottom: 8px;
@@ -52,22 +70,22 @@
         }
 
         .subtitle {
-            font-size: 15px;
-            color: #8e8e93;
-            margin-bottom: 32px;
+            font-size: 14px;
+            color: #a1a1a6;
+            margin-bottom: 28px;
             line-height: 1.4;
         }
 
         .promo-box {
-            background: linear-gradient(145deg, #2c2c2e, #1c1c1e);
-            padding: 24px;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 20px;
             border-radius: 16px;
-            margin-bottom: 32px;
-            border: 1px solid #3a3a3c;
+            margin-bottom: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .promo-title {
-            font-size: 36px;
+            font-size: 34px;
             font-weight: 800;
             letter-spacing: -1px;
             color: #ffffff;
@@ -75,10 +93,10 @@
         }
 
         .promo-subtitle {
-            font-size: 14px;
-            color: #0a84ff;
+            font-size: 13px;
+            color: #2f96ff;
             font-weight: 600;
-            margin-top: 8px;
+            margin-top: 6px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -87,16 +105,16 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
 
         .btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 52px;
+            height: 50px;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.2s ease;
@@ -114,19 +132,19 @@
 
         .btn-secondary {
             background-color: transparent;
-            color: #0a84ff;
-            border: 1px solid #3a3a3c;
+            color: #2f96ff;
+            border: 1px solid rgba(47, 150, 255, 0.3);
         }
 
         .btn-secondary:active {
-            background-color: rgba(10, 132, 255, 0.1);
+            background-color: rgba(47, 150, 255, 0.1);
             transform: scale(0.98);
         }
 
         .terms-box {
             text-align: left;
-            border-top: 1px solid #2c2c2e;
-            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 16px;
         }
 
         .terms-title {
@@ -144,7 +162,7 @@
 
         li {
             font-size: 12px;
-            color: #636366;
+            color: #86868b;
             line-height: 1.5;
             margin-bottom: 6px;
             position: relative;
@@ -155,16 +173,19 @@
             content: "•";
             position: absolute;
             left: 0;
-            color: #48484a;
+            color: #424245;
         }
     </style>
 </head>
 <body>
 
     <div class="card">
+        <!-- REEMPLAZA ESTE ENLACE POR LA FOTO DE TU LOGO -->
+        <img class="brand-logo" src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=150&auto=format&fit=crop" alt="Logo">
+
         <div class="header-tag">Beneficio Exclusivo</div>
         <h1>¡Felicidades!</h1>
-        <p class="subtitle">Has recibido un cupón especial para canjear en nuestra sucursal al escanear tu flyer de la calle.</p>
+        <p class="subtitle">Has recibido un cupón especial para canjear en nuestra sucursal al escanear tu flyer.</p>
 
         <div class="promo-box">
             <div class="promo-title">15% OFF</div>
@@ -172,11 +193,9 @@
         </div>
 
         <div class="cta-container">
-            <!-- REPLAZA EL LINK CON TU INSTAGRAM REAL -->
             <a href="https://www.instagram.com/tecnotradepty/" class="btn btn-primary" target="_blank">
                 👉 Reclamar en Instagram
             </a>
-            <!-- REPLAZA EL LINK CON TU UBICACIÓN DE GOOGLE MAPS REAL -->
             <a href="https://maps.app.goo.gl/2hAhZcQzJXttbKuZA" class="btn btn-secondary" target="_blank">
                 📍 Cómo llegar al local
             </a>
