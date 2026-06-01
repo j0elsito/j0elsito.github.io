@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beneficio Exclusivo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 390px;
+            text-align: center;
+            padding: 40px 24px;
+            background: #1c1c1e;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2c2c2e;
+        }
+
+        .header-tag {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #8e8e93;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #8e8e93;
+            margin-bottom: 32px;
+            line-height: 1.4;
+        }
+
+        .promo-box {
+            background: linear-gradient(145deg, #2c2c2e, #1c1c1e);
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            border: 1px solid #3a3a3c;
+        }
+
+        .promo-title {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .promo-subtitle {
+            font-size: 14px;
+            color: #0a84ff;
+            font-weight: 600;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 52px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .btn-primary:active {
+            background-color: #e5e5ea;
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #0a84ff;
+            border: 1px solid #3a3a3c;
+        }
+
+        .btn-secondary:active {
+            background-color: rgba(10, 132, 255, 0.1);
+            transform: scale(0.98);
+        }
+
+        .terms-box {
+            text-align: left;
+            border-top: 1px solid #2c2c2e;
+            padding-top: 20px;
+        }
+
+        .terms-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8e8e93;
+            margin-bottom: 8px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            font-size: 12px;
+            color: #636366;
+            line-height: 1.5;
+            margin-bottom: 6px;
+            position: relative;
+            padding-left: 12px;
+        }
+
+        li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #48484a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="header-tag">Beneficio Exclusivo</div>
+        <h1>¡Felicidades!</h1>
+        <p class="subtitle">Has recibido un cupón especial para canjear en nuestra sucursal al escanear tu flyer de la calle.</p>
+
+        <div class="promo-box">
+            <div class="promo-title">15% OFF</div>
+            <div class="promo-subtitle">En Reparación de Pantalla y Tapa Trasera</div>
+        </div>
+
+        <div class="cta-container">
+            <!-- REPLAZA EL LINK CON TU INSTAGRAM REAL -->
+            <a href="https://instagram.com/TU_USUARIO_AQUI" class="btn btn-primary" target="_blank">
+                👉 Reclamar en Instagram
+            </a>
+            <!-- REPLAZA EL LINK CON TU UBICACIÓN DE GOOGLE MAPS REAL -->
+            <a href="https://maps.google.com/?q=TU_UBICACION_AQUI" class="btn btn-secondary" target="_blank">
+                📍 Cómo llegar al local
+            </a>
+        </div>
+
+        <div class="terms-box">
+            <div class="terms-title">Condiciones de la promoción</div>
+            <ul>
+                <li>Promoción limitada válida hasta el 15 de junio de 2026.</li>
+                <li>Exclusivo para personas que siguen nuestra cuenta de Instagram.</li>
+                <li>No aplica para smartwatches ni audífonos.</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
