@@ -7,11 +7,12 @@
     <style>
         :root {
             --text-color: #ffffff;
-            --accent-color: #A2C4ECE6; /* Azul claro sutil para textos secundarios */
-            --card-bg: rgba(0, 0, 0, 0.65); /* Fondo oscuro translúcido para las tarjetas */
+            --accent-color: #A2C4ECE6;
+            --card-bg: rgba(0, 0, 0, 0.65);
             --border-color: rgba(255, 255, 255, 0.15);
             --whatsapp-color: #25D366;
             --instagram-color: #4A5568;
+            --promo-color: #38bdf8; /* Color azul celeste destacado para el gancho comercial */
         }
 
         body {
@@ -21,7 +22,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
             
-            /* Configuración de tu imagen de fondo */
             background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
             background-size: cover;
             background-position: center;
@@ -32,19 +32,40 @@
         header {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px 20px 20px;
+            padding: 30px 20px;
             text-align: center;
             border-bottom: 1px solid var(--border-color);
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .brand-logo {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .logo {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 700;
             letter-spacing: -0.5px;
-            margin: 0 0 8px 0;
+            margin: 0;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
@@ -74,325 +95,3 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
-
-        .product-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-        }
-
-        .product-image-placeholder {
-            width: 100%;
-            height: 280px;
-            background-color: rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-color);
-            font-size: 14px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .product-info {
-            padding: 20px;
-        }
-
-        .product-sku {
-            font-size: 11px;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-        }
-
-        .product-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin: 0 0 8px 0;
-        }
-
-        .product-price {
-            font-size: 16px;
-            font-weight: 500;
-            color: #ffffff;
-        }
-
-        /* Ventana Emergente (Modal de Producto) */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-content {
-            background-color: rgba(10, 15, 25, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            width: 90%;
-            max-width: 500px;
-            border-radius: 24px;
-            padding: 32px;
-            position: relative;
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: #ffffff;
-            font-size: 24px;
-            cursor: pointer;
-            opacity: 0.7;
-        }
-
-        .close-btn:hover {
-            opacity: 1;
-        }
-
-        .modal-title {
-            font-size: 22px;
-            font-weight: 600;
-            margin: 0 0 8px 0;
-        }
-
-        .modal-price {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #ffffff;
-        }
-
-        .modal-description {
-            font-size: 14px;
-            color: var(--accent-color);
-            line-height: 1.5;
-            margin-bottom: 24px;
-        }
-
-        /* Botones de Acción */
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .btn {
-            padding: 14px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
-            text-align: center;
-            display: block;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.2s ease, transform 0.1s ease;
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        .btn-whatsapp {
-            background-color: var(--whatsapp-color);
-            color: white;
-        }
-
-        .btn-whatsapp:hover {
-            background-color: #20ba5a;
-        }
-
-        .btn-instagram {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-instagram:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Alerta flotante de copiado */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #0a0f19;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 14px;
-            z-index: 2000;
-            display: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="logo">TecnoTrade</div>
-        <p class="subtitle">Catálogo de Covers Premium</p>
-    </header>
-
-    <div class="catalog-container" id="catalog">
-        </div>
-
-    <div class="modal-overlay" id="product-modal" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="close-btn" onclick="clearHash()">&times;</button>
-            <div id="modal-sku" class="product-sku">SKU</div>
-            <h2 id="modal-title" class="modal-title">Nombre del Producto</h2>
-            <div id="modal-price" class="modal-price">$0.00</div>
-            <p id="modal-description" class="modal-description">Descripción detallada.</p>
-            
-            <div class="action-buttons">
-                <a href="#" id="btn-wa" target="_blank" class="btn btn-whatsapp">Pedir por WhatsApp</a>
-                <button id="btn-ig" class="btn btn-instagram">Copiar SKU e ir a Instagram</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="toast" id="toast-alert">Código de producto copiado al portapapeles</div>
-
-    <script>
-        // CONFIGURACIÓN DE TU NEGOCIO
-        const CONFIG = {
-            whatsappPhone: "50760000000", // Cambia por tu número real
-            instagramUser: "tecnotradepty" // Vinculado a tu usuario de Instagram
-        };
-
-        // BASE DE DATOS DE PRODUCTOS
-        const products = [
-            {
-                id: "f5666",
-                title: "Silicone Case MagSafe",
-                price: "$19.99",
-                sku: "#COV-F5666",
-                description: "Cover de silicona premium con tacto suave, interior de microfibra para evitar rayones y anillo MagSafe magnético integrado perfectamente compatible con carga inalámbrica."
-            },
-            {
-                id: "a3421",
-                title: "Leather Luxury Edition",
-                price: "$24.99",
-                sku: "#COV-A3421",
-                description: "Diseño elegante en cuero sintético de alta resistencia. Bordes elevados para proteger la cámara y botones de aluminio anodizado que ofrecen una pulsación premium."
-            },
-            {
-                id: "x9812",
-                title: "Crystal Clear Armor",
-                price: "$14.99",
-                sku: "#COV-X9812",
-                description: "Transparencia absoluta con tecnología anti-amarilleo. Esquinas reforzadas con colchón de aire para soportar impactos severos sin perder la estética original de tu equipo."
-            }
-        ];
-
-        // 1. Renderizar los productos en la cuadrícula
-        const catalogContainer = document.getElementById('catalog');
-        products.forEach(product => {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.setAttribute('onclick', `location.hash = 'producto-${product.id}'`);
-            card.innerHTML = `
-                <div class="product-image-placeholder">📱 Imagen de Muestra</div>
-                <div class="product-info">
-                    <div class="product-sku">${product.sku}</div>
-                    <h3 class="product-title">${product.title}</h3>
-                    <div class="product-price">${product.price}</div>
-                </div>
-            `;
-            catalogContainer.appendChild(card);
-        });
-
-        // 2. Manejar la apertura del Modal según la URL (#producto-id)
-        const modal = document.getElementById('product-modal');
-        
-        function checkHash() {
-            const hash = window.location.hash;
-            if (hash.startsWith('#producto-')) {
-                const productId = hash.replace('#producto-', '');
-                const product = products.find(p => p.id === productId);
-                
-                if (product) {
-                    openModal(product);
-                }
-            } else {
-                modal.classList.remove('active');
-            }
-        }
-
-        function openModal(product) {
-            document.getElementById('modal-sku').innerText = product.sku;
-            document.getElementById('modal-title').innerText = product.title;
-            document.getElementById('modal-price').innerText = product.price;
-            document.getElementById('modal-description').innerText = product.description;
-
-            // Configurar el enlace dinámico de WhatsApp
-            const message = `Hola TecnoTrade, estoy interesado en el producto ${product.title} (${product.sku})`;
-            const encodedMessage = encodeURIComponent(message);
-            document.getElementById('btn-wa').href = `https://wa.me/${CONFIG.whatsappPhone}?text=${encodedMessage}`;
-
-            // Configurar la acción del botón de Instagram
-            const btnIg = document.getElementById('btn-ig');
-            btnIg.onclick = function() {
-                navigator.clipboard.writeText(`Interesado en el producto ${product.sku}`).then(() => {
-                    showToast();
-                    setTimeout(() => {
-                        window.open(`https://instagram.com/${CONFIG.instagramUser}`, '_blank');
-                    }, 1200);
-                });
-            };
-
-            modal.classList.add('active');
-        }
-
-        function closeModal(event) {
-            if(event.target === modal) {
-                clearHash();
-            }
-        }
-
-        function clearHash() {
-            window.location.hash = '';
-        }
-
-        function showToast() {
-            const toast = document.getElementById('toast-alert');
-            toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 2500);
-        }
-
-        window.addEventListener('hashchange', checkHash);
-        window.addEventListener('load', checkHash);
-    </script>
-</body>
-</html>
