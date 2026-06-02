@@ -143,15 +143,34 @@
         }
 
         /* ICONOS VECTORES AJUSTADOS AL NUEVO TAMAÑO */
-        .vector-icon {
-            position: relative;
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid rgba(255,255,255,0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform: scale(0.7); /* Reducidos para que quepan perfectos en el cuadrado */
-        }
+        /* REEMPLAZA TU CLASE .vector-icon POR ESTA */
+.vector-icon {
+    position: relative;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255,255,255,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0.7);
+    /* Animación infinita de levitación */
+    animation: floatAmbient 4s ease-in-out infinite;
+}
+
+/* Retrasos para que cada icono flote a su propio ritmo */
+.card-buy .vector-icon { animation-delay: 0s; }
+.card-sell .vector-icon { animation-delay: 1s; }
+.card-repair .vector-icon { animation-delay: 2s; }
+.card-laptop .vector-icon { animation-delay: 3s; }
+
+/* El motor del movimiento */
+@keyframes floatAmbient {
+    0% { transform: scale(0.7) translateY(0px); }
+    50% { transform: scale(0.7) translateY(-8px); }
+    100% { transform: scale(0.7) translateY(0px); }
+}
+
+
+
 
         /* Forma 1: Teléfono */
         .v-phone { width: 55px; height: 100px; border-radius: 14px; }
