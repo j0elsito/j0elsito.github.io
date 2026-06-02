@@ -17,35 +17,32 @@
             --border-glass: rgba(255, 255, 255, 0.1);
         }
 
-        html { width: 100%; height: 100%; overflow: hidden; }
-
         body {
             margin: 0; padding: 0;
-            width: 100%; height: 100%;
+            min-height: 100vh;
             background-color: var(--bg-dark);
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
-            overflow: hidden;
-            overscroll-behavior: none;
+            overflow-x: hidden;
+            overscroll-behavior: none; /* Previene el efecto elástico al llegar al borde */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            perspective: 1500px; /* Profundidad 3D aumentada */
         }
 
-        /* 1. FONDO VIVO: METAL LÍQUIDO + NEBLINA EN MOVIMIENTO */
+        /* 1. FONDO SEGURO (Sin romper el render de Android) */
         .motion-bg-container {
             position: fixed;
-            top: -5%; left: -5%; width: 110%; height: 110%;
+            top: -20px; left: -20px; right: -20px; bottom: -20px;
             z-index: -3;
             background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
             background-size: cover;
             background-position: center;
-            filter: contrast(1.2) brightness(0.35) blur(3px);
+            filter: contrast(1.15) brightness(0.35) blur(3px);
             pointer-events: none;
-            animation: bgBreathe 10s infinite alternate ease-in-out;
+            animation: bgBreathe 12s infinite alternate ease-in-out;
         }
 
         /* Capa de luces cambiantes superpuesta al metal */
@@ -62,9 +59,9 @@
         /* 2. HEADER CON PULSO Y JERGA PANAMEÑA */
         .header-section {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             z-index: 10;
-            margin-top: 20px;
+            margin-top: 30px;
             animation: dropDownLogo 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
@@ -96,14 +93,15 @@
         }
         .panama-slang span { color: var(--neon-cyan); font-weight: 700; }
 
-        /* 3. CUADRÍCULA 2x2 EXAGERADA */
+        /* 3. CUADRÍCULA 2x2 EXAGERADA (Motor 3D contenido aquí) */
         .grid-wrapper {
             width: 90%; max-width: 480px;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
             z-index: 10;
-            padding-bottom: 90px;
+            padding-bottom: 100px; /* Espacio para las redes sociales */
+            perspective: 1200px; /* Profundidad 3D solo en la cuadrícula */
         }
 
         /* TARJETAS CON EFECTO SHIMMER Y 3D */
@@ -155,7 +153,6 @@
             display: flex; justify-content: center; align-items: center;
             transform: scale(0.7);
             box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            /* Cada ícono levita a su propio ritmo */
             animation: floatAmbient 4s ease-in-out infinite alternate;
         }
         
@@ -218,3 +215,126 @@
         }
         
         .social-btn img { width: 20px; filter: invert(1); opacity: 0.8; }
+        .social-btn:active { transform: scale(0.85); background: rgba(255,255,255,0.2); }
+
+        /* Efecto Radar para la Ubicación */
+        .location-btn { position: relative; border-color: rgba(0, 240, 255, 0.3); }
+        .location-btn::after {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            border-radius: 50%; border: 1px solid var(--neon-blue);
+            animation: radarPulse 2s infinite;
+        }
+        .location-btn img { filter: invert(70%) sepia(50%) saturate(3000%) hue-rotate(150deg) brightness(100%); opacity: 1; }
+
+        /* TODAS LAS ANIMACIONES GRAFICAS */
+        @keyframes bgBreathe { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+        @keyframes auroraSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); } 100% { box-shadow: 0 0 35px rgba(0, 240, 255, 0.6); } }
+        @keyframes dropDownLogo { from { opacity: 0; transform: translateY(-40px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        
+        /* Entrada agresiva y 3D (Arreglada para que no colapse) */
+        @keyframes card3DEntrance { 
+            0% { opacity: 0; transform: translateY(80px) rotateX(40deg) scale(0.8); } 
+            100% { opacity: 1; transform: translateY(0) rotateX(0) scale(1); } 
+        }
+        
+        @keyframes lightSweep { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+        @keyframes floatAmbient { 0% { transform: scale(0.7) translateY(0px); } 100% { transform: scale(0.7) translateY(-12px); } }
+        @keyframes fadeInUP { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes radarPulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
+
+        /* Destello al cambiar de página */
+        .screen-flash {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; z-index: 9999; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease-out;
+        }
+        .flash-active { opacity: 1 !important; }
+
+    </style>
+</head>
+<body>
+
+    <div class="screen-flash" id="flash-fx"></div>
+    <div class="motion-bg-container"></div>
+    <div class="dynamic-aurora"></div>
+
+    <div class="header-section">
+        <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" alt="TecnoTrade">
+        <h1>TecnoTrade</h1>
+        <!-- JERGA PANAMEÑA PREMIUM -->
+        <p class="panama-slang">Bienvenido al Hub. Toca una categoría y <span>resolvemos tu vuelta de una.</span></p>
+    </div>
+
+    <div class="grid-wrapper">
+        
+        <a href="catalogo.html" class="glass-card card-buy nav-trigger">
+            <div class="image-visual-space">
+                <div class="vector-icon v-phone"></div>
+            </div>
+            <h2 class="card-title">Comprar<br>Equipo</h2>
+        </a>
+
+        <a href="vender.html" class="glass-card card-sell nav-trigger">
+            <div class="image-visual-space">
+                <div class="vector-icon v-cash"></div>
+            </div>
+            <h2 class="card-title">Vender<br>Equipo</h2>
+        </a>
+
+        <a href="reparar.html" class="glass-card card-repair nav-trigger">
+            <div class="image-visual-space">
+                <div class="vector-icon v-repair"></div>
+            </div>
+            <h2 class="card-title">Servicio<br>Técnico</h2>
+        </a>
+
+        <a href="laptops.html" class="glass-card card-laptop nav-trigger">
+            <div class="image-visual-space">
+                <div class="vector-icon v-laptop"></div>
+            </div>
+            <h2 class="card-title">Laptops &<br>Sistemas</h2>
+        </a>
+
+    </div>
+
+    <!-- BOTONES INFERIORES -->
+    <div class="social-bar">
+        <a href="https://wa.me/50767966691" target="_blank" class="social-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WhatsApp">
+        </a>
+        
+        <!-- BOTÓN DE LOCALIZACIÓN (Latido Radar) -->
+        <a href="https://maps.app.goo.gl/search/Panama" target="_blank" class="social-btn location-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" alt="Ubicación">
+        </a>
+
+        <a href="https://www.instagram.com/tecnotradepty/" target="_blank" class="social-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+        </a>
+    </div>
+
+    <!-- SCRIPT DE NAVEGACIÓN Y FEEDBACK TÁCTIL -->
+    <script>
+        const navTriggers = document.querySelectorAll('.nav-trigger');
+        const flashFx = document.getElementById('flash-fx');
+
+        navTriggers.forEach(card => {
+            card.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetUrl = this.getAttribute('href');
+                
+                flashFx.classList.add('flash-active');
+                
+                setTimeout(() => {
+                    flashFx.classList.remove('flash-active');
+                }, 100);
+
+                setTimeout(() => {
+                    window.location.assign(targetUrl);
+                }, 350);
+            });
+        });
+    </script>
+</body>
+</html>
