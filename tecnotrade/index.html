@@ -14,118 +14,125 @@
             --neon-purple: #bd00ff;
             --neon-green: #39ff14;
             --neon-cyan: #00ffcc;
-            --card-glass: rgba(255, 255, 255, 0.03);
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --nav-bg: rgba(10, 10, 15, 0.95);
+            /* Colores de cristal más oscuros para contrastar con tu fondo plateado */
+            --card-glass: rgba(10, 15, 25, 0.45);
+            --border-glass: rgba(255, 255, 255, 0.12);
         }
 
-        /* 1. RESET Y FONDO BASE */
+        /* 1. RESET Y SCROLL NATURAL (Arregla el bug de que no bajaba) */
         html, body {
-            width: 100%; height: 100%; margin: 0; padding: 0;
-            overflow: hidden; 
-            background-color: var(--bg-dark); 
+            margin: 0; padding: 0;
+            background-color: var(--bg-dark);
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            overflow-y: auto; /* Scroll habilitado */
         }
 
-        /* 2. CAPA DE IMAGEN INTERACTIVA (ENLACE ABSOLUTO 100% SEGURO) */
+        /* 2. FONDOS INTERACTIVOS (Con tratamiento cinematográfico) */
         .motion-bg-container {
-            position: fixed; top: -20px; left: -20px; right: -20px; bottom: -20px; 
-            z-index: 1; /* Capa sobre el fondo negro */
+            position: fixed; top: -5%; left: -5%; width: 110%; height: 110%; 
+            z-index: -3; 
             background-image: url('https://j0elsito.github.io/chatliquidmetal1.png');
             background-size: cover; background-position: center; 
-            filter: contrast(1.1) brightness(0.75); /* Brillo ajustado para que luzca espectacular */
+            /* Se añade blur y se oscurece un poco para que el texto blanco resalte */
+            filter: brightness(0.5) saturate(1.2) blur(3px); 
             pointer-events: none;
-            animation: bgBreathe 15s infinite alternate ease-in-out;
+            animation: bgBreathe 20s infinite alternate ease-in-out;
         }
         @keyframes bgBreathe { 
-            0% { transform: scale(1); filter: contrast(1.1) brightness(0.65); } 
-            100% { transform: scale(1.05); filter: contrast(1.15) brightness(0.85); } 
+            0% { transform: scale(1); filter: brightness(0.4) saturate(1.2) blur(3px); } 
+            100% { transform: scale(1.05); filter: brightness(0.6) saturate(1.3) blur(1px); } 
         }
 
-        /* 3. CAPA DE AURORAS */
+        /* Viñeta oscura para enfocar la vista en el centro */
+        .bg-vignette {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background: radial-gradient(circle at center top, rgba(3,5,9,0.1) 0%, rgba(3,5,9,0.9) 100%);
+            pointer-events: none;
+        }
+
         .dynamic-aurora {
-            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; 
-            z-index: 2; /* Sobre la imagen */
-            background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.05), transparent 60%),
-                        radial-gradient(circle at 80% 20%, rgba(189, 0, 255, 0.05), transparent 50%);
+            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; z-index: -1;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 204, 0.05), transparent 60%),
+                        radial-gradient(circle at 80% 20%, rgba(0, 240, 255, 0.05), transparent 50%);
             animation: auroraSpin 25s infinite linear; pointer-events: none;
         }
         @keyframes auroraSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* 4. CONTENEDOR PRINCIPAL (TODO EL UI) */
-        .app-container {
-            width: 100%; height: 100vh; overflow-y: auto; overflow-x: hidden;
-            padding-bottom: 120px; scrollbar-width: none; scroll-behavior: smooth;
-            position: relative; z-index: 10; /* Siempre encima de los fondos */
-        }
-        .app-container::-webkit-scrollbar { display: none; }
-
-        /* OVERLAY TRANSICIÓN SUAVE */
+        /* OVERLAY TRANSICIÓN */
         .page-transition-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-dark); z-index: 99999;
             transition: opacity 0.4s ease-in-out; pointer-events: none; opacity: 1;
         }
 
+        /* 3. CONTENEDOR PRINCIPAL CENTRADO (Para que se vea bien en PC) */
+        .app-wrapper {
+            max-width: 480px; /* Ancho máximo de App */
+            margin: 0 auto;   /* Centrado en pantalla */
+            padding-bottom: 120px; /* Espacio para la barra flotante */
+            position: relative;
+            z-index: 10;
+        }
+
         /* TOP NAVBAR */
         .top-navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 16px 20px; position: sticky; top: 0; z-index: 100;
-            background: linear-gradient(to bottom, rgba(3,5,9,0.95) 0%, rgba(3,5,9,0.7) 70%, rgba(3,5,9,0) 100%);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            transform: translateY(-20px); opacity: 0; animation: slideDown 0.6s 0.2s forwards ease-out;
+            background: linear-gradient(to bottom, rgba(3,5,9,0.95) 0%, rgba(3,5,9,0.5) 80%, transparent 100%);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         }
-        @keyframes slideDown { to { transform: translateY(0); opacity: 1; } }
-        
         .nav-icon { width: 26px; height: 26px; fill: #fff; opacity: 0.9; cursor: pointer; transition: transform 0.2s; }
         .nav-icon:active { transform: scale(0.8); }
         .nav-center { display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .nav-logo-img { width: 34px; height: 34px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
-        .logo-text { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; margin: 0; }
+        .nav-logo-img { width: 32px; height: 32px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
+        .logo-text { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; margin: 0; }
         .logo-text span { color: var(--neon-cyan); }
 
         /* BUSCADOR INTERACTIVO */
-        .search-wrapper { position: relative; padding: 15px 20px; margin-bottom: 5px; z-index: 90; opacity: 0; animation: fadeIn 0.8s 0.4s forwards; }
+        .search-wrapper { position: relative; padding: 10px 20px 20px; z-index: 90; }
         .search-box {
             display: flex; align-items: center; gap: 12px;
-            background: rgba(255,255,255,0.04); border: 1px solid var(--border-glass);
-            border-radius: 18px; padding: 14px 18px; backdrop-filter: blur(10px);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--card-glass); border: 1px solid var(--border-glass);
+            border-radius: 20px; padding: 14px 18px; 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
-        .search-box:focus-within { border-color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0, 255, 204, 0.15); background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+        .search-box:focus-within { border-color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0, 255, 204, 0.15); transform: translateY(-2px); }
         .search-box svg { width: 20px; height: 20px; fill: var(--text-muted); transition: fill 0.3s; }
         .search-box:focus-within svg { fill: var(--neon-cyan); }
         .search-box input { background: transparent; border: none; color: #fff; width: 100%; font-size: 15px; font-weight: 500; outline: none; }
-        .search-box input::placeholder { color: var(--text-muted); font-weight: 400; }
+        .search-box input::placeholder { color: var(--text-muted); }
         
         .suggestions-dropdown {
-            position: absolute; top: calc(100% - 10px); left: 20px; right: 20px;
-            background: rgba(10, 10, 15, 0.95); border: 1px solid var(--border-glass);
-            border-radius: 16px; padding: 8px 0; backdrop-filter: blur(20px);
+            position: absolute; top: calc(100% - 15px); left: 20px; right: 20px;
+            background: rgba(10, 15, 25, 0.95); border: 1px solid var(--border-glass);
+            border-radius: 16px; padding: 8px 0; backdrop-filter: blur(25px);
             max-height: 280px; overflow-y: auto; display: none;
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
         .suggestion-item {
             padding: 14px 20px; font-size: 14px; font-weight: 600; cursor: pointer; color: #e2e8f0;
             display: flex; justify-content: space-between; align-items: center;
-            transition: background 0.2s, padding-left 0.2s;
+            transition: all 0.2s; border-bottom: 1px solid rgba(255,255,255,0.03);
         }
+        .suggestion-item:last-child { border-bottom: none; }
         .suggestion-item:hover, .suggestion-item:active { background: rgba(0, 255, 204, 0.1); color: var(--neon-cyan); padding-left: 26px; }
         .suggestion-arrow { font-size: 10px; color: var(--text-muted); transition: transform 0.2s; }
         .suggestion-item:hover .suggestion-arrow { color: var(--neon-cyan); transform: translateX(5px); }
 
         /* HERO BANNER */
-        .hero-section { padding: 0 20px; margin-bottom: 25px; opacity: 0; animation: fadeInUp 0.8s 0.5s forwards; }
+        .hero-section { padding: 0 20px; margin-bottom: 25px; }
         .hero-banner {
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%);
-            border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 28px; padding: 28px 24px; position: relative; overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15) 0%, rgba(0, 0, 0, 0.6) 100%);
+            border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 28px; padding: 28px 24px; position: relative; overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5); backdrop-filter: blur(15px);
         }
         .hero-tag { background: #fff; color: #000; font-size: 10px; font-weight: 800; padding: 5px 12px; border-radius: 12px; margin-bottom: 14px; text-transform: uppercase; display: inline-block; box-shadow: 0 0 15px rgba(255,255,255,0.3); }
         .hero-title { font-size: 26px; font-weight: 900; margin: 0 0 8px 0; letter-spacing: -0.5px; }
-        .hero-subtitle { font-size: 13px; color: var(--text-muted); margin: 0 0 24px 0; max-width: 65%; line-height: 1.4; }
+        .hero-subtitle { font-size: 13px; color: #b0b0b5; margin: 0 0 24px 0; max-width: 65%; line-height: 1.4; }
         .hero-btn { 
             background: var(--text-main); color: var(--bg-dark); border: none; border-radius: 20px; 
             padding: 12px 24px; font-size: 13px; font-weight: 800; display: inline-block; 
@@ -135,78 +142,81 @@
         
         .hero-device {
             position: absolute; right: -25px; bottom: -40px; width: 140px; height: 190px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.01));
-            border: 2px solid rgba(255,255,255,0.2); border-radius: 28px;
-            box-shadow: -15px -15px 40px rgba(0,0,0,0.5); transform: rotate(-8deg);
+            background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.02));
+            border: 2px solid rgba(255,255,255,0.25); border-radius: 28px;
+            box-shadow: -15px -15px 40px rgba(0,0,0,0.6); transform: rotate(-8deg);
         }
-        .hero-device::after { content: ''; position: absolute; top: 18px; right: 18px; width: 35px; height: 35px; border-radius: 10px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); }
+        .hero-device::after { content: ''; position: absolute; top: 18px; right: 18px; width: 35px; height: 35px; border-radius: 10px; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.15); }
 
         /* GRID CATEGORÍAS 2x2 */
-        .section-title { font-size: 18px; font-weight: 800; padding: 0 20px; margin-bottom: 16px; opacity: 0; animation: fadeIn 0.8s 0.6s forwards; }
-        .grid-wrapper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 20px; opacity: 0; animation: fadeInUp 0.8s 0.7s forwards; }
+        .section-title { font-size: 18px; font-weight: 800; padding: 0 20px; margin-bottom: 16px; }
+        .grid-wrapper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 20px; }
         
         .glass-card {
             background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 24px;
             padding: 20px 16px; text-decoration: none; color: var(--text-main); display: flex; flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(20px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            transition: all 0.2s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        .glass-card:active { transform: scale(0.93); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+        .glass-card:active { transform: scale(0.95); background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); }
 
-        /* VECTORES CSS PUROS DE ALTA CALIDAD */
-        .image-visual-space { width: 100%; height: 75px; background: rgba(255,255,255,0.02); border-radius: 16px; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; }
+        /* VECTORES CSS PUROS */
+        .image-visual-space { width: 100%; height: 75px; background: rgba(255,255,255,0.03); border-radius: 16px; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; }
         .vector-icon { position: relative; display: flex; justify-content: center; align-items: center; transform: scale(0.7); }
         
-        .v-phone { width: 55px; height: 100px; border-radius: 14px; background: rgba(0, 0, 0, 0.5); border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .v-phone::before { content:''; position:absolute; top:8px; left:8px; width:15px; height:25px; border:2px solid rgba(255,255,255,0.15); border-radius:6px; }
+        .v-phone { width: 55px; height: 100px; border-radius: 14px; background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255,255,255,0.3); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .v-phone::before { content:''; position:absolute; top:8px; left:8px; width:15px; height:25px; border:2px solid rgba(255,255,255,0.2); border-radius:6px; }
         
-        .v-cash { width: 85px; height: 50px; border-radius: 10px; background: rgba(0, 0, 0, 0.5); border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .v-cash::before { content:'$'; position:absolute; font-size: 22px; font-weight: 900; color: rgba(255,255,255,0.5); }
-        .v-cash::after { content:''; position:absolute; width: 34px; height: 34px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 50%; }
+        .v-cash { width: 85px; height: 50px; border-radius: 10px; background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255,255,255,0.3); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .v-cash::before { content:'$'; position:absolute; font-size: 22px; font-weight: 900; color: rgba(255,255,255,0.6); }
+        .v-cash::after { content:''; position:absolute; width: 34px; height: 34px; border: 2px dashed rgba(255,255,255,0.4); border-radius: 50%; }
 
-        .v-repair { width: 56px; height: 56px; border-radius: 50%; background: rgba(0, 0, 0, 0.5); border: 4px dashed rgba(255,255,255,0.2); box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.5); animation: rotateSlow 10s linear infinite; }
-        .v-repair::after { content:''; position:absolute; width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); }
+        .v-repair { width: 56px; height: 56px; border-radius: 50%; background: rgba(0, 0, 0, 0.6); border: 4px dashed rgba(255,255,255,0.3); box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.5); animation: rotateSlow 10s linear infinite; }
+        .v-repair::after { content:''; position:absolute; width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.4); }
         @keyframes rotateSlow { 100% { transform: scale(0.7) rotate(360deg); } }
 
-        .v-laptop { width: 90px; height: 55px; border-radius: 8px 8px 0 0; background: rgba(0, 0, 0, 0.5); border: 2px solid rgba(255,255,255,0.2); border-bottom: 8px solid rgba(255,255,255,0.4); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .v-laptop::before { content:''; position:absolute; top: 6px; width: 74px; height: 38px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; background: rgba(255,255,255,0.02); }
+        .v-laptop { width: 90px; height: 55px; border-radius: 8px 8px 0 0; background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255,255,255,0.3); border-bottom: 8px solid rgba(255,255,255,0.5); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .v-laptop::before { content:''; position:absolute; top: 6px; width: 74px; height: 38px; border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; background: rgba(255,255,255,0.05); }
 
         .card-title { font-size: 15px; font-weight: 800; margin: 0; text-align: center; letter-spacing: -0.2px; }
 
-        /* BOTTOM NAVBAR FIJA */
+        /* 4. BOTTOM NAVBAR FLOTANTE (ESTILO PÍLDORA) */
         .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background: var(--nav-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-around; padding: 14px 0 24px 0; 
-            z-index: 10000; transform: translateY(100%); animation: slideUp 0.6s 0.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
+            position: fixed; 
+            bottom: 20px; /* Despegada del fondo */
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 90%; 
+            max-width: 420px; /* Control de tamaño en PC */
+            background: rgba(10, 15, 25, 0.85); /* Cristal más oscuro */
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 35px; /* Bordes totalmente redondeados */
+            display: flex; justify-content: space-around; 
+            padding: 12px 10px; 
+            z-index: 10000; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
         }
-        @keyframes slideUp { to { transform: translateY(0); } }
 
-        .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; color: var(--text-muted); position: relative; transition: color 0.2s; }
-        .nav-tab.active { color: var(--neon-cyan); }
-        .nav-tab svg { width: 22px; height: 22px; fill: currentColor; transition: transform 0.2s; }
-        .nav-tab:active svg { transform: scale(0.85); }
+        .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--text-muted); position: relative; transition: all 0.3s; }
+        .nav-tab.active { color: var(--neon-cyan); transform: translateY(-3px); } /* Sube ligeramente al estar activa */
+        .nav-tab svg { width: 22px; height: 22px; fill: currentColor; }
         .nav-label { font-size: 10px; font-weight: 700; }
         
-        .cart-badge { position: absolute; top: -5px; right: -8px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800; padding: 2px 5px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-dark); box-shadow: 0 2px 5px rgba(255,59,48,0.4); }
-
-        /* UTILIDADES DE ANIMACIÓN */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .cart-badge { position: absolute; top: -6px; right: -6px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800; padding: 3px 6px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(255,59,48,0.5); }
 
     </style>
 </head>
 <body>
 
-    <!-- OVERLAY PARA TRANSICIÓN SUAVE (Efecto SPA) -->
     <div class="page-transition-overlay" id="pageTransition"></div>
 
-    <!-- AQUÍ ESTÁ EL FONDO CON RUTA DIRECTA AL REPOSITORIO -->
     <div class="motion-bg-container"></div>
+    <div class="bg-vignette"></div>
     <div class="dynamic-aurora"></div>
 
-    <div class="app-container">
+    <div class="app-wrapper">
         
-        <!-- TOP NAVBAR -->
         <header class="top-navbar">
             <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
             <div class="nav-center">
@@ -216,7 +226,6 @@
             <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         </header>
 
-        <!-- BUSCADOR INTELIGENTE -->
         <div class="search-wrapper">
             <div class="search-box">
                 <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
@@ -225,7 +234,6 @@
             <div id="suggestionsBox" class="suggestions-dropdown"></div>
         </div>
 
-        <!-- HERO BANNER -->
         <section class="hero-section">
             <div class="hero-banner">
                 <span class="hero-tag">Destacado</span>
@@ -236,7 +244,6 @@
             </div>
         </section>
 
-        <!-- CATEGORÍAS 2x2 -->
         <div class="section-title">Categorías</div>
         <div class="grid-wrapper">
             <a href="catalogo.html" class="glass-card navigate-link">
@@ -257,9 +264,8 @@
             </a>
         </div>
         
-    </div> <!-- Fin app-container -->
+    </div>
 
-    <!-- BOTTOM NAVBAR -->
     <nav class="bottom-nav">
         <a href="index.html" class="nav-tab active">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -280,9 +286,7 @@
         </a>
     </nav>
 
-    <!-- SCRIPTS -->
     <script>
-        // 1. SISTEMA DE TRANSICIÓN SUAVE
         document.addEventListener("DOMContentLoaded", () => {
             const overlay = document.getElementById('pageTransition');
             setTimeout(() => { overlay.style.opacity = '0'; }, 50);
@@ -298,7 +302,6 @@
             });
         });
 
-        // 2. BASE DE DATOS DEL BUSCADOR
         const inventory = [
             { name: "Samsung Galaxy", id: "android-samsung" },
             { name: "Honor", id: "android-honor" },
@@ -338,7 +341,6 @@
         const suggestionsBox = document.getElementById('suggestionsBox');
         const overlay = document.getElementById('pageTransition'); 
 
-        // 3. LÓGICA DE BÚSQUEDA
         searchInput.addEventListener('input', function() {
             const query = this.value.toLowerCase().trim();
             suggestionsBox.innerHTML = ''; 
