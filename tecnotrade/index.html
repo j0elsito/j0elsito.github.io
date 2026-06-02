@@ -14,12 +14,11 @@
             --neon-purple: #bd00ff;
             --neon-green: #39ff14;
             --neon-cyan: #00ffcc;
-            /* Colores de cristal más oscuros para contrastar con tu fondo plateado */
             --card-glass: rgba(10, 15, 25, 0.45);
             --border-glass: rgba(255, 255, 255, 0.12);
         }
 
-        /* 1. RESET Y SCROLL NATURAL (Arregla el bug de que no bajaba) */
+        /* 1. RESET Y SCROLL NATURAL */
         html, body {
             margin: 0; padding: 0;
             background-color: var(--bg-dark);
@@ -27,39 +26,34 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            overflow-y: auto; /* Scroll habilitado */
+            overflow-y: auto;
         }
 
-        /* 2. FONDOS INTERACTIVOS (Con tratamiento cinematográfico) */
-        .motion-bg-container {
-            position: fixed; top: -5%; left: -5%; width: 110%; height: 110%; 
-            z-index: -3; 
-            background-image: url('https://j0elsito.github.io/chatliquidmetal1.png');
-            background-size: cover; background-position: center; 
-            /* Se añade blur y se oscurece un poco para que el texto blanco resalte */
-            filter: brightness(0.5) saturate(1.2) blur(3px); 
+        /* 2. NUEVO FONDO INTERACTIVO PURO CSS (Inquebrantable y Estilo Apple) */
+        .css-interactive-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3;
+            background-color: #020305; overflow: hidden;
+        }
+        .orb {
+            position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.6;
+            animation: floatOrb 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .orb-1 { width: 45vw; height: 45vw; background: rgba(0, 255, 204, 0.4); top: -10%; left: -10%; }
+        .orb-2 { width: 50vw; height: 50vw; background: rgba(0, 240, 255, 0.3); bottom: -20%; right: -10%; animation-delay: -5s; animation-duration: 25s; }
+        .orb-3 { width: 40vw; height: 40vw; background: rgba(189, 0, 255, 0.2); top: 30%; left: 30%; animation-delay: -10s; animation-duration: 30s; }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(10vw, 10vh) scale(1.1); }
+            100% { transform: translate(-5vw, 5vh) scale(0.9); }
+        }
+
+        /* Viñeta de ruido y sombra para darle textura premium */
+        .bg-texture {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2;
+            background: radial-gradient(circle at center, transparent 0%, rgba(2,3,5,0.8) 100%);
             pointer-events: none;
-            animation: bgBreathe 20s infinite alternate ease-in-out;
         }
-        @keyframes bgBreathe { 
-            0% { transform: scale(1); filter: brightness(0.4) saturate(1.2) blur(3px); } 
-            100% { transform: scale(1.05); filter: brightness(0.6) saturate(1.3) blur(1px); } 
-        }
-
-        /* Viñeta oscura para enfocar la vista en el centro */
-        .bg-vignette {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
-            background: radial-gradient(circle at center top, rgba(3,5,9,0.1) 0%, rgba(3,5,9,0.9) 100%);
-            pointer-events: none;
-        }
-
-        .dynamic-aurora {
-            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; z-index: -1;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 204, 0.05), transparent 60%),
-                        radial-gradient(circle at 80% 20%, rgba(0, 240, 255, 0.05), transparent 50%);
-            animation: auroraSpin 25s infinite linear; pointer-events: none;
-        }
-        @keyframes auroraSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* OVERLAY TRANSICIÓN */
         .page-transition-overlay {
@@ -68,13 +62,12 @@
             transition: opacity 0.4s ease-in-out; pointer-events: none; opacity: 1;
         }
 
-        /* 3. CONTENEDOR PRINCIPAL CENTRADO (Para que se vea bien en PC) */
+        /* 3. CONTENEDOR PRINCIPAL (MÓVIL POR DEFECTO) */
         .app-wrapper {
-            max-width: 480px; /* Ancho máximo de App */
-            margin: 0 auto;   /* Centrado en pantalla */
-            padding-bottom: 120px; /* Espacio para la barra flotante */
-            position: relative;
-            z-index: 10;
+            width: 100%;
+            margin: 0 auto;
+            padding-bottom: 120px;
+            position: relative; z-index: 10;
         }
 
         /* TOP NAVBAR */
@@ -119,20 +112,21 @@
             transition: all 0.2s; border-bottom: 1px solid rgba(255,255,255,0.03);
         }
         .suggestion-item:last-child { border-bottom: none; }
-        .suggestion-item:hover, .suggestion-item:active { background: rgba(0, 255, 204, 0.1); color: var(--neon-cyan); padding-left: 26px; }
+        .suggestion-item:hover { background: rgba(0, 255, 204, 0.1); color: var(--neon-cyan); padding-left: 26px; }
         .suggestion-arrow { font-size: 10px; color: var(--text-muted); transition: transform 0.2s; }
         .suggestion-item:hover .suggestion-arrow { color: var(--neon-cyan); transform: translateX(5px); }
 
         /* HERO BANNER */
         .hero-section { padding: 0 20px; margin-bottom: 25px; }
         .hero-banner {
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15) 0%, rgba(0, 0, 0, 0.6) 100%);
-            border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 28px; padding: 28px 24px; position: relative; overflow: hidden;
+            background: linear-gradient(135deg, rgba(0, 255, 204, 0.15) 0%, rgba(0, 0, 0, 0.5) 100%);
+            border: 1px solid rgba(0, 255, 204, 0.25); border-radius: 28px; padding: 28px 24px; position: relative; overflow: hidden;
             box-shadow: 0 15px 35px rgba(0,0,0,0.5); backdrop-filter: blur(15px);
         }
+        .hero-content { position: relative; z-index: 2; }
         .hero-tag { background: #fff; color: #000; font-size: 10px; font-weight: 800; padding: 5px 12px; border-radius: 12px; margin-bottom: 14px; text-transform: uppercase; display: inline-block; box-shadow: 0 0 15px rgba(255,255,255,0.3); }
         .hero-title { font-size: 26px; font-weight: 900; margin: 0 0 8px 0; letter-spacing: -0.5px; }
-        .hero-subtitle { font-size: 13px; color: #b0b0b5; margin: 0 0 24px 0; max-width: 65%; line-height: 1.4; }
+        .hero-subtitle { font-size: 13px; color: #cbd5e1; margin: 0 0 24px 0; max-width: 65%; line-height: 1.4; }
         .hero-btn { 
             background: var(--text-main); color: var(--bg-dark); border: none; border-radius: 20px; 
             padding: 12px 24px; font-size: 13px; font-weight: 800; display: inline-block; 
@@ -144,11 +138,11 @@
             position: absolute; right: -25px; bottom: -40px; width: 140px; height: 190px;
             background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.02));
             border: 2px solid rgba(255,255,255,0.25); border-radius: 28px;
-            box-shadow: -15px -15px 40px rgba(0,0,0,0.6); transform: rotate(-8deg);
+            box-shadow: -15px -15px 40px rgba(0,0,0,0.6); transform: rotate(-8deg); z-index: 1;
         }
         .hero-device::after { content: ''; position: absolute; top: 18px; right: 18px; width: 35px; height: 35px; border-radius: 10px; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.15); }
 
-        /* GRID CATEGORÍAS 2x2 */
+        /* GRID CATEGORÍAS */
         .section-title { font-size: 18px; font-weight: 800; padding: 0 20px; margin-bottom: 16px; }
         .grid-wrapper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 20px; }
         
@@ -158,9 +152,10 @@
             backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             transition: all 0.2s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        .glass-card:active { transform: scale(0.95); background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); }
+        .glass-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); }
+        .glass-card:active { transform: scale(0.95); }
 
-        /* VECTORES CSS PUROS */
+        /* VECTORES CSS */
         .image-visual-space { width: 100%; height: 75px; background: rgba(255,255,255,0.03); border-radius: 16px; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; }
         .vector-icon { position: relative; display: flex; justify-content: center; align-items: center; transform: scale(0.7); }
         
@@ -178,45 +173,70 @@
         .v-laptop { width: 90px; height: 55px; border-radius: 8px 8px 0 0; background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255,255,255,0.3); border-bottom: 8px solid rgba(255,255,255,0.5); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
         .v-laptop::before { content:''; position:absolute; top: 6px; width: 74px; height: 38px; border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; background: rgba(255,255,255,0.05); }
 
-        .card-title { font-size: 15px; font-weight: 800; margin: 0; text-align: center; letter-spacing: -0.2px; }
+        .card-title { font-size: 15px; font-weight: 800; margin: 0; text-align: center; }
 
-        /* 4. BOTTOM NAVBAR FLOTANTE (ESTILO PÍLDORA) */
+        /* BOTTOM NAVBAR FLOTANTE (MÓVIL) */
         .bottom-nav {
-            position: fixed; 
-            bottom: 20px; /* Despegada del fondo */
-            left: 50%; 
-            transform: translateX(-50%); 
-            width: 90%; 
-            max-width: 420px; /* Control de tamaño en PC */
-            background: rgba(10, 15, 25, 0.85); /* Cristal más oscuro */
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 35px; /* Bordes totalmente redondeados */
-            display: flex; justify-content: space-around; 
-            padding: 12px 10px; 
-            z-index: 10000; 
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
+            width: 90%; max-width: 420px; 
+            background: rgba(10, 15, 25, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 35px; 
+            display: flex; justify-content: space-around; padding: 12px 10px; z-index: 10000; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
         }
-
         .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--text-muted); position: relative; transition: all 0.3s; }
-        .nav-tab.active { color: var(--neon-cyan); transform: translateY(-3px); } /* Sube ligeramente al estar activa */
+        .nav-tab.active { color: var(--neon-cyan); transform: translateY(-3px); }
         .nav-tab svg { width: 22px; height: 22px; fill: currentColor; }
         .nav-label { font-size: 10px; font-weight: 700; }
-        
         .cart-badge { position: absolute; top: -6px; right: -6px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800; padding: 3px 6px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(255,59,48,0.5); }
 
+        /* ====================================================
+           4. ADAPTACIÓN A ESCRITORIO (PC) - ¡MAGIA RESPONSIVA!
+           ==================================================== */
+        @media (min-width: 768px) {
+            /* Se ensancha el contenedor de la App en PC */
+            .app-wrapper { max-width: 1100px; padding-top: 30px; }
+            
+            /* La barra superior se vuelve una píldora flotante */
+            .top-navbar { border-radius: 24px; margin: 0 20px 30px 20px; top: 20px; border: 1px solid rgba(255,255,255,0.1); }
+            
+            /* Buscador más corto y centrado */
+            .search-wrapper { max-width: 600px; margin: 0 auto 30px auto; }
+            .suggestions-dropdown { left: 50%; transform: translateX(-50%); width: 100%; max-width: 600px; }
+            
+            /* Hero Banner estilo Panorámico */
+            .hero-banner { display: flex; align-items: center; justify-content: space-between; padding: 40px; margin: 0 20px 40px 20px; }
+            .hero-content { max-width: 50%; }
+            .hero-subtitle { max-width: 100%; font-size: 15px; }
+            .hero-device { position: relative; right: 0; bottom: 0; transform: rotate(-5deg); width: 180px; height: 240px; }
+            
+            /* La cuadrícula de 2 columnas se vuelve de 4 columnas */
+            .grid-wrapper { grid-template-columns: repeat(4, 1fr); gap: 24px; }
+            .section-title { font-size: 22px; }
+
+            /* El menú flotante inferior de la PC se adapta como un Dock de Mac */
+            .bottom-nav { max-width: 500px; padding: 15px 20px; border-radius: 40px; }
+            .nav-tab svg { width: 26px; height: 26px; }
+            .nav-label { font-size: 12px; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- OVERLAY TRANSICIÓN -->
     <div class="page-transition-overlay" id="pageTransition"></div>
 
-    <div class="motion-bg-container"></div>
-    <div class="bg-vignette"></div>
-    <div class="dynamic-aurora"></div>
+    <!-- EL NUEVO FONDO CSS INQUEBRANTABLE -->
+    <div class="css-interactive-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="bg-texture"></div>
 
     <div class="app-wrapper">
         
+        <!-- TOP NAVBAR -->
         <header class="top-navbar">
             <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
             <div class="nav-center">
@@ -226,6 +246,7 @@
             <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         </header>
 
+        <!-- BUSCADOR INTELIGENTE -->
         <div class="search-wrapper">
             <div class="search-box">
                 <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
@@ -234,16 +255,20 @@
             <div id="suggestionsBox" class="suggestions-dropdown"></div>
         </div>
 
+        <!-- HERO BANNER -->
         <section class="hero-section">
             <div class="hero-banner">
-                <span class="hero-tag">Destacado</span>
-                <h2 class="hero-title">iPhone 16 Pro</h2>
-                <p class="hero-subtitle">Descubre el nuevo diseño y usa tu equipo como abono.</p>
-                <a href="catalogo.html#iphone-16-pro" class="hero-btn navigate-link">Comprar ahora</a>
+                <div class="hero-content">
+                    <span class="hero-tag">Destacado</span>
+                    <h2 class="hero-title">iPhone 16 Pro</h2>
+                    <p class="hero-subtitle">Descubre el nuevo diseño y usa tu equipo como abono.</p>
+                    <a href="catalogo.html#iphone-16-pro" class="hero-btn navigate-link">Comprar ahora</a>
+                </div>
                 <div class="hero-device"></div>
             </div>
         </section>
 
+        <!-- CATEGORÍAS -->
         <div class="section-title">Categorías</div>
         <div class="grid-wrapper">
             <a href="catalogo.html" class="glass-card navigate-link">
@@ -266,6 +291,7 @@
         
     </div>
 
+    <!-- BOTTOM NAVBAR FLOTANTE (DOCK) -->
     <nav class="bottom-nav">
         <a href="index.html" class="nav-tab active">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -286,6 +312,7 @@
         </a>
     </nav>
 
+    <!-- SCRIPTS -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const overlay = document.getElementById('pageTransition');
