@@ -19,146 +19,194 @@
             --nav-bg: rgba(10, 10, 15, 0.95);
         }
 
-        /* BLOQUEO TOTAL PARA BARRA FIJA */
+        /* 1. RESET Y FONDO BASE */
         html, body {
             width: 100%; height: 100%; margin: 0; padding: 0;
             overflow: hidden; 
-            background-color: var(--bg-dark); color: var(--text-main);
+            background-color: var(--bg-dark); 
+            color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* CAJA DE SCROLL INTERNA */
-        .app-container {
-            width: 100%; height: 100vh; overflow-y: auto; overflow-x: hidden;
-            padding-bottom: 120px; scrollbar-width: none;
-        }
-        .app-container::-webkit-scrollbar { display: none; }
-
-        /* MATRIZ DE FONDO Y ORBES */
+        /* 2. CAPA DE IMAGEN INTERACTIVA (ENLACE ABSOLUTO 100% SEGURO) */
         .motion-bg-container {
-            position: fixed; top: -10px; left: -10px; right: -10px; bottom: -10px; z-index: -2;
-            background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
-            background-size: cover; background-position: center; filter: contrast(1.15) brightness(0.35) blur(4px);
+            position: fixed; top: -20px; left: -20px; right: -20px; bottom: -20px; 
+            z-index: 1; /* Capa sobre el fondo negro */
+            background-image: url('https://j0elsito.github.io/chatliquidmetal1.png');
+            background-size: cover; background-position: center; 
+            filter: contrast(1.1) brightness(0.75); /* Brillo ajustado para que luzca espectacular */
             pointer-events: none;
+            animation: bgBreathe 15s infinite alternate ease-in-out;
         }
+        @keyframes bgBreathe { 
+            0% { transform: scale(1); filter: contrast(1.1) brightness(0.65); } 
+            100% { transform: scale(1.05); filter: contrast(1.15) brightness(0.85); } 
+        }
+
+        /* 3. CAPA DE AURORAS */
         .dynamic-aurora {
-            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; z-index: -1;
+            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; 
+            z-index: 2; /* Sobre la imagen */
             background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.05), transparent 60%),
                         radial-gradient(circle at 80% 20%, rgba(189, 0, 255, 0.05), transparent 50%);
-            animation: auroraSpin 20s infinite linear; pointer-events: none;
+            animation: auroraSpin 25s infinite linear; pointer-events: none;
         }
         @keyframes auroraSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* 1. TOP NAVBAR (Igual al catálogo) */
+        /* 4. CONTENEDOR PRINCIPAL (TODO EL UI) */
+        .app-container {
+            width: 100%; height: 100vh; overflow-y: auto; overflow-x: hidden;
+            padding-bottom: 120px; scrollbar-width: none; scroll-behavior: smooth;
+            position: relative; z-index: 10; /* Siempre encima de los fondos */
+        }
+        .app-container::-webkit-scrollbar { display: none; }
+
+        /* OVERLAY TRANSICIÓN SUAVE */
+        .page-transition-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-dark); z-index: 99999;
+            transition: opacity 0.4s ease-in-out; pointer-events: none; opacity: 1;
+        }
+
+        /* TOP NAVBAR */
         .top-navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 16px 20px; position: sticky; top: 0; z-index: 100;
-            background: linear-gradient(to bottom, rgba(3,5,9,0.95) 0%, rgba(3,5,9,0.8) 60%, rgba(3,5,9,0) 100%);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            background: linear-gradient(to bottom, rgba(3,5,9,0.95) 0%, rgba(3,5,9,0.7) 70%, rgba(3,5,9,0) 100%);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            transform: translateY(-20px); opacity: 0; animation: slideDown 0.6s 0.2s forwards ease-out;
         }
-        .nav-icon { width: 26px; height: 26px; fill: #fff; opacity: 0.9; cursor: pointer; }
+        @keyframes slideDown { to { transform: translateY(0); opacity: 1; } }
+        
+        .nav-icon { width: 26px; height: 26px; fill: #fff; opacity: 0.9; cursor: pointer; transition: transform 0.2s; }
+        .nav-icon:active { transform: scale(0.8); }
         .nav-center { display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .nav-logo-img { width: 32px; height: 32px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
-        .logo-text { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; margin: 0; }
+        .nav-logo-img { width: 34px; height: 34px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
+        .logo-text { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; margin: 0; }
         .logo-text span { color: var(--neon-cyan); }
 
-        /* 2. BUSCADOR INTERACTIVO CON DROPDOWN */
-        .search-wrapper { position: relative; padding: 15px 20px; margin-bottom: 5px; z-index: 50; }
+        /* BUSCADOR INTERACTIVO */
+        .search-wrapper { position: relative; padding: 15px 20px; margin-bottom: 5px; z-index: 90; opacity: 0; animation: fadeIn 0.8s 0.4s forwards; }
         .search-box {
             display: flex; align-items: center; gap: 12px;
-            background: var(--card-glass); border: 1px solid var(--border-glass);
-            border-radius: 16px; padding: 14px 18px; backdrop-filter: blur(10px);
-            transition: border-color 0.3s;
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border-glass);
+            border-radius: 18px; padding: 14px 18px; backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .search-box:focus-within { border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(0, 255, 204, 0.2); }
-        .search-box svg { width: 20px; height: 20px; fill: var(--text-muted); }
-        .search-box input { background: transparent; border: none; color: #fff; width: 100%; font-size: 15px; outline: none; }
-        .search-box input::placeholder { color: var(--text-muted); }
+        .search-box:focus-within { border-color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0, 255, 204, 0.15); background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+        .search-box svg { width: 20px; height: 20px; fill: var(--text-muted); transition: fill 0.3s; }
+        .search-box:focus-within svg { fill: var(--neon-cyan); }
+        .search-box input { background: transparent; border: none; color: #fff; width: 100%; font-size: 15px; font-weight: 500; outline: none; }
+        .search-box input::placeholder { color: var(--text-muted); font-weight: 400; }
         
-        /* Contenedor de Sugerencias */
         .suggestions-dropdown {
-            position: absolute; top: 100%; left: 20px; right: 20px;
+            position: absolute; top: calc(100% - 10px); left: 20px; right: 20px;
             background: rgba(10, 10, 15, 0.95); border: 1px solid var(--border-glass);
-            border-radius: 12px; margin-top: 5px; backdrop-filter: blur(20px);
-            max-height: 250px; overflow-y: auto; display: none;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border-radius: 16px; padding: 8px 0; backdrop-filter: blur(20px);
+            max-height: 280px; overflow-y: auto; display: none;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
         .suggestion-item {
-            padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 14px; font-weight: 600; cursor: pointer; color: #e2e8f0;
+            padding: 14px 20px; font-size: 14px; font-weight: 600; cursor: pointer; color: #e2e8f0;
             display: flex; justify-content: space-between; align-items: center;
+            transition: background 0.2s, padding-left 0.2s;
         }
-        .suggestion-item:last-child { border-bottom: none; }
-        .suggestion-item:hover, .suggestion-item:active { background: rgba(0, 255, 204, 0.1); color: var(--neon-cyan); }
-        .suggestion-arrow { font-size: 10px; color: var(--text-muted); }
+        .suggestion-item:hover, .suggestion-item:active { background: rgba(0, 255, 204, 0.1); color: var(--neon-cyan); padding-left: 26px; }
+        .suggestion-arrow { font-size: 10px; color: var(--text-muted); transition: transform 0.2s; }
+        .suggestion-item:hover .suggestion-arrow { color: var(--neon-cyan); transform: translateX(5px); }
 
-        /* 3. HERO BANNER */
-        .hero-section { padding: 0 20px; margin-bottom: 25px; }
+        /* HERO BANNER */
+        .hero-section { padding: 0 20px; margin-bottom: 25px; opacity: 0; animation: fadeInUp 0.8s 0.5s forwards; }
         .hero-banner {
             background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%);
-            border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 24px; padding: 24px; position: relative; overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 28px; padding: 28px 24px; position: relative; overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
-        .hero-tag { background: #fff; color: #000; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 12px; margin-bottom: 12px; text-transform: uppercase; display: inline-block; }
-        .hero-title { font-size: 24px; font-weight: 800; margin: 0 0 8px 0; line-height: 1.1; }
-        .hero-subtitle { font-size: 13px; color: var(--text-muted); margin: 0 0 20px 0; max-width: 60%; }
-        .hero-btn { background: var(--text-main); color: var(--bg-dark); border: none; border-radius: 20px; padding: 12px 24px; font-size: 13px; font-weight: 800; display: inline-block; text-decoration: none; transition: transform 0.2s; }
-        .hero-btn:active { transform: scale(0.95); }
+        .hero-tag { background: #fff; color: #000; font-size: 10px; font-weight: 800; padding: 5px 12px; border-radius: 12px; margin-bottom: 14px; text-transform: uppercase; display: inline-block; box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+        .hero-title { font-size: 26px; font-weight: 900; margin: 0 0 8px 0; letter-spacing: -0.5px; }
+        .hero-subtitle { font-size: 13px; color: var(--text-muted); margin: 0 0 24px 0; max-width: 65%; line-height: 1.4; }
+        .hero-btn { 
+            background: var(--text-main); color: var(--bg-dark); border: none; border-radius: 20px; 
+            padding: 12px 24px; font-size: 13px; font-weight: 800; display: inline-block; 
+            text-decoration: none; transition: all 0.2s; box-shadow: 0 8px 20px rgba(255,255,255,0.2);
+        }
+        .hero-btn:active { transform: scale(0.95); box-shadow: 0 4px 10px rgba(255,255,255,0.1); }
         
         .hero-device {
-            position: absolute; right: -20px; bottom: -30px; width: 130px; height: 180px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
-            border: 2px solid rgba(255,255,255,0.2); border-radius: 25px;
-            box-shadow: -10px -10px 30px rgba(0,0,0,0.5); transform: rotate(-5deg);
+            position: absolute; right: -25px; bottom: -40px; width: 140px; height: 190px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.01));
+            border: 2px solid rgba(255,255,255,0.2); border-radius: 28px;
+            box-shadow: -15px -15px 40px rgba(0,0,0,0.5); transform: rotate(-8deg);
         }
-        .hero-device::after { content: ''; position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; border-radius: 8px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); }
+        .hero-device::after { content: ''; position: absolute; top: 18px; right: 18px; width: 35px; height: 35px; border-radius: 10px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); }
 
-        /* 4. CATEGORÍAS (Estilo Catálogo con Vectores) */
-        .section-title { font-size: 16px; font-weight: 700; padding: 0 20px; margin-bottom: 12px; }
-        .grid-wrapper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 20px; }
+        /* GRID CATEGORÍAS 2x2 */
+        .section-title { font-size: 18px; font-weight: 800; padding: 0 20px; margin-bottom: 16px; opacity: 0; animation: fadeIn 0.8s 0.6s forwards; }
+        .grid-wrapper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 20px; opacity: 0; animation: fadeInUp 0.8s 0.7s forwards; }
         
         .glass-card {
             background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 24px;
-            padding: 16px; text-decoration: none; color: var(--text-main); display: flex; flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(20px); transition: transform 0.2s; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            padding: 20px 16px; text-decoration: none; color: var(--text-main); display: flex; flex-direction: column; align-items: center; justify-content: center;
+            backdrop-filter: blur(20px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
-        .glass-card:active { transform: scale(0.95); background: rgba(255,255,255,0.06); }
+        .glass-card:active { transform: scale(0.93); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
 
-        /* Vectores */
-        .image-visual-space { width: 100%; height: 80px; background: rgba(255,255,255,0.01); border-radius: 14px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; }
-        .vector-icon { position: relative; background: rgba(0, 0, 0, 0.4); border: 2px solid rgba(255,255,255,0.15); display: flex; justify-content: center; align-items: center; transform: scale(0.65); }
+        /* VECTORES CSS PUROS DE ALTA CALIDAD */
+        .image-visual-space { width: 100%; height: 75px; background: rgba(255,255,255,0.02); border-radius: 16px; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; }
+        .vector-icon { position: relative; display: flex; justify-content: center; align-items: center; transform: scale(0.7); }
         
-        .v-phone { width: 55px; height: 100px; border-radius: 14px; }
+        .v-phone { width: 55px; height: 100px; border-radius: 14px; background: rgba(0, 0, 0, 0.5); border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
         .v-phone::before { content:''; position:absolute; top:8px; left:8px; width:15px; height:25px; border:2px solid rgba(255,255,255,0.15); border-radius:6px; }
-        .v-cash { width: 90px; height: 50px; border-radius: 10px; }
-        .v-cash::before { content:'$'; position:absolute; font-size: 20px; font-weight: bold; color: rgba(255,255,255,0.4); }
-        .v-cash::after { content:''; position:absolute; width: 30px; height: 30px; border: 2px dashed rgba(255,255,255,0.2); border-radius: 50%; }
         
-        .card-title { font-size: 14px; font-weight: 800; margin: 0; text-align: center; }
+        .v-cash { width: 85px; height: 50px; border-radius: 10px; background: rgba(0, 0, 0, 0.5); border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .v-cash::before { content:'$'; position:absolute; font-size: 22px; font-weight: 900; color: rgba(255,255,255,0.5); }
+        .v-cash::after { content:''; position:absolute; width: 34px; height: 34px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 50%; }
 
-        /* 5. BOTTOM NAVBAR FIJA */
+        .v-repair { width: 56px; height: 56px; border-radius: 50%; background: rgba(0, 0, 0, 0.5); border: 4px dashed rgba(255,255,255,0.2); box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.5); animation: rotateSlow 10s linear infinite; }
+        .v-repair::after { content:''; position:absolute; width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); }
+        @keyframes rotateSlow { 100% { transform: scale(0.7) rotate(360deg); } }
+
+        .v-laptop { width: 90px; height: 55px; border-radius: 8px 8px 0 0; background: rgba(0, 0, 0, 0.5); border: 2px solid rgba(255,255,255,0.2); border-bottom: 8px solid rgba(255,255,255,0.4); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .v-laptop::before { content:''; position:absolute; top: 6px; width: 74px; height: 38px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; background: rgba(255,255,255,0.02); }
+
+        .card-title { font-size: 15px; font-weight: 800; margin: 0; text-align: center; letter-spacing: -0.2px; }
+
+        /* BOTTOM NAVBAR FIJA */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%;
-            background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-around; padding: 12px 0 20px 0; 
-            z-index: 10000;
+            background: var(--nav-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-around; padding: 14px 0 24px 0; 
+            z-index: 10000; transform: translateY(100%); animation: slideUp 0.6s 0.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--text-muted); position: relative; }
+        @keyframes slideUp { to { transform: translateY(0); } }
+
+        .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; color: var(--text-muted); position: relative; transition: color 0.2s; }
         .nav-tab.active { color: var(--neon-cyan); }
-        .nav-tab svg { width: 22px; height: 22px; fill: currentColor; }
-        .nav-label { font-size: 10px; font-weight: 600; }
-        .cart-badge { position: absolute; top: -4px; right: -4px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-dark); }
+        .nav-tab svg { width: 22px; height: 22px; fill: currentColor; transition: transform 0.2s; }
+        .nav-tab:active svg { transform: scale(0.85); }
+        .nav-label { font-size: 10px; font-weight: 700; }
+        
+        .cart-badge { position: absolute; top: -5px; right: -8px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800; padding: 2px 5px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-dark); box-shadow: 0 2px 5px rgba(255,59,48,0.4); }
+
+        /* UTILIDADES DE ANIMACIÓN */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
     </style>
 </head>
 <body>
 
+    <!-- OVERLAY PARA TRANSICIÓN SUAVE (Efecto SPA) -->
+    <div class="page-transition-overlay" id="pageTransition"></div>
+
+    <!-- AQUÍ ESTÁ EL FONDO CON RUTA DIRECTA AL REPOSITORIO -->
     <div class="motion-bg-container"></div>
     <div class="dynamic-aurora"></div>
 
     <div class="app-container">
         
-        <!-- TOP NAVBAR (Unificada) -->
+        <!-- TOP NAVBAR -->
         <header class="top-navbar">
             <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
             <div class="nav-center">
@@ -168,13 +216,12 @@
             <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         </header>
 
-        <!-- BUSCADOR CON LÓGICA -->
+        <!-- BUSCADOR INTELIGENTE -->
         <div class="search-wrapper">
             <div class="search-box">
                 <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
                 <input type="text" id="searchInput" placeholder="Buscar modelo (ej: 15 Pro Max)..." autocomplete="off">
             </div>
-            <!-- Aquí aparecerán los resultados -->
             <div id="suggestionsBox" class="suggestions-dropdown"></div>
         </div>
 
@@ -184,21 +231,29 @@
                 <span class="hero-tag">Destacado</span>
                 <h2 class="hero-title">iPhone 16 Pro</h2>
                 <p class="hero-subtitle">Descubre el nuevo diseño y usa tu equipo como abono.</p>
-                <a href="catalogo.html#iphone-16-pro" class="hero-btn">Comprar ahora</a>
+                <a href="catalogo.html#iphone-16-pro" class="hero-btn navigate-link">Comprar ahora</a>
                 <div class="hero-device"></div>
             </div>
         </section>
 
-        <!-- CATEGORÍAS RÁPIDAS -->
+        <!-- CATEGORÍAS 2x2 -->
         <div class="section-title">Categorías</div>
         <div class="grid-wrapper">
-            <a href="catalogo.html" class="glass-card">
+            <a href="catalogo.html" class="glass-card navigate-link">
                 <div class="image-visual-space"><div class="vector-icon v-phone"></div></div>
                 <h2 class="card-title">Equipos</h2>
             </a>
             <a href="vender.html" class="glass-card">
                 <div class="image-visual-space"><div class="vector-icon v-cash"></div></div>
                 <h2 class="card-title">Vender</h2>
+            </a>
+            <a href="reparar.html" class="glass-card">
+                <div class="image-visual-space"><div class="vector-icon v-repair"></div></div>
+                <h2 class="card-title">Reparar</h2>
+            </a>
+            <a href="laptops.html" class="glass-card">
+                <div class="image-visual-space"><div class="vector-icon v-laptop"></div></div>
+                <h2 class="card-title">Laptops</h2>
             </a>
         </div>
         
@@ -210,7 +265,7 @@
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
             <span class="nav-label">Inicio</span>
         </a>
-        <a href="catalogo.html" class="nav-tab">
+        <a href="catalogo.html" class="nav-tab navigate-link">
             <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
             <span class="nav-label">Catálogo</span>
         </a>
@@ -225,9 +280,25 @@
         </a>
     </nav>
 
-    <!-- LÓGICA DEL BUSCADOR INTELIGENTE -->
+    <!-- SCRIPTS -->
     <script>
-        // Base de datos exacta conectada a los IDs del catalogo.html
+        // 1. SISTEMA DE TRANSICIÓN SUAVE
+        document.addEventListener("DOMContentLoaded", () => {
+            const overlay = document.getElementById('pageTransition');
+            setTimeout(() => { overlay.style.opacity = '0'; }, 50);
+
+            const navLinks = document.querySelectorAll('.navigate-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetUrl = this.getAttribute('href');
+                    overlay.style.opacity = '1'; 
+                    setTimeout(() => { window.location.assign(targetUrl); }, 400); 
+                });
+            });
+        });
+
+        // 2. BASE DE DATOS DEL BUSCADOR
         const inventory = [
             { name: "Samsung Galaxy", id: "android-samsung" },
             { name: "Honor", id: "android-honor" },
@@ -265,42 +336,36 @@
 
         const searchInput = document.getElementById('searchInput');
         const suggestionsBox = document.getElementById('suggestionsBox');
+        const overlay = document.getElementById('pageTransition'); 
 
-        // Escuchar cada tecla que el usuario presione
+        // 3. LÓGICA DE BÚSQUEDA
         searchInput.addEventListener('input', function() {
             const query = this.value.toLowerCase().trim();
-            suggestionsBox.innerHTML = ''; // Limpiar resultados anteriores
+            suggestionsBox.innerHTML = ''; 
 
             if (query.length > 0) {
-                // Filtrar el inventario (busca si el nombre incluye lo que el usuario escribió)
                 const filtered = inventory.filter(item => item.name.toLowerCase().includes(query));
-
                 if (filtered.length > 0) {
-                    suggestionsBox.style.display = 'block'; // Mostrar la caja
-                    
+                    suggestionsBox.style.display = 'block'; 
                     filtered.forEach(item => {
                         const div = document.createElement('div');
                         div.className = 'suggestion-item';
-                        // Texto a la izquierda, flecha a la derecha
                         div.innerHTML = `<span>${item.name}</span> <span class="suggestion-arrow">▶</span>`;
-                        
-                        // Acción al tocar la sugerencia: Ir al catálogo con el ID en el link
                         div.onclick = function() {
-                            window.location.href = `catalogo.html#${item.id}`;
+                            overlay.style.opacity = '1';
+                            setTimeout(() => { window.location.assign(`catalogo.html#${item.id}`); }, 400);
                         };
                         suggestionsBox.appendChild(div);
                     });
                 } else {
-                    // Si no hay resultados
                     suggestionsBox.style.display = 'block';
                     suggestionsBox.innerHTML = `<div class="suggestion-item" style="color: #86868b; text-align:center;">No se encontraron modelos</div>`;
                 }
             } else {
-                suggestionsBox.style.display = 'none'; // Ocultar si está vacío
+                suggestionsBox.style.display = 'none';
             }
         });
 
-        // Ocultar sugerencias si toca fuera del buscador
         document.addEventListener('click', function(e) {
             if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
                 suggestionsBox.style.display = 'none';
