@@ -2,339 +2,130 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>TecnoTrade | Welcome</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TecnoTrade | Store</title>
     <style>
         :root {
             --bg-dark: #030509;
-            --text-main: #ffffff;
-            --text-glow: #a2c4ec;
             --neon-blue: #00f0ff;
-            --neon-purple: #bd00ff;
             --neon-green: #39ff14;
+            --neon-purple: #bd00ff;
             --neon-cyan: #00ffcc;
-            --card-glass: rgba(255, 255, 255, 0.03);
-            --border-glass: rgba(255, 255, 255, 0.1);
         }
 
         body {
-            margin: 0; padding: 0;
-            min-height: 100vh;
+            margin: 0; padding: 0; min-height: 100vh;
             background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            -webkit-font-smoothing: antialiased;
+            color: #fff;
+            font-family: 'SF Pro Display', -apple-system, sans-serif;
             overflow-x: hidden;
-            overscroll-behavior: none; /* Previene el efecto elástico al llegar al borde */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        /* 1. FONDO SEGURO (Sin romper el render de Android) */
-        .motion-bg-container {
-            position: fixed;
-            top: -20px; left: -20px; right: -20px; bottom: -20px;
-            z-index: -3;
-            background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
-            background-size: cover;
-            background-position: center;
-            filter: contrast(1.15) brightness(0.35) blur(3px);
-            pointer-events: none;
-            animation: bgBreathe 12s infinite alternate ease-in-out;
+        /* 1. HERO Y PROMO BAR (Para que se sienta activo) */
+        .promo-bar {
+            width: 90%; max-width: 480px;
+            background: linear-gradient(90deg, rgba(0, 240, 255, 0.1), transparent);
+            border-left: 3px solid var(--neon-blue);
+            padding: 10px 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--neon-blue);
+            display: flex; align-items: center; justify-content: space-between;
         }
 
-        /* Capa de luces cambiantes superpuesta al metal */
-        .dynamic-aurora {
-            position: fixed;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            z-index: -2;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.05), transparent 60%),
-                        radial-gradient(circle at 80% 20%, rgba(189, 0, 255, 0.05), transparent 50%);
-            animation: auroraSpin 20s infinite linear;
-            pointer-events: none;
-        }
-
-        /* 2. HEADER CON PULSO Y JERGA PANAMEÑA */
-        .header-section {
-            text-align: center;
-            margin-bottom: 25px;
-            z-index: 10;
-            margin-top: 30px;
-            animation: dropDownLogo 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .header-section img {
-            width: 75px; height: 75px;
-            border-radius: 24px;
-            border: 2px solid rgba(255,255,255,0.25);
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
-            margin-bottom: 12px;
-            animation: pulseGlow 3s infinite alternate;
-        }
-
-        .header-section h1 {
-            font-size: 38px; font-weight: 900; letter-spacing: -1px; margin: 0;
-            background: linear-gradient(90deg, #fff, #e2e8f0, var(--neon-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* El toque local elegante */
-        .panama-slang {
-            font-size: 13px;
-            color: #94a3b8;
-            font-weight: 500;
-            margin-top: 8px;
-            max-width: 280px;
-            line-height: 1.4;
-            letter-spacing: 0.5px;
-        }
-        .panama-slang span { color: var(--neon-cyan); font-weight: 700; }
-
-        /* 3. CUADRÍCULA 2x2 EXAGERADA (Motor 3D contenido aquí) */
+        /* 2. DISEÑO DE TARJETAS DE VENTA */
         .grid-wrapper {
             width: 90%; max-width: 480px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            z-index: 10;
-            padding-bottom: 100px; /* Espacio para las redes sociales */
-            perspective: 1200px; /* Profundidad 3D solo en la cuadrícula */
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 16px; margin-top: 20px;
         }
 
-        /* TARJETAS CON EFECTO SHIMMER Y 3D */
         .glass-card {
-            background: var(--card-glass);
-            border: 1px solid var(--border-glass);
-            border-radius: 30px;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            aspect-ratio: 1 / 1.1;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; color: var(--text-main);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 20px; text-decoration: none; color: white;
             position: relative; overflow: hidden;
-            box-shadow: inset 0 0 20px rgba(255,255,255,0.02), 0 15px 35px rgba(0,0,0,0.4);
-            opacity: 0; transform-style: preserve-3d;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s ease;
         }
 
-        /* Coreografía de entrada 3D en cascada */
-        .glass-card { animation: card3DEntrance 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        .glass-card:nth-child(1) { animation-delay: 0.1s; }
-        .glass-card:nth-child(2) { animation-delay: 0.25s; }
-        .glass-card:nth-child(3) { animation-delay: 0.4s; }
-        .glass-card:nth-child(4) { animation-delay: 0.55s; }
-
-        /* Reflejo de luz pasando por la tarjeta infinitamente */
-        .glass-card::before {
-            content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: skewX(-25deg);
-            animation: lightSweep 6s infinite;
+        /* Badge para sensación de tienda */
+        .sale-badge {
+            position: absolute; top: 12px; right: 12px;
+            font-size: 9px; font-weight: 800; padding: 3px 8px;
+            border-radius: 12px; text-transform: uppercase;
         }
+        .badge-new { background: var(--neon-blue); color: #000; }
+        .badge-hot { background: var(--neon-green); color: #000; }
 
-        /* Explosión táctil */
-        .glass-card:active { transform: scale(0.92) translateZ(-20px); }
+        .glass-card:active { transform: scale(0.95); border-color: white; }
 
-        /* 4. ÍCONOS LEVITANDO */
-        .image-visual-space {
-            width: 80%; height: 50%;
-            margin-bottom: 15px;
-            display: flex; align-items: center; justify-content: center;
-            position: relative;
-        }
-
+        /* Iconos de Venta */
         .vector-icon {
-            position: relative;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255,255,255,0.15);
-            display: flex; justify-content: center; align-items: center;
-            transform: scale(0.7);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            animation: floatAmbient 4s ease-in-out infinite alternate;
-        }
-        
-        .card-buy .vector-icon { animation-delay: 0s; }
-        .card-sell .vector-icon { animation-delay: 1s; }
-        .card-repair .vector-icon { animation-delay: 2s; }
-        .card-laptop .vector-icon { animation-delay: 3s; }
-
-        /* VECTORES */
-        .v-phone { width: 55px; height: 100px; border-radius: 14px; }
-        .v-phone::before { content:''; position:absolute; top:8px; left:8px; width:15px; height:25px; border:2px solid rgba(255,255,255,0.15); border-radius:6px; }
-        
-        .v-cash { width: 90px; height: 50px; border-radius: 10px; }
-        .v-cash::before { content:'$'; position:absolute; font-size: 20px; font-weight: bold; color: rgba(255,255,255,0.4); }
-        .v-cash::after { content:''; position:absolute; width: 30px; height: 30px; border: 2px dashed rgba(255,255,255,0.2); border-radius: 50%; }
-
-        .v-repair { width: 60px; height: 70px; border-radius: 10px; border-style: dashed; }
-        .v-repair::before { content:'⚙'; position:absolute; font-size: 28px; color: rgba(255,255,255,0.4); }
-
-        .v-laptop { width: 90px; height: 55px; border-radius: 6px 6px 0 0; border-bottom: 8px solid rgba(255,255,255,0.2); }
-        .v-laptop::before { content:''; position:absolute; top: 5px; width: 70px; height: 40px; border: 2px solid rgba(255,255,255,0.1); border-radius: 4px; }
-
-        /* Colores Neón al Tocar */
-        .card-buy:active { border-color: var(--neon-blue); box-shadow: 0 0 40px rgba(0, 240, 255, 0.4); }
-        .card-buy:active .vector-icon { border-color: var(--neon-blue); background: rgba(0,240,255,0.15); }
-        
-        .card-sell:active { border-color: var(--neon-green); box-shadow: 0 0 40px rgba(57, 255, 20, 0.4); }
-        .card-sell:active .vector-icon { border-color: var(--neon-green); background: rgba(57,255,20,0.15); }
-        .card-sell:active .v-cash::before { color: var(--neon-green); }
-
-        .card-repair:active { border-color: var(--neon-purple); box-shadow: 0 0 40px rgba(189, 0, 255, 0.4); }
-        .card-repair:active .vector-icon { border-color: var(--neon-purple); background: rgba(189,0,255,0.15); }
-        .card-repair:active .v-repair::before { color: var(--neon-purple); }
-
-        .card-laptop:active { border-color: var(--neon-cyan); box-shadow: 0 0 40px rgba(0, 255, 204, 0.4); }
-        .card-laptop:active .vector-icon { border-color: var(--neon-cyan); border-bottom-color: var(--neon-cyan); background: rgba(0,255,204,0.15); }
-
-        /* TÍTULOS */
-        .card-title {
-            font-size: 15px; font-weight: 800; text-align: center; margin: 0; line-height: 1.2; padding: 0 5px;
-            text-shadow: 0 5px 10px rgba(0,0,0,0.5);
-        }
-
-        /* 5. REDES SOCIALES + UBICACIÓN */
-        .social-bar {
-            position: fixed; bottom: 30px;
-            display: flex; gap: 35px; align-items: center;
-            z-index: 20;
-            animation: fadeInUP 1s 0.8s forwards; opacity: 0;
-        }
-
-        .social-btn {
-            display: flex; align-items: center; justify-content: center;
             width: 45px; height: 45px;
             background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 50%;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 12px; margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
         }
-        
-        .social-btn img { width: 20px; filter: invert(1); opacity: 0.8; }
-        .social-btn:active { transform: scale(0.85); background: rgba(255,255,255,0.2); }
 
-        /* Efecto Radar para la Ubicación */
-        .location-btn { position: relative; border-color: rgba(0, 240, 255, 0.3); }
-        .location-btn::after {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            border-radius: 50%; border: 1px solid var(--neon-blue);
-            animation: radarPulse 2s infinite;
-        }
-        .location-btn img { filter: invert(70%) sepia(50%) saturate(3000%) hue-rotate(150deg) brightness(100%); opacity: 1; }
-
-        /* TODAS LAS ANIMACIONES GRAFICAS */
-        @keyframes bgBreathe { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
-        @keyframes auroraSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); } 100% { box-shadow: 0 0 35px rgba(0, 240, 255, 0.6); } }
-        @keyframes dropDownLogo { from { opacity: 0; transform: translateY(-40px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        
-        /* Entrada agresiva y 3D (Arreglada para que no colapse) */
-        @keyframes card3DEntrance { 
-            0% { opacity: 0; transform: translateY(80px) rotateX(40deg) scale(0.8); } 
-            100% { opacity: 1; transform: translateY(0) rotateX(0) scale(1); } 
-        }
-        
-        @keyframes lightSweep { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
-        @keyframes floatAmbient { 0% { transform: scale(0.7) translateY(0px); } 100% { transform: scale(0.7) translateY(-12px); } }
-        @keyframes fadeInUP { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes radarPulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
-
-        /* Destello al cambiar de página */
-        .screen-flash {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff; z-index: 9999; opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease-out;
-        }
-        .flash-active { opacity: 1 !important; }
-
+        .card-title { font-size: 14px; font-weight: 800; }
+        .card-desc { font-size: 10px; color: #a1a1aa; margin-top: 4px; }
     </style>
 </head>
 <body>
 
-    <div class="screen-flash" id="flash-fx"></div>
-    <div class="motion-bg-container"></div>
-    <div class="dynamic-aurora"></div>
+    <!-- Fondo -->
+    <div class="motion-bg-container" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png'); background-size: cover; filter: brightness(0.3);"></div>
 
-    <div class="header-section">
-        <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" alt="TecnoTrade">
-        <h1>TecnoTrade</h1>
-        <!-- JERGA PANAMEÑA PREMIUM -->
-        <p class="panama-slang">Bienvenido al Hub. Toca una categoría y <span>resolvemos tu vuelta de una.</span></p>
+    <!-- Promo Bar -->
+    <div class="promo-bar">
+        <span>⚡ INVENTARIO ACTUALIZADO</span>
+        <span>VER CATÁLOGO</span>
     </div>
 
+    <!-- Header -->
+    <div style="text-align: center; margin-top: 30px;">
+        <h1 style="font-size: 32px; font-weight: 800;">TecnoTrade</h1>
+        <p style="font-size: 12px; color: #888;">Bienvenido al Hub. Toca una categoría y <b>resolvemos tu vuelta de una.</b></p>
+    </div>
+
+    <!-- Grid de Ventas -->
     <div class="grid-wrapper">
-        
-        <a href="catalogo.html" class="glass-card card-buy nav-trigger">
-            <div class="image-visual-space">
-                <div class="vector-icon v-phone"></div>
-            </div>
-            <h2 class="card-title">Comprar<br>Equipo</h2>
+        <a href="catalogo.html" class="glass-card">
+            <span class="sale-badge badge-new">NUEVO</span>
+            <div class="vector-icon">📱</div>
+            <div class="card-title">Comprar Equipo</div>
+            <div class="card-desc">Stock disponible al mejor precio.</div>
         </a>
 
-        <a href="vender.html" class="glass-card card-sell nav-trigger">
-            <div class="image-visual-space">
-                <div class="vector-icon v-cash"></div>
-            </div>
-            <h2 class="card-title">Vender<br>Equipo</h2>
+        <a href="vender.html" class="glass-card">
+            <div class="vector-icon">💵</div>
+            <div class="card-title">Vender Equipo</div>
+            <div class="card-desc">Trade-in rápido en efectivo.</div>
         </a>
 
-        <a href="reparar.html" class="glass-card card-repair nav-trigger">
-            <div class="image-visual-space">
-                <div class="vector-icon v-repair"></div>
-            </div>
-            <h2 class="card-title">Servicio<br>Técnico</h2>
+        <a href="reparar.html" class="glass-card">
+            <span class="sale-badge badge-hot">ACTIVO</span>
+            <div class="vector-icon">🔧</div>
+            <div class="card-title">Servicio Técnico</div>
+            <div class="card-desc">Reparación profesional garantizada.</div>
         </a>
 
-        <a href="laptops.html" class="glass-card card-laptop nav-trigger">
-            <div class="image-visual-space">
-                <div class="vector-icon v-laptop"></div>
-            </div>
-            <h2 class="card-title">Laptops &<br>Sistemas</h2>
-        </a>
-
-    </div>
-
-    <!-- BOTONES INFERIORES -->
-    <div class="social-bar">
-        <a href="https://wa.me/50767966691" target="_blank" class="social-btn">
-            <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WhatsApp">
-        </a>
-        
-        <!-- BOTÓN DE LOCALIZACIÓN (Latido Radar) -->
-        <a href="https://maps.app.goo.gl/search/Panama" target="_blank" class="social-btn location-btn">
-            <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" alt="Ubicación">
-        </a>
-
-        <a href="https://www.instagram.com/tecnotradepty/" target="_blank" class="social-btn">
-            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+        <a href="laptops.html" class="glass-card">
+            <div class="vector-icon">💻</div>
+            <div class="card-title">Laptops & Sistemas</div>
+            <div class="card-desc">Optimización y mantenimiento.</div>
         </a>
     </div>
 
-    <!-- SCRIPT DE NAVEGACIÓN Y FEEDBACK TÁCTIL -->
-    <script>
-        const navTriggers = document.querySelectorAll('.nav-trigger');
-        const flashFx = document.getElementById('flash-fx');
+    <!-- Footer de Conversión -->
+    <div style="margin-top: 30px; display: flex; gap: 20px;">
+        <a href="https://wa.me/50767966691" style="background: var(--neon-green); color: #000; padding: 10px 20px; border-radius: 20px; font-size: 12px; font-weight: 800; text-decoration: none;">WHATSAPP</a>
+        <a href="https://maps.app.goo.gl/search/Panama" style="background: var(--neon-cyan); color: #000; padding: 10px 20px; border-radius: 20px; font-size: 12px; font-weight: 800; text-decoration: none;">UBICACIÓN</a>
+    </div>
 
-        navTriggers.forEach(card => {
-            card.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetUrl = this.getAttribute('href');
-                
-                flashFx.classList.add('flash-active');
-                
-                setTimeout(() => {
-                    flashFx.classList.remove('flash-active');
-                }, 100);
-
-                setTimeout(() => {
-                    window.location.assign(targetUrl);
-                }, 350);
-            });
-        });
-    </script>
 </body>
 </html>
