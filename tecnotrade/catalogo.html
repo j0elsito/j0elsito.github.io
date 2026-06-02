@@ -3,194 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>TecnoTrade | Catálogo</title>
+    
+    <!-- BLOQUEO ESTRICTO CONTRA EL MODO OSCURO DE LOS CELULARES -->
+    <meta name="color-scheme" content="light only">
+    <meta name="theme-color" content="#f5f5f7">
+    
+    <title>TecnoTrade | Catálogo de Equipos</title>
+    
     <style>
         :root {
-            --bg-dark: #030509;
-            --text-main: #ffffff;
-            --text-muted: #86868b;
-            --neon-blue: #00f0ff;
-            --neon-green: #39ff14;
-            --neon-cyan: #00ffcc;
-            --card-glass: rgba(255, 255, 255, 0.03);
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --nav-bg: rgba(10, 10, 15, 0.95);
+            /* PALETA MACSTORE CLARA - 100% LIGHT THEME */
+            --bg-base: #f5f5f7;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --apple-blue: #0071e3;
+            --apple-blue-hover: #0077ed;
+            --apple-blue-glow: rgba(0, 113, 227, 0.15);
+            --card-glass: rgba(255, 255, 255, 0.85);
+            --card-glass-pure: #ffffff;
+            --border-subtle: rgba(0, 0, 0, 0.08);
+            
+            /* SOMBRAS Y TRANSICIONES */
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
+            --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-fast: all 0.2s ease;
         }
 
-        /* BLOQUEO TOTAL PARA LA BARRA FIJA */
+        /* RESET GENERAL FORZADO A MODO CLARO */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         html, body {
-            width: 100%; height: 100%; margin: 0; padding: 0;
-            overflow: hidden; 
-            background-color: var(--bg-dark); color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0; padding: 0;
+            width: 100%; min-height: 100%;
+            background-color: var(--bg-base) !important;
+            color: var(--text-primary) !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
-        /* CAJA DE SCROLL INTERNA */
-        .app-container {
-            width: 100%; height: 100vh; overflow-y: auto; overflow-x: hidden;
-            padding-bottom: 100px; scrollbar-width: none;
-        }
-        .app-container::-webkit-scrollbar { display: none; }
-
-        /* MATRIZ DE FONDO */
-        .motion-bg-container {
-            position: fixed; top: -10px; left: -10px; right: -10px; bottom: -10px; z-index: -2;
-            background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
-            background-size: cover; background-position: center; filter: contrast(1.15) brightness(0.35) blur(4px);
-            pointer-events: none;
+        /* CAPA DE TRANSICIÓN DE PÁGINA (EFECTO APARICIÓN DESDE LA OSCURIDAD) */
+        .page-loader-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #030509; /* Negro profundo para conectar con la salida de index */
+            z-index: 99999;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
+            pointer-events: none; opacity: 1;
         }
 
-        /* 1. TOP NAVBAR (Actualizada con Logo + Texto) */
-        .top-navbar {
+        /* ENTORNO CINEMATOGRÁFICO CLARO (El mismo de index.html) */
+        .ambient-canvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3;
+            background-color: #f5f5f7; overflow: hidden; pointer-events: none;
+        }
+        .liquid-orb {
+            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.8;
+            will-change: transform; animation: moveOrb 25s infinite alternate ease-in-out;
+        }
+        .orb-sapphire { width: 55vw; height: 55vw; background: rgba(0, 113, 227, 0.12); top: -15%; left: -10%; }
+        .orb-cyan     { width: 60vw; height: 60vw; background: rgba(0, 198, 214, 0.10); bottom: -25%; right: -15%; animation-delay: -6s; animation-duration: 28s; }
+        .orb-amethyst { width: 48vw; height: 48vw; background: rgba(189, 0, 255, 0.05); top: 35%; left: 25%; animation-delay: -12s; animation-duration: 32s; }
+
+        @keyframes moveOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(6vw, 8vh) scale(1.08); }
+            100% { transform: translate(-3vw, 4vh) scale(0.92); }
+        }
+
+        /* CONTENEDOR MAESTRO DINÁMICO */
+        .app-layout-container {
+            width: 100%; max-width: 480px; 
+            margin: 0 auto; padding-bottom: 140px; position: relative; z-index: 10;
+        }
+
+        /* TOP NAVIGATION BAR (CONTINUIDAD DE INDEX) */
+        .mac-navbar {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 16px 20px; position: sticky; top: 0; z-index: 100;
-            background: linear-gradient(to bottom, rgba(3,5,9,0.95) 0%, rgba(3,5,9,0.8) 60%, rgba(3,5,9,0) 100%);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding: 18px 24px; position: sticky; top: 0; z-index: 100;
+            background: linear-gradient(to bottom, rgba(245,245,247,0.96) 0%, rgba(245,245,247,0.8) 70%, transparent 100%);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
         }
-        .nav-icon { width: 26px; height: 26px; fill: #fff; opacity: 0.9; cursor: pointer; }
+        .navbar-action-btn {
+            background: transparent; border: none; padding: 4px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: var(--transition-fast);
+            color: var(--text-primary); text-decoration: none;
+        }
+        .navbar-action-btn:active { transform: scale(0.85); opacity: 0.7; }
+        .navbar-action-btn svg { width: 24px; height: 24px; fill: var(--text-primary); }
         
-        .nav-center { display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .nav-logo-img { 
-            width: 32px; height: 32px; border-radius: 10px; 
-            border: 1px solid rgba(255,255,255,0.2); 
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); 
-        }
-        .logo-text { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; margin: 0; }
-        .logo-text span { color: var(--neon-cyan); }
+        .navbar-brand-block { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .brand-avatar { width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
+        .brand-title { font-size: 22px; font-weight: 800; letter-spacing: -0.6px; margin: 0; color: var(--text-primary); }
+        .brand-title span { color: var(--apple-blue); font-weight: 900; }
 
-        /* CUADRÍCULA DE SECCIONES */
-        .grid-wrapper {
-            max-width: 1150px; margin: 20px auto; padding: 0 20px 40px 20px;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
-        }
-        .glass-card {
-            background: var(--card-glass); border: 1px solid var(--border-glass);
-            border-radius: 32px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            padding: 20px; display: flex; flex-direction: column;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-        }
+        /* HEADER DEL CATÁLOGO */
+        .catalog-header { padding: 10px 24px 20px; text-align: center; }
+        .catalog-main-title { font-size: 32px; font-weight: 900; margin: 0 0 5px 0; letter-spacing: -1px; }
+        .catalog-subtitle { font-size: 14px; color: var(--text-secondary); margin: 0; }
 
-        /* EFECTOS VISUALES 3D DEL TELÉFONO */
+        /* CUADRÍCULA DE EQUIPOS */
+        .catalog-matrix-grid {
+            display: flex; flex-direction: column; gap: 24px; padding: 0 24px 40px 24px;
+        }
+        
+        .matrix-glass-card {
+            background: var(--card-glass); border: 1px solid #ffffff; border-radius: 32px;
+            padding: 24px; display: flex; flex-direction: column;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-md); transition: var(--transition-smooth);
+        }
+        .matrix-glass-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+
+        /* VISUAL DEL TELÉFONO */
         .image-visual-space {
-            width: 100%; height: 140px; background: rgba(255,255,255,0.01);
-            border-radius: 20px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.03);
+            width: 100%; height: 130px; background: rgba(0,0,0,0.02);
+            border-radius: 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center;
         }
-        .image-visual-space::after {
-            content: ''; position: absolute; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-            top: -10%; left: 0; animation: scanLaser 3s infinite linear; opacity: 0.6;
-        }
-        .android-card .image-visual-space::after { background: linear-gradient(90deg, transparent, var(--neon-green), transparent); }
-        @keyframes scanLaser { 0% { top: -10%; } 100% { top: 110%; } }
-
         .vector-phone {
-            width: 60px; height: 110px; border: 3px solid rgba(255,255,255,0.2); border-radius: 14px; position: relative; background: rgba(0, 0, 0, 0.3);
+            width: 65px; height: 120px; border: 3px solid #d2d2d7; border-radius: 16px; 
+            position: relative; background: #ffffff; box-shadow: 0 8px 25px rgba(0,0,0,0.06);
         }
-        .vector-phone::before { content: ''; position: absolute; top: 8px; left: 8px; width: 20px; height: 30px; border: 2px solid rgba(255,255,255,0.12); border-radius: 6px; }
-
-        .card-tag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--neon-blue); margin-bottom: 6px; }
-        .android-card .card-tag { color: var(--neon-green); }
-        .card-main-title { font-size: 24px; font-weight: 800; margin: 0 0 15px 0; letter-spacing: -0.5px; }
-
-        /* LAYOUT DE PRODUCTOS: 2 COLUMNAS (GRID) */
-        .list-container {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+        .vector-phone::before { 
+            content: ''; position: absolute; top: 10px; left: 10px; width: 20px; height: 35px; 
+            border: 2px solid #e5e5ea; border-radius: 6px; 
         }
+
+        .card-tag { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--apple-blue); margin-bottom: 8px; display: block; }
+        .android-card .card-tag { color: #00b050; } 
+        .card-main-title { font-size: 26px; font-weight: 900; margin: 0 0 20px 0; letter-spacing: -0.5px; color: var(--text-primary); }
+
+        /* FILAS DE MODELOS E INTERACCIÓN */
+        .list-container { display: flex; flex-direction: column; gap: 12px; }
         .interactive-row {
-            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 8px;
-            background: rgba(255, 255, 255, 0.02); padding: 16px 10px;
-            border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.03);
-            text-decoration: none; color: #fff; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; justify-content: space-between; align-items: center;
+            background: #ffffff; padding: 18px 20px;
+            border-radius: 20px; border: 1px solid var(--border-subtle);
+            text-decoration: none; color: var(--text-primary); transition: var(--transition-fast);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
-        .interactive-row:active { transform: scale(0.95); background: rgba(255, 255, 255, 0.07); }
-        .model-name { font-size: 13px; font-weight: 700; line-height: 1.2; }
+        .interactive-row:active { transform: scale(0.97); background: #f0f0f5; }
+        .model-name { font-size: 15px; font-weight: 700; }
         .model-price {
-            font-size: 11px; font-weight: 800; background: rgba(255,255,255,0.05);
-            padding: 5px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08);
+            font-size: 13px; font-weight: 800; background: var(--apple-blue-glow); color: var(--apple-blue);
+            padding: 6px 14px; border-radius: 12px; border: 1px solid rgba(0, 113, 227, 0.1);
         }
+        .android-card .model-price { background: rgba(0, 176, 80, 0.1); color: #00b050; border-color: rgba(0, 176, 80, 0.1); }
 
-        /* EFECTO DE RESALTADO AL BUSCAR */
+        /* EFECTO DE RESALTADO AL VENIR DEL BUSCADOR */
         .highlight-target {
-            border-color: var(--neon-cyan) !important;
-            box-shadow: 0 0 25px rgba(0, 255, 204, 0.5) !important;
-            background: rgba(0, 255, 204, 0.1) !important;
+            border-color: var(--apple-blue) !important;
+            box-shadow: 0 0 0 4px var(--apple-blue-glow) !important;
+            background: rgba(0, 113, 227, 0.03) !important;
             animation: highlightPulse 2s ease-in-out infinite;
         }
-        @keyframes highlightPulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-
-        /* BOTTOM NAVBAR FIJA */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-around; padding: 12px 0 20px 0; 
-            z-index: 9999;
+        @keyframes highlightPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
-        .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--text-muted); position: relative; }
-        .nav-tab.active { color: var(--neon-cyan); }
-        .nav-tab svg { width: 22px; height: 22px; fill: currentColor; }
-        .nav-label { font-size: 10px; font-weight: 600; }
-        .cart-badge {
-            position: absolute; top: -4px; right: -4px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800;
-            width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-dark);
+
+        /* PREMIUM DOCK INTERFACIAL SYSTEM (CONTINUIDAD DE INDEX) */
+        .interfacial-dock-nav {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 420px;
+            background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 36px;
+            display: flex; justify-content: space-around; padding: 12px 10px; z-index: 10000;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+            transform: translate3d(-50%, 120%, 0); animation: slideDockUp 0.7s 0.6s forwards cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slideDockUp { to { transform: translate3d(-50%, 0, 0); } }
+
+        .dock-action-tab { display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; color: var(--text-secondary); position: relative; transition: var(--transition-smooth); }
+        .dock-action-tab.tab-active { color: var(--apple-blue); transform: translateY(-4px); }
+        .dock-action-tab svg { width: 23px; height: 23px; fill: currentColor; transition: var(--transition-fast); }
+        .dock-action-tab:active svg { transform: scale(0.85); }
+        .dock-label-text { font-size: 10px; font-weight: 700; letter-spacing: -0.1px; }
+        
+        .dock-cart-indicator {
+            position: absolute; top: -6px; right: -8px; background: #ff3b30; color: #ffffff;
+            font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(255,59,48,0.3); border: 2px solid #ffffff;
+        }
+
+        /* ADAPTACIÓN A PC */
+        @media (min-width: 768px) {
+            .app-layout-container { max-width: 1120px; padding-top: 40px; }
+            .mac-navbar { border-radius: 24px; margin: 0 24px 36px 24px; top: 24px; border: 1px solid #ffffff; box-shadow: var(--shadow-sm); }
+            .catalog-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; padding: 0 24px 80px 24px;}
+            .interfacial-dock-nav { max-width: 480px; padding: 14px 24px; border-radius: 40px; bottom: 32px; }
+            .dock-action-tab svg { width: 25px; height: 25px; }
+            .dock-label-text { font-size: 11px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="motion-bg-container"></div>
+    <!-- OVERLAY DE CARGA (NEGRO PARA SURGIR DE LA OSCURIDAD) -->
+    <div class="page-loader-overlay" id="globalPageLoader"></div>
 
-    <div class="app-container" id="scroll-box">
+    <!-- NÚCLEO DE RENDER DE ARTE FLUIDO -->
+    <div class="ambient-canvas">
+        <div class="liquid-orb orb-sapphire"></div>
+        <div class="liquid-orb orb-cyan"></div>
+        <div class="liquid-orb orb-amethyst"></div>
+    </div>
+
+    <div class="app-layout-container">
         
-        <!-- TOP NAVBAR (Reemplaza el antiguo bloque gigante) -->
-        <header class="top-navbar">
-            <!-- Menú -->
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-            
-            <!-- Centro: Logo + Texto -->
-            <div class="nav-center">
-                <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" class="nav-logo-img" alt="Logo">
-                <h1 class="logo-text">Tecno<span>Trade</span></h1>
-            </div>
-
-            <!-- Usuario -->
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <!-- MAC NAVBAR CON BOTÓN DE REGRESO -->
+        <header class="mac-navbar">
+            <a href="index.html" class="navbar-action-btn core-spa-link" aria-label="Volver al inicio">
+                <svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+            </a>
+            <a href="index.html" class="navbar-brand-block core-spa-link">
+                <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" class="brand-avatar" alt="TecnoTrade Logo">
+                <h1 class="brand-title">Tecno<span>Trade</span></h1>
+            </a>
+            <button class="navbar-action-btn" aria-label="Opciones">
+                <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </button>
         </header>
 
-        <main class="grid-wrapper">
+        <div class="catalog-header">
+            <h2 class="catalog-main-title">Catálogo</h2>
+            <p class="catalog-subtitle">Selecciona tu modelo para cotizar al instante</p>
+        </div>
+
+        <main class="catalog-matrix-grid">
 
             <!-- CONSULTA TU ANDROID -->
-            <div class="glass-card android-card">
-                <div class="image-visual-space"><div class="vector-phone" style="border-radius: 8px;"></div></div>
-                <div class="card-header-info">
+            <div class="matrix-glass-card android-card">
+                <div class="image-visual-space"><div class="vector-phone" style="border-radius: 10px;"></div></div>
+                <div>
                     <span class="card-tag">Multi-Brand</span>
-                    <h2 class="card-main-title">Consulta Android</h2>
+                    <h2 class="card-main-title">Android</h2>
                 </div>
                 <div class="list-container">
                     <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Samsung." id="android-samsung" class="interactive-row" target="_blank">
-                        <span class="model-name">Samsung</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
+                        <span class="model-name">Samsung Galaxy</span><span class="model-price">Cotizar</span>
                     </a>
                     <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Honor." id="android-honor" class="interactive-row" target="_blank">
-                        <span class="model-name">Honor</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
+                        <span class="model-name">Honor</span><span class="model-price">Cotizar</span>
                     </a>
                     <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Xiaomi." id="android-xiaomi" class="interactive-row" target="_blank">
-                        <span class="model-name">Xiaomi</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
+                        <span class="model-name">Xiaomi</span><span class="model-price">Cotizar</span>
                     </a>
                     <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Google%20Pixel." id="android-pixel" class="interactive-row" target="_blank">
-                        <span class="model-name">Pixel</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
+                        <span class="model-name">Google Pixel</span><span class="model-price">Cotizar</span>
                     </a>
                     <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Redmi." id="android-redmi" class="interactive-row" target="_blank">
-                        <span class="model-name">Redmi</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
+                        <span class="model-name">Redmi Note</span><span class="model-price">Cotizar</span>
                     </a>
                 </div>
             </div>
 
             <!-- SERIE IPHONE 17 -->
-            <div class="glass-card">
+            <div class="matrix-glass-card">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div class="card-header-info">
-                    <span class="card-tag">Concept Line</span>
-                    <h2 class="card-main-title">iPhone Serie 17</h2>
+                <div>
+                    <span class="card-tag">Próximo Lanzamiento</span>
+                    <h2 class="card-main-title">iPhone 17</h2>
                 </div>
                 <div class="list-container">
                     <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017." id="iphone-17" class="interactive-row" target="_blank">
@@ -209,11 +289,11 @@
             </div>
 
             <!-- SERIE IPHONE 16 -->
-            <div class="glass-card">
+            <div class="matrix-glass-card">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div class="card-header-info">
+                <div>
                     <span class="card-tag">Flagship Core</span>
-                    <h2 class="card-main-title">iPhone Serie 16</h2>
+                    <h2 class="card-main-title">iPhone 16</h2>
                 </div>
                 <div class="list-container">
                     <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016." id="iphone-16" class="interactive-row" target="_blank">
@@ -232,11 +312,11 @@
             </div>
 
             <!-- SERIE IPHONE 15 -->
-            <div class="glass-card">
+            <div class="matrix-glass-card">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div class="card-header-info">
+                <div>
                     <span class="card-tag">Hot Choice</span>
-                    <h2 class="card-main-title">iPhone Serie 15</h2>
+                    <h2 class="card-main-title">iPhone 15</h2>
                 </div>
                 <div class="list-container">
                     <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015." id="iphone-15" class="interactive-row" target="_blank">
@@ -255,11 +335,11 @@
             </div>
 
             <!-- SERIE IPHONE 14 -->
-            <div class="glass-card">
+            <div class="matrix-glass-card">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div class="card-header-info">
+                <div>
                     <span class="card-tag">Performance</span>
-                    <h2 class="card-main-title">iPhone Serie 14</h2>
+                    <h2 class="card-main-title">iPhone 14</h2>
                 </div>
                 <div class="list-container">
                     <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014." id="iphone-14" class="interactive-row" target="_blank">
@@ -278,11 +358,11 @@
             </div>
 
             <!-- SERIE IPHONE 13 -->
-            <div class="glass-card">
+            <div class="matrix-glass-card">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div class="card-header-info">
+                <div>
                     <span class="card-tag">Value Choice</span>
-                    <h2 class="card-main-title">iPhone Serie 13</h2>
+                    <h2 class="card-main-title">iPhone 13</h2>
                 </div>
                 <div class="list-container">
                     <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013%20Mini." id="iphone-13-mini" class="interactive-row" target="_blank">
@@ -301,11 +381,11 @@
             </div>
 
             <!-- SERIE IPHONE 12 -->
-            <div class="glass-card">
+            <div class="matrix-glass-card">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div class="card-header-info">
+                <div>
                     <span class="card-tag">Budget-Friendly</span>
-                    <h2 class="card-main-title">iPhone Serie 12</h2>
+                    <h2 class="card-main-title">iPhone 12</h2>
                 </div>
                 <div class="list-container">
                     <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012%20Mini." id="iphone-12-mini" class="interactive-row" target="_blank">
@@ -324,11 +404,11 @@
             </div>
 
             <!-- SERIE IPHONE 11 -->
-            <div class="glass-card">
+            <div class="matrix-glass-card">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div class="card-header-info">
+                <div>
                     <span class="card-tag">Entry Level</span>
-                    <h2 class="card-main-title">iPhone Serie 11</h2>
+                    <h2 class="card-main-title">iPhone 11</h2>
                 </div>
                 <div class="list-container">
                     <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2011." id="iphone-11" class="interactive-row" target="_blank">
@@ -344,43 +424,72 @@
             </div>
 
         </main>
-    </div> <!-- Fin del app-container -->
+    </div>
 
-    <!-- BOTTOM NAVIGATION (Fija) -->
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-tab">
+    <!-- PREMIUM DOCK NAVBAR FLOTANTE (ESTADO CATÁLOGO ACTIVO) -->
+    <nav class="interfacial-dock-nav">
+        <a href="index.html" class="dock-action-tab core-spa-link">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            <span class="nav-label">Inicio</span>
+            <span class="dock-label-text">Inicio</span>
         </a>
-        <a href="catalogo.html" class="nav-tab active">
+        <a href="catalogo.html" class="dock-action-tab tab-active">
             <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-            <span class="nav-label">Catálogo</span>
+            <span class="dock-label-text">Catálogo</span>
         </a>
-        <a href="#" class="nav-tab">
+        <a href="#" class="dock-action-tab">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            <span class="nav-label">Favoritos</span>
+            <span class="dock-label-text">Favoritos</span>
         </a>
-        <a href="#" class="nav-tab">
-            <div class="cart-badge">2</div>
+        <a href="#" class="dock-action-tab">
+            <div class="dock-cart-indicator">2</div>
             <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-            <span class="nav-label">Carrito</span>
+            <span class="dock-label-text">Carrito</span>
         </a>
     </nav>
 
     <script>
-        // LÓGICA DEL BUSCADOR (Efecto Highlight y Scroll)
-        window.addEventListener('load', () => {
-            const hash = window.location.hash.substring(1);
-            if(hash) {
-                const targetElement = document.getElementById(hash);
-                if(targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    targetElement.classList.add('highlight-target');
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. EFECTO DE APARICIÓN DESDE LA OSCURIDAD
+            const systemLoader = document.getElementById('globalPageLoader');
+            
+            // Un leve retraso para que el navegador procese el renderizado y el salto desde el negro se sienta fluido
+            setTimeout(() => { 
+                systemLoader.style.opacity = '0'; 
+            }, 50);
+
+            // 2. CONTROLADOR SPA PARA REGRESAR A INDEX
+            const spaInteractionTriggers = document.querySelectorAll('.core-spa-link');
+            spaInteractionTriggers.forEach(elementLink => {
+                elementLink.addEventListener('click', function(clickEvent) {
+                    clickEvent.preventDefault();
+                    const targetPageDestination = this.getAttribute('href');
+                    
+                    // Al volver a salir, la pantalla se vuelve a poner negra para el puente
+                    systemLoader.style.backgroundColor = '#030509';
+                    systemLoader.style.opacity = '1'; 
                     
                     setTimeout(() => {
-                        targetElement.classList.remove('highlight-target');
-                        history.replaceState(null, null, ' ');
-                    }, 4000);
+                        window.location.assign(targetPageDestination);
+                    }, 420); 
+                });
+            });
+
+            // 3. LÓGICA DE RESALTADO AL VENIR DESDE EL BUSCADOR DE INDEX
+            // Cuando alguien busque "iPhone 16 Pro" en index.html, la página bajará automáticamente hasta el equipo y lo iluminará en azul
+            const urlHash = window.location.hash.substring(1);
+            if(urlHash) {
+                const targetElement = document.getElementById(urlHash);
+                if(targetElement) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        targetElement.classList.add('highlight-target');
+                        
+                        // Quita el resaltado después de 4 segundos
+                        setTimeout(() => {
+                            targetElement.classList.remove('highlight-target');
+                            history.replaceState(null, null, ' ');
+                        }, 4000);
+                    }, 600); // Se espera a que el fundido en negro termine para hacer scroll
                 }
             }
         });
