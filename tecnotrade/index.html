@@ -31,7 +31,6 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            /* URL absoluta directa para evitar conflictos de subcarpetas en GitHub Pages */
             background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
             background-size: cover;
             background-position: center;
@@ -51,22 +50,14 @@
             z-index: 1;
         }
 
-        /* CONTENEDOR PRINCIPAL */
+        /* CONTENEDOR PRINCIPAL WITH ENTRANCE ANIMATION */
         .main-wrapper {
             position: relative;
             z-index: 2;
             width: 92%;
             max-width: 420px;
             text-align: center;
-            animation: appEntrance 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
-
-        /* TRANSICIÓN DE SALIDA */
-        .main-wrapper.fade-out {
-            opacity: 0;
-            transform: translateY(-20px);
-            filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            animation: appEntrance 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
         h1 {
@@ -160,107 +151,3 @@
             bottom: 40px;
             display: flex;
             gap: 30px;
-            z-index: 2;
-        }
-
-        .social-icon {
-            width: 24px;
-            height: 24px;
-            opacity: 0.4;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .social-icon:hover {
-            opacity: 1;
-            transform: translateY(-2px);
-        }
-
-        @keyframes appEntrance {
-            from { opacity: 0; transform: translateY(15px); filter: blur(4px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="glass-overlay"></div>
-
-    <div class="main-wrapper" id="menu-container">
-        <h1>TecnoTrade</h1>
-        <p class="tagline">Selecciona una categoría para continuar</p>
-        
-        <div class="cards-stack">
-            <!-- CORRECCIÓN CLAVE: El enlace debe coincidir EXACTAMENTE con el nombre del archivo en GitHub, incluyendo mayúsculas y extensión. -->
-            <!-- El archivo en tu repositorio se llama 'Catalogo.htm' (con 'C' mayúscula y extensión '.htm') -->
-            <a href="Catalogo.htm" class="deck-card nav-link">
-                <div class="icon-box">📱</div>
-                <div class="card-info">
-                    <span class="card-title">Comprar Teléfono</span>
-                    <span class="card-desc">Equipos con garantía garantizada</span>
-                </div>
-                <span class="arrow-indicator">➔</span>
-            </a>
-
-            <!-- OPCIÓN 2: VENDER EQUIPO -->
-            <a href="vender.html" class="deck-card nav-link">
-                <div class="icon-box">💵</div>
-                <div class="card-info">
-                    <span class="card-title">Vender mi dispositivo</span>
-                    <span class="card-desc">Usa tu equipo actual como abono</span>
-                </div>
-                <span class="arrow-indicator">➔</span>
-            </a>
-
-            <!-- OPCIÓN 3: REPARAR EQUIPO -->
-            <a href="reparar.html" class="deck-card nav-link">
-                <div class="icon-box">🔧</div>
-                <div class="card-info">
-                    <span class="card-title">Reparar equipo</span>
-                    <span class="card-desc">Pantallas, baterías y servicio técnico</span>
-                </div>
-                <span class="arrow-indicator">➔</span>
-            </a>
-
-            <!-- OPCIÓN 4: LAPTOPS Y SISTEMAS -->
-            <a href="laptops.html" class="deck-card nav-link">
-                <div class="icon-box">💻</div>
-                <div class="card-info">
-                    <span class="card-title">Laptops & Sistemas</span>
-                    <span class="card-desc">Mantenimiento y cambio de sistemas</span>
-                </div>
-                <span class="arrow-indicator">➔</span>
-            </a>
-        </div>
-    </div>
-
-    <div class="minimal-footer">
-        <a href="https://wa.me/50767966691" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" class="social-icon" alt="WhatsApp">
-        </a>
-        <a href="https://www.instagram.com/tecnotradepty/" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="social-icon" alt="Instagram">
-        </a>
-    </div>
-
-    <script>
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const destination = this.getAttribute('href');
-                
-                // Si es un enlace externo (como WhatsApp o Instagram), no aplicamos la animación de salida
-                if (destination.startsWith('http')) return;
-
-                // Evitamos que salte de golpe para hacer la animación primero
-                e.preventDefault();
-                
-                // Aplicamos la clase de salida (difumina y desvanece)
-                document.getElementById('menu-container').classList.add('fade-out');
-                
-                // Esperamos 400 milisegundos (el tiempo de la animación) y hacemos el cambio de página oficial
-                setTimeout(() => {
-                    window.location.href = destination;
-                }, 400);
-            });
-        });
-    </script>
-</body>
-</html>
