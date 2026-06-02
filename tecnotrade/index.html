@@ -2,291 +2,111 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TecnoTrade | Welcome</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TecnoTrade | Dashboard</title>
     <style>
         :root {
-            --bg-dark: #030509;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
-            --text-glow: #a2c4ec;
-            --neon-blue: #00f0ff;
-            --neon-purple: #bd00ff;
-            --neon-green: #39ff14;
-            --neon-cyan: #00ffcc;
-            --card-glass: rgba(255, 255, 255, 0.02);
-            --border-glass: rgba(255, 255, 255, 0.08);
+            --text-muted: #a1a1aa;
         }
 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            -webkit-font-smoothing: antialiased;
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow-x: hidden;
+            background-color: #030509;
             perspective: 1200px;
         }
 
-        /* FONDO OSCURO CON METAL LÍQUIDO (Igual al catálogo) */
+        /* FONDO FIJO QUE NO SE MUEVE CON EL ZOOM NI EL REDIMENSIONADO */
         .motion-bg-container {
             position: fixed;
-            top: -5%;
-            left: -5%;
-            width: 110%;
-            height: 110%;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             z-index: -2;
-            background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
+            background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/fondoliquidmetal1.png');
             background-size: cover;
             background-position: center;
-            filter: contrast(1.15) brightness(0.4) blur(4px);
+            background-repeat: no-repeat;
+            filter: contrast(1.1) brightness(0.4);
         }
 
-        /* ORBES DE NEÓN FLOTANTES PARA DARLE VIDA AL FONDO */
+        /* ORBES (Sin porcentajes que se rompan) */
         .neon-orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(140px);
+            filter: blur(120px);
             z-index: -1;
-            opacity: 0.35;
-            mix-blend-mode: screen;
+            opacity: 0.3;
             pointer-events: none;
-            animation: floatOrb 15s infinite alternate ease-in-out;
         }
-        .orb-1 { width: 500px; height: 500px; background: var(--neon-blue); top: -10%; left: -10%; }
-        .orb-2 { width: 550px; height: 550px; background: var(--neon-purple); bottom: -10%; right: -10%; animation-direction: alternate-reverse; }
+        .orb-1 { width: 40vh; height: 40vh; background: #00f0ff; top: 10%; left: 10%; }
+        .orb-2 { width: 40vh; height: 40vh; background: #bd00ff; bottom: 10%; right: 10%; }
 
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(60px, 40px) scale(1.15); }
-        }
-
-        /* HEADER PREMIUM */
-        .header-section {
-            text-align: center;
-            margin-bottom: 40px;
-            z-index: 10;
-            animation: dropIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .header-section img {
-            width: 80px;
-            height: 80px;
-            border-radius: 25px;
-            border: 2px solid rgba(255,255,255,0.2);
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
-            margin-bottom: 15px;
-        }
-
-        .header-section h1 {
-            font-size: 42px;
-            font-weight: 900;
-            letter-spacing: -1.5px;
-            margin: 0;
-            background: linear-gradient(90deg, #fff, var(--text-glow), var(--neon-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .header-section p {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--neon-blue);
-            font-weight: 700;
-            margin-top: 5px;
-        }
-
-        /* CUADRÍCULA DEL DASHBOARD */
-        .grid-wrapper {
+        /* Dashboard igual al del catálogo */
+        .dashboard-wrapper {
             width: 90%;
-            max-width: 900px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            max-width: 440px;
             z-index: 10;
-            transform-style: preserve-3d;
-            padding-bottom: 80px;
-        }
-
-        /* TARJETAS DE VIDRIO OSCURO */
-        .glass-card {
-            background: var(--card-glass);
-            border: 1px solid var(--border-glass);
-            border-radius: 36px;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            padding: 24px;
             display: flex;
             flex-direction: column;
+            gap: 16px;
+        }
+
+        .header-section { text-align: center; margin-bottom: 30px; }
+        .header-section h1 { font-size: 38px; font-weight: 900; margin-bottom: 5px; }
+        .header-section p { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
+
+        .tilt-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
             text-decoration: none;
-            color: var(--text-main);
-            position: relative;
-            transform-style: preserve-3d;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            transition: border-color 0.4s, box-shadow 0.2s, transform 0.1s ease;
-            opacity: 0;
-            animation: cardEntrance 0.8s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+            color: white;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: 0.3s;
         }
 
-        .glass-card:nth-child(1) { animation-delay: 0.1s; }
-        .glass-card:nth-child(2) { animation-delay: 0.2s; }
-        .glass-card:nth-child(3) { animation-delay: 0.3s; }
-        .glass-card:nth-child(4) { animation-delay: 0.4s; }
+        .tilt-card:active { transform: scale(0.97); }
 
-        /* ESPACIO VISUAL CON ESCÁNER LÁSER (Igual al catálogo) */
-        .image-visual-space {
-            width: 100%;
-            height: 140px;
-            background: rgba(255,255,255,0.01);
-            border-radius: 20px;
-            margin-bottom: 20px;
+        .card-icon {
+            font-size: 28px;
+            background: rgba(255,255,255,0.05);
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.03);
-            transform: translateZ(40px);
+            border-radius: 15px;
         }
 
-        /* LÍNEA DE ESCÁNER DINÁMICA POR CATEGORÍA */
-        .image-visual-space::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            top: -10%; left: 0;
-            animation: scanLaser 3s infinite linear;
-            opacity: 0.7;
-        }
-        .card-buy .image-visual-space::after { background: linear-gradient(90deg, transparent, var(--neon-blue), transparent); }
-        .card-sell .image-visual-space::after { background: linear-gradient(90deg, transparent, var(--neon-green), transparent); }
-        .card-repair .image-visual-space::after { background: linear-gradient(90deg, transparent, var(--neon-purple), transparent); }
-        .card-laptop .image-visual-space::after { background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent); }
+        .card-title { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+        .card-subtitle { font-size: 13px; color: var(--text-muted); }
 
-        @keyframes scanLaser {
-            0% { top: -10%; }
-            100% { top: 110%; }
-        }
-
-        /* DISEÑO DE LOS VECTORES / ICONOS 3D */
-        .vector-icon {
-            position: relative;
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            background: rgba(0, 0, 0, 0.4);
-            border: 3px solid rgba(255,255,255,0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Forma 1: Teléfono */
-        .v-phone { width: 55px; height: 100px; border-radius: 14px; }
-        .v-phone::before { content:''; position:absolute; top:8px; left:8px; width:15px; height:25px; border:2px solid rgba(255,255,255,0.15); border-radius:6px; }
-        
-        /* Forma 2: Billete/Trade-In */
-        .v-cash { width: 90px; height: 50px; border-radius: 10px; }
-        .v-cash::before { content:'$'; position:absolute; font-size: 20px; font-weight: bold; color: rgba(255,255,255,0.4); }
-        .v-cash::after { content:''; position:absolute; width: 30px; height: 30px; border: 2px dashed rgba(255,255,255,0.2); border-radius: 50%; }
-
-        /* Forma 3: Herramienta/Placa */
-        .v-repair { width: 60px; height: 70px; border-radius: 10px; border-style: dashed; }
-        .v-repair::before { content:'⚙'; position:absolute; font-size: 28px; color: rgba(255,255,255,0.4); }
-
-        /* Forma 4: Laptop */
-        .v-laptop { width: 90px; height: 55px; border-radius: 6px 6px 0 0; border-bottom: 8px solid rgba(255,255,255,0.2); }
-        .v-laptop::before { content:''; position:absolute; top: 5px; width: 70px; height: 40px; border: 2px solid rgba(255,255,255,0.1); border-radius: 4px; }
-
-        /* EFECTOS HOVER POR CATEGORÍA */
-        .glass-card:hover .vector-icon {
-            transform: scale(1.2) rotateY(15deg) rotateX(-10deg) translateY(-5px);
-        }
-        .card-buy:hover { border-color: var(--neon-blue); }
-        .card-buy:hover .vector-icon { border-color: var(--neon-blue); box-shadow: 0 0 30px rgba(0, 240, 255, 0.4); }
-        
-        .card-sell:hover { border-color: var(--neon-green); }
-        .card-sell:hover .vector-icon { border-color: var(--neon-green); box-shadow: 0 0 30px rgba(57, 255, 20, 0.4); }
-        .card-sell:hover .v-cash::before { color: var(--neon-green); }
-
-        .card-repair:hover { border-color: var(--neon-purple); }
-        .card-repair:hover .vector-icon { border-color: var(--neon-purple); box-shadow: 0 0 30px rgba(189, 0, 255, 0.4); }
-        .card-repair:hover .v-repair::before { color: var(--neon-purple); }
-
-        .card-laptop:hover { border-color: var(--neon-cyan); }
-        .card-laptop:hover .vector-icon { border-color: var(--neon-cyan); border-bottom-color: var(--neon-cyan); box-shadow: 0 0 30px rgba(0, 255, 204, 0.4); }
-
-        /* TEXTOS INTERNOS */
-        .card-tag {
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 6px;
-            transform: translateZ(25px);
-        }
-        .card-buy .card-tag { color: var(--neon-blue); }
-        .card-sell .card-tag { color: var(--neon-green); }
-        .card-repair .card-tag { color: var(--neon-purple); }
-        .card-laptop .card-tag { color: var(--neon-cyan); }
-
-        .card-title {
-            font-size: 24px;
-            font-weight: 800;
-            margin: 0 0 8px 0;
-            letter-spacing: -0.5px;
-            transform: translateZ(30px);
-        }
-
-        .card-desc {
-            font-size: 14px;
-            color: #a1a1aa;
-            transform: translateZ(20px);
-            line-height: 1.4;
-        }
-
-        /* REDES SOCIALES EN LA BASE */
         .social-bar {
             position: absolute;
-            bottom: 25px;
+            bottom: 30px;
             display: flex;
-            gap: 25px;
-            z-index: 10;
+            gap: 30px;
         }
 
-        .social-icon {
-            width: 26px;
-            opacity: 0.6;
-            filter: invert(1);
-            transition: all 0.3s ease;
-        }
-        .social-icon:hover {
-            opacity: 1;
-            transform: translateY(-3px) scale(1.1);
-        }
-
-        /* ANIMACIONES */
-        @keyframes dropIn {
-            from { opacity: 0; transform: translateY(-40px); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-        @keyframes cardEntrance {
-            from { opacity: 0; transform: translateY(50px) rotateX(-15deg); filter: blur(5px); }
-            to { opacity: 1; transform: translateY(0) rotateX(0); filter: blur(0); }
-        }
-
-        /* TRANSICIÓN DE SALIDA DE LA PÁGINA */
-        .page-exit {
-            opacity: 0 !important;
-            transform: translateY(-30px) scale(0.95) !important;
-            filter: blur(10px) !important;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
-        }
+        .social-icon { width: 25px; filter: invert(1); opacity: 0.5; }
     </style>
 </head>
 <body>
@@ -295,105 +115,49 @@
     <div class="neon-orb orb-1"></div>
     <div class="neon-orb orb-2"></div>
 
-    <div class="header-section" id="header-box">
-        <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" alt="TecnoTrade">
-        <h1>TecnoTrade</h1>
-        <p>Next-Gen Hub</p>
-    </div>
+    <div class="dashboard-wrapper">
+        <div class="header-section">
+            <h1>TecnoTrade</h1>
+            <p>Dashboard de servicios</p>
+        </div>
 
-    <div class="grid-wrapper" id="menu-grid">
-        
-        <a href="catalogo.html" class="glass-card card-buy nav-link">
-            <div class="image-visual-space">
-                <div class="vector-icon v-phone"></div>
+        <a href="catalogo.html" class="tilt-card">
+            <div class="card-icon">📱</div>
+            <div class="card-text">
+                <div class="card-title">Comprar Teléfono</div>
+                <div class="card-subtitle">Catálogo premium de equipos</div>
             </div>
-            <span class="card-tag">Premium Catalog</span>
-            <h2 class="card-title">Comprar Equipo</h2>
-            <p class="card-desc">Explora los modelos disponibles de Apple y Android con garantía.</p>
         </a>
 
-        <a href="vender.html" class="glass-card card-sell nav-link">
-            <div class="image-visual-space">
-                <div class="vector-icon v-cash"></div>
+        <a href="vender.html" class="tilt-card">
+            <div class="card-icon">💵</div>
+            <div class="card-text">
+                <div class="card-title">Vender mi dispositivo</div>
+                <div class="card-subtitle">Trade-in inmediato</div>
             </div>
-            <span class="card-tag">Trade-In</span>
-            <h2 class="card-title">Vender mi Equipo</h2>
-            <p class="card-desc">Cotiza tu dispositivo actual y úsalo como abono para tu próxima compra.</p>
         </a>
 
-        <a href="reparar.html" class="glass-card card-repair nav-link">
-            <div class="image-visual-space">
-                <div class="vector-icon v-repair"></div>
+        <a href="reparar.html" class="tilt-card">
+            <div class="card-icon">🔧</div>
+            <div class="card-text">
+                <div class="card-title">Servicio Técnico</div>
+                <div class="card-subtitle">Reparaciones garantizadas</div>
             </div>
-            <span class="card-tag">Technical Service</span>
-            <h2 class="card-title">Servicio Técnico</h2>
-            <p class="card-desc">Diagnóstico, cambios de pantalla, baterías y reparaciones en placa base.</p>
         </a>
 
-        <a href="laptops.html" class="glass-card card-laptop nav-link">
-            <div class="image-visual-space">
-                <div class="vector-icon v-laptop"></div>
+        <a href="laptops.html" class="tilt-card">
+            <div class="card-icon">💻</div>
+            <div class="card-text">
+                <div class="card-title">Laptops & Sistemas</div>
+                <div class="card-subtitle">Mantenimiento y software</div>
             </div>
-            <span class="card-tag">System & IT</span>
-            <h2 class="card-title">Laptops & Sistemas</h2>
-            <p class="card-desc">Mantenimiento, formateo y optimización de computadoras.</p>
         </a>
-
     </div>
 
     <div class="social-bar">
-        <a href="https://wa.me/50767966691" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" class="social-icon" alt="WhatsApp"></a>
-        <a href="https://www.instagram.com/tecnotradepty/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="social-icon" alt="Instagram"></a>
+        <a href="https://wa.me/50767966691"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" class="social-icon"></a>
+        <a href="https://www.instagram.com/tecnotradepty/"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="social-icon"></a>
     </div>
 
-    <script>
-        // 1. TRANSICIÓN DE SALIDA SUAVE
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const destination = this.getAttribute('href');
-                
-                // Previene el salto brusco
-                e.preventDefault();
-                
-                // Aplica el efecto de difuminado a todo el contenido
-                document.getElementById('header-box').classList.add('page-exit');
-                document.getElementById('menu-grid').classList.add('page-exit');
-                
-                // Cambia de página después de la animación
-                setTimeout(() => {
-                    window.location.assign(destination);
-                }, 400);
-            });
-        });
-
-        // 2. GIRO FÍSICO 3D PARA DISPOSITIVOS DE ESCRITORIO
-        if (window.innerWidth > 768) {
-            const cards = document.querySelectorAll('.glass-card');
-            
-            cards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = (e.clientX - rect.left) / rect.width - 0.5;
-                    const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-                    const degX = (y * -20).toFixed(2);
-                    const degY = (x * 20).toFixed(2);
-
-                    card.style.transform = `rotateX(${degX}deg) rotateY(${degY}deg) scale3d(1.04, 1.04, 1.04)`;
-                    
-                    // Sombra dinámica según el color de la tarjeta
-                    if(card.classList.contains('card-buy')) card.style.boxShadow = `${-degY * 2}px ${degX * 2}px 40px rgba(0, 240, 255, 0.15), 0 15px 40px rgba(0,0,0,0.5)`;
-                    if(card.classList.contains('card-sell')) card.style.boxShadow = `${-degY * 2}px ${degX * 2}px 40px rgba(57, 255, 20, 0.15), 0 15px 40px rgba(0,0,0,0.5)`;
-                    if(card.classList.contains('card-repair')) card.style.boxShadow = `${-degY * 2}px ${degX * 2}px 40px rgba(189, 0, 255, 0.15), 0 15px 40px rgba(0,0,0,0.5)`;
-                    if(card.classList.contains('card-laptop')) card.style.boxShadow = `${-degY * 2}px ${degX * 2}px 40px rgba(0, 255, 204, 0.15), 0 15px 40px rgba(0,0,0,0.5)`;
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                    card.style.boxShadow = `0 15px 35px rgba(0,0,0,0.4)`;
-                });
-            });
-        }
-    </script>
 </body>
 </html>
