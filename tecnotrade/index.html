@@ -31,49 +31,69 @@
         }
 
         header {
-            max-width: 1000px;
+            max-width: 1060px;
             margin: 0 auto;
-            padding: 30px 20px;
-            text-align: center;
+            padding: 24px 20px;
             border-bottom: 1px solid var(--border-color);
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            justify-content: space-between;
+            gap: 20px;
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
+            box-sizing: border-box;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
         .logo {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 800;
             letter-spacing: -1px;
             margin: 0;
             background: linear-gradient(135deg, #ffffff 0%, var(--accent-color) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.1;
         }
 
         .subtitle {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-muted);
             margin: 0;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-transform: uppercase;
         }
 
         .social-links {
             display: flex;
             gap: 12px;
-            margin-top: 10px;
         }
 
         .social-btn {
-            padding: 8px 18px;
+            padding: 10px 20px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: 600;
@@ -168,7 +188,7 @@
         }
 
         .variant-price {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             color: #fff;
             background: var(--badge-bg);
@@ -201,16 +221,34 @@
         .btn-order:hover {
             background: var(--accent-color);
         }
+
+        /* Responsive para el header */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            .brand-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 class="logo">TecnoTrade</h1>
-        <p class="subtitle">Disponibilidad de iPhone</p>
+        <div class="brand-container">
+            <img class="brand-logo" src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" alt="TecnoTrade Logo">
+            <div class="header-text">
+                <h1 class="logo">TecnoTrade</h1>
+                <p class="subtitle">Disponibilidad de iPhone</p>
+            </div>
+        </div>
         <div class="social-links">
             <a href="https://wa.me/tu_numero" class="social-btn btn-ws" target="_blank">WhatsApp</a>
-            <a href="https://instagram.com/tu_usuario" class="social-btn btn-ig" target="_blank">Instagram</a>
+            <a href="https://www.instagram.com/tecnotradepty/" class="social-btn btn-ig" target="_blank">Instagram</a>
         </div>
     </header>
 
@@ -219,88 +257,87 @@
         <!-- SERIE IPHONE 17 -->
         <div class="product-card">
             <div class="card-header-info">
-                <span class="series-status">Último Lanzamiento</span>
+                <span class="series-status">Próximo Lanzamiento</span>
                 <h2 class="series-title">iPhone Serie 17</h2>
             </div>
             <div class="variants-list">
                 <div class="variant-item">
                     <span class="variant-name">iPhone 17</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 850$</span>
                 </div>
                 <div class="variant-item">
-                    <span class="variant-name">iPhone 17 Slim / Air</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-name">iPhone 17 Plus</span>
+                    <span class="variant-price">Desde 1000$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 17 Pro</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 1100$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 17 Pro Max</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 1200$</span>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2017" class="btn-order" target="_blank">Cotizar Serie 17</a>
+                <a href="https://wa.me/tu_numero?text=Hola,%20quiero%20comprar%20un%20dispositivo%20de%20la%20Serie%2017" class="btn-order" target="_blank">Comprar Serie 17</a>
             </div>
         </div>
 
         <!-- SERIE IPHONE 16 -->
         <div class="product-card">
             <div class="card-header-info">
-                <span class="series-status">Destacado</span>
+                <span class="series-status">Último Modelo</span>
                 <h2 class="series-title">iPhone Serie 16</h2>
             </div>
             <div class="variants-list">
                 <div class="variant-item">
                     <span class="variant-name">iPhone 16</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 525$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 16 Plus</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 560$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 16 Pro</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 650$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 16 Pro Max</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 740$</span>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2016" class="btn-order" target="_blank">Cotizar Serie 16</a>
+                <a href="https://wa.me/tu_numero?text=Hola,%20quiero%20comprar%20un%20dispositivo%20de%20la%20Serie%2016" class="btn-order" target="_blank">Comprar Serie 16</a>
             </div>
         </div>
 
-        <!-- SERIE IPHONE 13 -->
         <!-- SERIE IPHONE 15 -->
         <div class="product-card">
             <div class="card-header-info">
-                <span class="series-status">Disponible</span>
+                <span class="series-status">Popular</span>
                 <h2 class="series-title">iPhone Serie 15</h2>
             </div>
             <div class="variants-list">
                 <div class="variant-item">
                     <span class="variant-name">iPhone 15</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 350$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 15 Plus</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 400$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 15 Pro</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 450$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 15 Pro Max</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 540$</span>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2015" class="btn-order" target="_blank">Cotizar Serie 15</a>
+                <a href="https://wa.me/tu_numero?text=Hola,%20quiero%20comprar%20un%20dispositivo%20de%20la%20Serie%2015" class="btn-order" target="_blank">Comprar Serie 15</a>
             </div>
         </div>
 
@@ -313,23 +350,23 @@
             <div class="variants-list">
                 <div class="variant-item">
                     <span class="variant-name">iPhone 14</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 250$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 14 Plus</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 270$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 14 Pro</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 330$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 14 Pro Max</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 400$</span>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2014" class="btn-order" target="_blank">Cotizar Serie 14</a>
+                <a href="https://wa.me/tu_numero?text=Hola,%20quiero%20comprar%20un%20dispositivo%20de%20la%20Serie%2014" class="btn-order" target="_blank">Comprar Serie 14</a>
             </div>
         </div>
 
@@ -342,23 +379,23 @@
             <div class="variants-list">
                 <div class="variant-item">
                     <span class="variant-name">iPhone 13 Mini</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 200$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 13</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 225$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 13 Pro</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 300$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 13 Pro Max</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 340$</span>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2013" class="btn-order" target="_blank">Cotizar Serie 13</a>
+                <a href="https://wa.me/tu_numero?text=Hola,%20quiero%20comprar%20un%20dispositivo%20de%20la%20Serie%2013" class="btn-order" target="_blank">Comprar Serie 13</a>
             </div>
         </div>
 
@@ -371,23 +408,23 @@
             <div class="variants-list">
                 <div class="variant-item">
                     <span class="variant-name">iPhone 12 Mini</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 125$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 12</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 150$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 12 Pro</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 200$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 12 Pro Max</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 250$</span>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2012" class="btn-order" target="_blank">Cotizar Serie 12</a>
+                <a href="https://wa.me/tu_numero?text=Hola,%20quiero%20comprar%20un%20dispositivo%20de%20la%20Serie%2012" class="btn-order" target="_blank">Comprar Serie 12</a>
             </div>
         </div>
 
@@ -400,19 +437,19 @@
             <div class="variants-list">
                 <div class="variant-item">
                     <span class="variant-name">iPhone 11</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 130$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 11 Pro</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 150$</span>
                 </div>
                 <div class="variant-item">
                     <span class="variant-name">iPhone 11 Pro Max</span>
-                    <span class="variant-price">Consultar</span>
+                    <span class="variant-price">Desde 190$</span>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="https://wa.me/tu_numero?text=Hola,%20solicito%20info%20del%20iPhone%2011" class="btn-order" target="_blank">Cotizar Serie 11</a>
+                <a href="https://wa.me/tu_numero?text=Hola,%20quiero%20comprar%20un%20dispositivo%20de%20la%20Serie%2011" class="btn-order" target="_blank">Comprar Serie 11</a>
             </div>
         </div>
 
