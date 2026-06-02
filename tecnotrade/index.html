@@ -9,8 +9,8 @@
             --text-color: #ffffff;
             --text-muted: #cbd5e1;
             --accent-color: #60a5fa; 
-            --card-bg: rgba(255, 255, 255, 0.08); 
-            --border-color: rgba(255, 255, 255, 0.15);
+            --card-bg: rgba(255, 255, 255, 0.06); 
+            --border-color: rgba(255, 255, 255, 0.12);
             --whatsapp-color: #22c55e;
             --instagram-color: #db2777;
         }
@@ -21,14 +21,14 @@
             color: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
-            background-color: #090d16;
+            background-color: #070a12;
             min-height: 100vh;
             overflow-x: hidden;
-            /* Activamos el desplazamiento suave nativo */
             scroll-behavior: smooth;
+            perspective: 1000px; /* Habilita el espacio 3D para toda la web */
         }
 
-        /* Contenedor del fondo interactivo por Scroll */
+        /* Fondo interactivo por Scroll */
         .background-parallax {
             position: fixed;
             top: -10%;
@@ -41,10 +41,10 @@
             background-repeat: no-repeat;
             z-index: -1;
             will-change: transform;
-            /* Transición suave para que el movimiento del metal líquido no sea brusco */
-            transition: transform 0.2s cubic-bezier(0.1, 0.8, 0.3, 1);
+            transition: transform 0.3s cubic-bezier(0.1, 0.8, 0.3, 1);
         }
 
+        /* Animación inicial de entrada para el Header */
         header {
             position: relative;
             z-index: 10;
@@ -52,7 +52,7 @@
             margin: 20px auto 0 auto;
             padding: 24px 20px;
             border: 1px solid var(--border-color);
-            background: rgba(255, 255, 255, 0.05); 
+            background: rgba(255, 255, 255, 0.04); 
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             display: flex;
@@ -63,6 +63,7 @@
             border-radius: 24px;
             box-sizing: border-box;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 0.8s ease-out forwards;
         }
 
         .brand-container {
@@ -77,6 +78,10 @@
             object-fit: contain;
             border-radius: 50%;
             border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+        header:hover .brand-logo {
+            transform: rotate(360deg); /* El logo gira suavemente al pasar sobre el header */
         }
 
         .header-text {
@@ -117,17 +122,19 @@
             font-weight: 600;
             text-decoration: none;
             color: white;
-            transition: transform 0.2s, opacity 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .social-btn:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
+            transform: translateY(-3px);
         }
+        .btn-ws:hover { box-shadow: 0 0 15px rgba(34, 197, 94, 0.5); }
+        .btn-ig:hover { box-shadow: 0 0 15px rgba(219, 39, 119, 0.5); }
 
         .btn-ws { background-color: var(--whatsapp-color); }
         .btn-ig { background-color: var(--instagram-color); }
 
+        /* Cuadrícula de Catálogo con soporte 3D */
         .catalog-container {
             position: relative;
             z-index: 10;
@@ -137,30 +144,41 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
+            transform-style: preserve-3d;
         }
 
+        /* Estructura base de las Tarjetas Premium */
         .product-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 28px;
             overflow: hidden;
-            transition: transform 0.3s ease, border-color 0.3s, box-shadow 0.3s;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d; /* Permite que los elementos internos salgan en 3D */
+            will-change: transform, box-shadow;
+            transition: transform 0.1s ease, border-color 0.3s, box-shadow 0.1s;
+            opacity: 0; /* Oculto inicialmente para animación en cascada */
+            animation: fadeInUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        .product-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(255, 255, 255, 0.35);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-        }
+        /* Retardos de la cascada para cada tarjeta */
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+        .product-card:nth-child(7) { animation-delay: 0.7s; }
+        .product-card:nth-child(8) { animation-delay: 0.8s; }
 
         .card-header-info {
             padding: 24px 24px 15px 24px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transform: translateZ(30px); /* Saca el título hacia adelante en el eje Z */
         }
 
         .series-title {
@@ -168,6 +186,7 @@
             font-size: 24px;
             font-weight: 700;
             letter-spacing: -0.5px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .series-status {
@@ -186,8 +205,10 @@
             flex-direction: column;
             gap: 12px;
             flex-grow: 1;
+            transform: translateZ(20px);
         }
 
+        /* Filas de modelos interactivas con brillo líquido */
         .variant-item {
             display: flex;
             justify-content: space-between;
@@ -198,13 +219,16 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             text-decoration: none;
             color: var(--text-color);
-            transition: background 0.2s, transform 0.2s, border-color 0.2s;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s, border-color 0.3s, transform 0.2s, box-shadow 0.3s;
         }
 
         .variant-item:hover {
             background: rgba(255, 255, 255, 0.12);
             border-color: var(--accent-color);
-            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(96, 165, 250, 0.2);
+            transform: scale(1.02) translateZ(10px);
         }
 
         .variant-name {
@@ -219,15 +243,34 @@
             padding: 6px 12px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: transform 0.2s;
+        }
+        .variant-item:hover .variant-price {
+            transform: scale(1.05);
         }
 
+        /* Estilo especial Neon-Green para Android */
         .android-card .series-status { color: #4ade80; }
         .android-card .variant-price {
             color: #4ade80;
             background: rgba(74, 222, 128, 0.1);
             border-color: rgba(74, 222, 128, 0.2);
         }
-        .android-card .variant-item:hover { border-color: #4ade80; }
+        .android-card .variant-item:hover { 
+            border-color: #4ade80; 
+            box-shadow: 0 0 15px rgba(74, 222, 128, 0.2);
+        }
+
+        /* Animaciones clave de fotogramas (CSS Keyframes) */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px) translateZ(-50px); }
+            to { opacity: 1; transform: translateY(0) translateZ(0); }
+        }
 
         @media (max-width: 600px) {
             header {
@@ -243,7 +286,7 @@
 </head>
 <body>
 
-    <!-- Capa del Fondo Líquido Interactivo por Scroll -->
+    <!-- Capa del Fondo Parallax -->
     <div class="background-parallax" id="liquid-bg"></div>
 
     <header>
@@ -472,23 +515,45 @@
 
     </main>
 
-    <!-- SCRIPT DE INTERACTIVIDAD POR SCROLL (EFECTO PARALLAX) -->
+    <!-- MOTOR DE INTERACTIVIDAD 3D AVANZADA (TILT & SCROLL EFFECT) -->
     <script>
         const liquidBg = document.getElementById('liquid-bg');
+        const cards = document.querySelectorAll('.product-card');
 
+        // 1. Efecto Parallax en el Fondo Líquido al hacer Scroll
         window.addEventListener('scroll', () => {
-            // Calculamos cuánto ha bajado el usuario en la pantalla
             let scrollPosition = window.pageYOffset;
-            
-            // Movemos el fondo a una velocidad controlada (0.15) para un efecto suave
-            let translateY = scrollPosition * 0.15;
-            
-            // Añadimos una escala ligera para simular que el metal líquido se deforma/reacciona
-            let scale = 1 + (scrollPosition * 0.0001);
-
-            // Aplicamos los cambios al fondo en tiempo real
+            let translateY = scrollPosition * 0.12;
+            let scale = 1 + (scrollPosition * 0.00008);
             liquidBg.style.transform = `translateY(${translateY}px) scale(${scale})`;
         });
+
+        // 2. Efecto Tilt 3D Físico en las Tarjetas (Solo Computadora por ergonomía táctil)
+        if (window.innerWidth > 768) {
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const cardRect = card.getBoundingClientRect();
+                    
+                    // Calcular posición relativa del cursor dentro de la tarjeta (-0.5 a 0.5)
+                    const x = (e.clientX - cardRect.left) / cardRect.width - 0.5;
+                    const y = (e.clientY - cardRect.top) / cardRect.height - 0.5;
+                    
+                    // Multiplicador de fuerza del ángulo de inclinación
+                    const tiltX = (y * -18).toFixed(2); 
+                    const tiltY = (x * 18).toFixed(2);
+
+                    // Aplicar la transformación 3D e incrementar la sombra proyectada
+                    card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.03, 1.03, 1.03)`;
+                    card.style.boxShadow = `${-tiltY * 1.5}px ${tiltX * 1.5}px 35px rgba(0, 0, 0, 0.45), 0 0 20px rgba(255,255,255,0.05)`;
+                });
+
+                // Restaurar posición física original al sacar el cursor
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                    card.style.boxShadow = `0 10px 25px rgba(0, 0, 0, 0.2)`;
+                });
+            });
+        }
     </script>
 </body>
 </html>
