@@ -19,68 +19,66 @@
             --nav-bg: rgba(10, 10, 15, 0.95);
         }
 
-        body {
+        /* 1. BLOQUEO TOTAL PARA LA BARRA FIJA (Estilo App Nativa) */
+        html, body {
+            width: 100%;
+            height: 100%;
             margin: 0;
             padding: 0;
+            overflow: hidden; /* Congela el fondo para que la barra no se mueva */
             background-color: var(--bg-dark);
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
-            min-height: 100vh;
-            overflow-x: hidden;
-            /* La perspectiva 3D global fue removida de aquí para no romper la barra fija */
         }
+
+        /* 2. CAJA DE SCROLL INTERNA */
+        .app-container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-bottom: 100px; /* Deja espacio para que el último producto no quede tapado por el menú */
+            scrollbar-width: none;
+        }
+        .app-container::-webkit-scrollbar { display: none; }
 
         /* MATRIZ DE FONDO Y ORBES */
         .motion-bg-container {
-            position: fixed; top: -10%; left: -10%; width: 120%; height: 120%; z-index: -2;
-            overflow: hidden; background: var(--bg-dark); pointer-events: none;
-            will-change: transform; transition: transform 0.4s cubic-bezier(0.1, 0.6, 0.2, 1);
-        }
-        .cyber-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: -10px; left: -10px; right: -10px; bottom: -10px; z-index: -2;
             background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
-            background-size: cover; background-position: center; background-repeat: no-repeat;
-            filter: contrast(1.15) brightness(0.75);
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0) 100%);
-            z-index: 1;
+            background-size: cover; background-position: center; filter: contrast(1.15) brightness(0.35) blur(4px);
+            pointer-events: none;
         }
-        .neon-orb { position: absolute; border-radius: 50%; filter: blur(140px); mix-blend-mode: screen; opacity: 0.25; z-index: 0; }
-        .orb-top-left { width: 450px; height: 450px; background: var(--neon-blue); top: 5%; left: 5%; }
-        .orb-mid-right { width: 500px; height: 500px; background: var(--neon-purple); top: 25%; right: 5%; }
-        .orb-bottom-left { width: 500px; height: 500px; background: var(--neon-purple); top: 45%; left: -5%; opacity: 0; }
-        .orb-bottom-right { width: 550px; height: 550px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-green)); top: 55%; right: -5%; opacity: 0; }
 
         /* HEADER */
         header {
-            max-width: 1100px; margin: 30px auto; padding: 30px;
+            max-width: 1100px; margin: 30px 20px; padding: 25px;
             background: rgba(3, 5, 9, 0.6); border: 1px solid var(--border-glass);
             border-radius: 32px; backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center;
         }
-        .logo-block { display: flex; align-items: center; gap: 20px; }
-        .brand-logo { width: 65px; height: 65px; border-radius: 22px; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 0 25px rgba(0, 240, 255, 0.25); }
-        .logo-title { font-size: 38px; font-weight: 900; letter-spacing: -1.5px; margin: 0; background: linear-gradient(90deg, #fff, var(--text-glow), var(--neon-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle { font-size: 12px; text-transform: uppercase; letter-spacing: 3px; color: var(--neon-cyan); font-weight: 700; margin-top: 2px; }
+        .brand-logo { width: 60px; height: 60px; border-radius: 20px; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 0 25px rgba(0, 240, 255, 0.25); }
+        .logo-title { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin: 0; background: linear-gradient(90deg, #fff, var(--text-glow), var(--neon-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { font-size: 11px; text-transform: uppercase; letter-spacing: 3px; color: var(--neon-cyan); font-weight: 700; margin-top: 2px; }
 
-        /* CUADRÍCULA Y TARJETAS */
+        /* CUADRÍCULA DE SECCIONES */
         .grid-wrapper {
-            max-width: 1150px; margin: 40px auto; padding: 0 20px 120px 20px;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; transform-style: preserve-3d;
-            perspective: 1200px; /* La perspectiva se queda solo aquí para no afectar la barra */
+            max-width: 1150px; margin: 20px auto; padding: 0 20px 40px 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
         }
         .glass-card {
             background: var(--card-glass); border: 1px solid var(--border-glass);
-            border-radius: 36px; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            padding: 24px; display: flex; flex-direction: column; transform-style: preserve-3d;
+            border-radius: 32px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 20px; display: flex; flex-direction: column;
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
-        /* EFECTOS VISUALES 3D */
+        /* EFECTOS VISUALES 3D DEL TELÉFONO */
         .image-visual-space {
-            width: 100%; height: 160px; background: rgba(255,255,255,0.01);
-            border-radius: 24px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.03); transform: translateZ(40px);
+            width: 100%; height: 140px; background: rgba(255,255,255,0.01);
+            border-radius: 20px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.03);
         }
         .image-visual-space::after {
             content: ''; position: absolute; width: 100%; height: 2px;
@@ -91,48 +89,55 @@
         @keyframes scanLaser { 0% { top: -10%; } 100% { top: 110%; } }
 
         .vector-phone {
-            width: 70px; height: 120px; border: 3px solid rgba(255,255,255,0.2); border-radius: 16px; position: relative; background: rgba(0, 0, 0, 0.3);
+            width: 60px; height: 110px; border: 3px solid rgba(255,255,255,0.2); border-radius: 14px; position: relative; background: rgba(0, 0, 0, 0.3);
         }
-        .vector-phone::before { content: ''; position: absolute; top: 10px; left: 10px; width: 22px; height: 35px; border: 2px solid rgba(255,255,255,0.12); border-radius: 8px; }
+        .vector-phone::before { content: ''; position: absolute; top: 8px; left: 8px; width: 20px; height: 30px; border: 2px solid rgba(255,255,255,0.12); border-radius: 6px; }
 
-        .card-tag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--neon-blue); margin-bottom: 6px; transform: translateZ(25px); }
+        .card-tag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--neon-blue); margin-bottom: 6px; }
         .android-card .card-tag { color: var(--neon-green); }
-        .card-main-title { font-size: 26px; font-weight: 800; margin: 0 0 20px 0; letter-spacing: -0.5px; transform: translateZ(30px); }
+        .card-main-title { font-size: 24px; font-weight: 800; margin: 0 0 15px 0; letter-spacing: -0.5px; }
 
-        /* FILAS INTERACTIVAS */
-        .list-container { display: flex; flex-direction: column; gap: 14px; transform: translateZ(20px); }
+        /* 3. NUEVO LAYOUT DE PRODUCTOS: 2 COLUMNAS (GRID) */
+        .list-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
         .interactive-row {
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255, 255, 255, 0.02); padding: 16px 20px;
-            border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 8px;
+            background: rgba(255, 255, 255, 0.02); padding: 16px 10px;
+            border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.03);
             text-decoration: none; color: #fff; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .model-name { font-size: 16px; font-weight: 700; }
+        .interactive-row:active {
+            transform: scale(0.95); background: rgba(255, 255, 255, 0.07);
+        }
+        .model-name { font-size: 13px; font-weight: 700; line-height: 1.2; }
         .model-price {
-            font-size: 13px; font-weight: 800; background: rgba(255,255,255,0.05);
-            padding: 6px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); transition: all 0.2s;
+            font-size: 11px; font-weight: 800; background: rgba(255,255,255,0.05);
+            padding: 5px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08);
         }
 
-        /* EFECTO DE RESALTADO AL BUSCAR (LA MAGIA) */
+        /* EFECTO DE RESALTADO AL BUSCAR */
         .highlight-target {
             border-color: var(--neon-cyan) !important;
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.4) !important;
-            background: rgba(0, 255, 204, 0.05) !important;
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.5) !important;
+            background: rgba(0, 255, 204, 0.1) !important;
             animation: highlightPulse 2s ease-in-out infinite;
-            z-index: 10;
         }
         @keyframes highlightPulse {
-            0% { transform: scale(1) translateZ(10px); }
-            50% { transform: scale(1.03) translateZ(20px); }
-            100% { transform: scale(1) translateZ(10px); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        /* BOTTOM NAVBAR (Fija 100%) */
+        /* BOTTOM NAVBAR (A prueba de fallos) */
         .bottom-nav {
-            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px;
+            position: fixed; bottom: 0; left: 0; width: 100%;
             background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-around; padding: 12px 0 20px 0; 
-            z-index: 9999; /* Prioridad máxima sobre toda la pantalla */
+            z-index: 9999;
         }
         .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--text-muted); position: relative; }
         .nav-tab.active { color: var(--neon-cyan); }
@@ -142,222 +147,212 @@
             position: absolute; top: -4px; right: -4px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800;
             width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-dark);
         }
-
-        @media (max-width: 768px) {
-            header { flex-direction: column; text-align: center; gap: 20px; margin: 15px; }
-            .grid-wrapper { gap: 25px; padding-bottom: 100px; }
-        }
     </style>
 </head>
 <body>
 
-    <div class="motion-bg-container" id="master-bg">
-        <div class="cyber-bg" id="metal-layer"></div>
-        <div class="neon-orb orb-top-left"></div>
-        <div class="neon-orb orb-mid-right"></div>
-        <div class="neon-orb orb-bottom-left" id="lower-purple"></div>
-        <div class="neon-orb orb-bottom-right" id="lower-cyan"></div>
-    </div>
+    <div class="motion-bg-container"></div>
 
-    <header>
-        <div class="logo-block">
+    <!-- TODO EL CONTENIDO SCROLLEABLE VA AQUÍ DENTRO -->
+    <div class="app-container" id="scroll-box">
+        <header>
             <img class="brand-logo" src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" alt="TecnoTrade Logo">
             <div class="header-text">
                 <h1 class="logo-title">TecnoTrade</h1>
                 <div class="subtitle">Next-Gen Catalog</div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <main class="grid-wrapper">
+        <main class="grid-wrapper">
 
-        <!-- TARGETA: CONSULTA TU ANDROID -->
-        <div class="glass-card android-card">
-            <div class="image-visual-space"><div class="vector-phone" style="border-radius: 8px;"></div></div>
-            <div class="card-header-info">
-                <span class="card-tag">Multi-Brand</span>
-                <h2 class="card-main-title">Consulta Android</h2>
+            <!-- CONSULTA TU ANDROID -->
+            <div class="glass-card android-card">
+                <div class="image-visual-space"><div class="vector-phone" style="border-radius: 8px;"></div></div>
+                <div class="card-header-info">
+                    <span class="card-tag">Multi-Brand</span>
+                    <h2 class="card-main-title">Consulta Android</h2>
+                </div>
+                <div class="list-container">
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Samsung." id="android-samsung" class="interactive-row" target="_blank">
+                        <span class="model-name">Samsung</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Honor." id="android-honor" class="interactive-row" target="_blank">
+                        <span class="model-name">Honor</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Xiaomi." id="android-xiaomi" class="interactive-row" target="_blank">
+                        <span class="model-name">Xiaomi</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Google%20Pixel." id="android-pixel" class="interactive-row" target="_blank">
+                        <span class="model-name">Pixel</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Redmi." id="android-redmi" class="interactive-row" target="_blank">
+                        <span class="model-name">Redmi</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
+                    </a>
+                </div>
             </div>
-            <div class="list-container">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Samsung." id="android-samsung" class="interactive-row" target="_blank">
-                    <span class="model-name">Samsung</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Honor." id="android-honor" class="interactive-row" target="_blank">
-                    <span class="model-name">Honor</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Xiaomi." id="android-xiaomi" class="interactive-row" target="_blank">
-                    <span class="model-name">Xiaomi</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Google%20Pixel." id="android-pixel" class="interactive-row" target="_blank">
-                    <span class="model-name">Pixel</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Redmi." id="android-redmi" class="interactive-row" target="_blank">
-                    <span class="model-name">Redmi</span><span class="model-price" style="color: var(--neon-green);">Cotizar</span>
-                </a>
-            </div>
-        </div>
 
-        <!-- SERIE IPHONE 17 -->
-        <div class="glass-card">
-            <div class="image-visual-space"><div class="vector-phone"></div></div>
-            <div class="card-header-info">
-                <span class="card-tag">Concept Line</span>
-                <h2 class="card-main-title">iPhone Serie 17</h2>
+            <!-- SERIE IPHONE 17 -->
+            <div class="glass-card">
+                <div class="image-visual-space"><div class="vector-phone"></div></div>
+                <div class="card-header-info">
+                    <span class="card-tag">Concept Line</span>
+                    <h2 class="card-main-title">iPhone Serie 17</h2>
+                </div>
+                <div class="list-container">
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017." id="iphone-17" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 17</span><span class="model-price">Desde 850$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017%20Plus." id="iphone-17-plus" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 17 Plus</span><span class="model-price">Desde 1000$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017%20Pro." id="iphone-17-pro" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 17 Pro</span><span class="model-price">Desde 1100$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017%20Pro%20Max." id="iphone-17-pro-max" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 17 Pro Max</span><span class="model-price">Desde 1200$</span>
+                    </a>
+                </div>
             </div>
-            <div class="list-container">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017." id="iphone-17" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 17</span><span class="model-price">Desde 850$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017%20Plus." id="iphone-17-plus" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 17 Plus</span><span class="model-price">Desde 1000$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017%20Pro." id="iphone-17-pro" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 17 Pro</span><span class="model-price">Desde 1100$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017%20Pro%20Max." id="iphone-17-pro-max" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 17 Pro Max</span><span class="model-price">Desde 1200$</span>
-                </a>
-            </div>
-        </div>
 
-        <!-- SERIE IPHONE 16 -->
-        <div class="glass-card">
-            <div class="image-visual-space"><div class="vector-phone"></div></div>
-            <div class="card-header-info">
-                <span class="card-tag">Flagship Core</span>
-                <h2 class="card-main-title">iPhone Serie 16</h2>
+            <!-- SERIE IPHONE 16 -->
+            <div class="glass-card">
+                <div class="image-visual-space"><div class="vector-phone"></div></div>
+                <div class="card-header-info">
+                    <span class="card-tag">Flagship Core</span>
+                    <h2 class="card-main-title">iPhone Serie 16</h2>
+                </div>
+                <div class="list-container">
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016." id="iphone-16" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 16</span><span class="model-price">Desde 525$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016%20Plus." id="iphone-16-plus" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 16 Plus</span><span class="model-price">Desde 560$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016%20Pro." id="iphone-16-pro" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 16 Pro</span><span class="model-price">Desde 650$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016%20Pro%20Max." id="iphone-16-pro-max" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 16 Pro Max</span><span class="model-price">Desde 740$</span>
+                    </a>
+                </div>
             </div>
-            <div class="list-container">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016." id="iphone-16" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 16</span><span class="model-price">Desde 525$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016%20Plus." id="iphone-16-plus" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 16 Plus</span><span class="model-price">Desde 560$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016%20Pro." id="iphone-16-pro" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 16 Pro</span><span class="model-price">Desde 650$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016%20Pro%20Max." id="iphone-16-pro-max" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 16 Pro Max</span><span class="model-price">Desde 740$</span>
-                </a>
-            </div>
-        </div>
 
-        <!-- SERIE IPHONE 15 -->
-        <div class="glass-card">
-            <div class="image-visual-space"><div class="vector-phone"></div></div>
-            <div class="card-header-info">
-                <span class="card-tag">Hot Choice</span>
-                <h2 class="card-main-title">iPhone Serie 15</h2>
+            <!-- SERIE IPHONE 15 -->
+            <div class="glass-card">
+                <div class="image-visual-space"><div class="vector-phone"></div></div>
+                <div class="card-header-info">
+                    <span class="card-tag">Hot Choice</span>
+                    <h2 class="card-main-title">iPhone Serie 15</h2>
+                </div>
+                <div class="list-container">
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015." id="iphone-15" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 15</span><span class="model-price">Desde 350$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015%20Plus." id="iphone-15-plus" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 15 Plus</span><span class="model-price">Desde 400$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015%20Pro." id="iphone-15-pro" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 15 Pro</span><span class="model-price">Desde 450$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015%20Pro%20Max." id="iphone-15-pro-max" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 15 Pro Max</span><span class="model-price">Desde 540$</span>
+                    </a>
+                </div>
             </div>
-            <div class="list-container">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015." id="iphone-15" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 15</span><span class="model-price">Desde 350$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015%20Plus." id="iphone-15-plus" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 15 Plus</span><span class="model-price">Desde 400$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015%20Pro." id="iphone-15-pro" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 15 Pro</span><span class="model-price">Desde 450$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015%20Pro%20Max." id="iphone-15-pro-max" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 15 Pro Max</span><span class="model-price">Desde 540$</span>
-                </a>
-            </div>
-        </div>
 
-        <!-- SERIE IPHONE 14 -->
-        <div class="glass-card">
-            <div class="image-visual-space"><div class="vector-phone"></div></div>
-            <div class="card-header-info">
-                <span class="card-tag">Performance</span>
-                <h2 class="card-main-title">iPhone Serie 14</h2>
+            <!-- SERIE IPHONE 14 -->
+            <div class="glass-card">
+                <div class="image-visual-space"><div class="vector-phone"></div></div>
+                <div class="card-header-info">
+                    <span class="card-tag">Performance</span>
+                    <h2 class="card-main-title">iPhone Serie 14</h2>
+                </div>
+                <div class="list-container">
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014." id="iphone-14" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 14</span><span class="model-price">Desde 250$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014%20Plus." id="iphone-14-plus" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 14 Plus</span><span class="model-price">Desde 270$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014%20Pro." id="iphone-14-pro" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 14 Pro</span><span class="model-price">Desde 330$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014%20Pro%20Max." id="iphone-14-pro-max" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 14 Pro Max</span><span class="model-price">Desde 400$</span>
+                    </a>
+                </div>
             </div>
-            <div class="list-container">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014." id="iphone-14" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 14</span><span class="model-price">Desde 250$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014%20Plus." id="iphone-14-plus" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 14 Plus</span><span class="model-price">Desde 270$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014%20Pro." id="iphone-14-pro" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 14 Pro</span><span class="model-price">Desde 330$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014%20Pro%20Max." id="iphone-14-pro-max" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 14 Pro Max</span><span class="model-price">Desde 400$</span>
-                </a>
-            </div>
-        </div>
 
-        <!-- SERIE IPHONE 13 -->
-        <div class="glass-card">
-            <div class="image-visual-space"><div class="vector-phone"></div></div>
-            <div class="card-header-info">
-                <span class="card-tag">Value Choice</span>
-                <h2 class="card-main-title">iPhone Serie 13</h2>
+            <!-- SERIE IPHONE 13 -->
+            <div class="glass-card">
+                <div class="image-visual-space"><div class="vector-phone"></div></div>
+                <div class="card-header-info">
+                    <span class="card-tag">Value Choice</span>
+                    <h2 class="card-main-title">iPhone Serie 13</h2>
+                </div>
+                <div class="list-container">
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013%20Mini." id="iphone-13-mini" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 13 Mini</span><span class="model-price">Desde 200$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013." id="iphone-13" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 13</span><span class="model-price">Desde 225$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013%20Pro." id="iphone-13-pro" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 13 Pro</span><span class="model-price">Desde 300$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013%20Pro%20Max." id="iphone-13-pro-max" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 13 Pro Max</span><span class="model-price">Desde 340$</span>
+                    </a>
+                </div>
             </div>
-            <div class="list-container">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013%20Mini." id="iphone-13-mini" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 13 Mini</span><span class="model-price">Desde 200$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013." id="iphone-13" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 13</span><span class="model-price">Desde 225$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013%20Pro." id="iphone-13-pro" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 13 Pro</span><span class="model-price">Desde 300$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013%20Pro%20Max." id="iphone-13-pro-max" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 13 Pro Max</span><span class="model-price">Desde 340$</span>
-                </a>
-            </div>
-        </div>
 
-        <!-- SERIE IPHONE 12 -->
-        <div class="glass-card">
-            <div class="image-visual-space"><div class="vector-phone"></div></div>
-            <div class="card-header-info">
-                <span class="card-tag">Budget-Friendly</span>
-                <h2 class="card-main-title">iPhone Serie 12</h2>
+            <!-- SERIE IPHONE 12 -->
+            <div class="glass-card">
+                <div class="image-visual-space"><div class="vector-phone"></div></div>
+                <div class="card-header-info">
+                    <span class="card-tag">Budget-Friendly</span>
+                    <h2 class="card-main-title">iPhone Serie 12</h2>
+                </div>
+                <div class="list-container">
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012%20Mini." id="iphone-12-mini" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 12 Mini</span><span class="model-price">Desde 125$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012." id="iphone-12" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 12</span><span class="model-price">Desde 150$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012%20Pro." id="iphone-12-pro" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 12 Pro</span><span class="model-price">Desde 200$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012%20Pro%20Max." id="iphone-12-pro-max" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 12 Pro Max</span><span class="model-price">Desde 250$</span>
+                    </a>
+                </div>
             </div>
-            <div class="list-container">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012%20Mini." id="iphone-12-mini" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 12 Mini</span><span class="model-price">Desde 125$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012." id="iphone-12" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 12</span><span class="model-price">Desde 150$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012%20Pro." id="iphone-12-pro" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 12 Pro</span><span class="model-price">Desde 200$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012%20Pro%20Max." id="iphone-12-pro-max" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 12 Pro Max</span><span class="model-price">Desde 250$</span>
-                </a>
-            </div>
-        </div>
 
-        <!-- SERIE IPHONE 11 -->
-        <div class="glass-card">
-            <div class="image-visual-space"><div class="vector-phone"></div></div>
-            <div class="card-header-info">
-                <span class="card-tag">Entry Level</span>
-                <h2 class="card-main-title">iPhone Serie 11</h2>
+            <!-- SERIE IPHONE 11 -->
+            <div class="glass-card">
+                <div class="image-visual-space"><div class="vector-phone"></div></div>
+                <div class="card-header-info">
+                    <span class="card-tag">Entry Level</span>
+                    <h2 class="card-main-title">iPhone Serie 11</h2>
+                </div>
+                <div class="list-container">
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2011." id="iphone-11" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 11</span><span class="model-price">Desde 130$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2011%20Pro." id="iphone-11-pro" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 11 Pro</span><span class="model-price">Desde 150$</span>
+                    </a>
+                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2011%20Pro%20Max." id="iphone-11-pro-max" class="interactive-row" target="_blank">
+                        <span class="model-name">iPhone 11 Pro Max</span><span class="model-price">Desde 190$</span>
+                    </a>
+                </div>
             </div>
-            <div class="list-container">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2011." id="iphone-11" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 11</span><span class="model-price">Desde 130$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2011%20Pro." id="iphone-11-pro" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 11 Pro</span><span class="model-price">Desde 150$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2011%20Pro%20Max." id="iphone-11-pro-max" class="interactive-row" target="_blank">
-                    <span class="model-name">iPhone 11 Pro Max</span><span class="model-price">Desde 190$</span>
-                </a>
-            </div>
-        </div>
 
-    </main>
+        </main>
+    </div> <!-- Fin del app-container -->
 
-    <!-- BOTTOM NAVIGATION -->
+    <!-- BOTTOM NAVIGATION (Fija 100%) -->
     <nav class="bottom-nav">
         <a href="index.html" class="nav-tab">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -379,38 +374,13 @@
     </nav>
 
     <script>
-        // LÓGICA DE AURORAS Y SCROLL
-        const masterBg = document.getElementById('master-bg');
-        const metalLayer = document.getElementById('metal-layer');
-        const lowerPurple = document.getElementById('lower-purple');
-        const lowerCyan = document.getElementById('lower-cyan');
-
-        window.addEventListener('scroll', () => {
-            let offset = window.pageYOffset;
-            let dynamicBlur = Math.min(offset * 0.07, 40);
-            let targetBrightness = Math.max(0.75 - (offset * 0.0015), 0.08); 
-            metalLayer.style.filter = `contrast(1.2) brightness(${targetBrightness}) blur(${dynamicBlur}px)`;
-            masterBg.style.transform = `translate3d(0, ${offset * 0.18}px, 0)`;
-
-            if (offset > 450) {
-                let triggerOpacity = Math.min((offset - 450) * 0.0015, 0.35);
-                lowerPurple.style.opacity = triggerOpacity;
-                lowerCyan.style.opacity = triggerOpacity + 0.05; 
-                let orbRise = (offset - 450) * 0.25;
-                lowerPurple.style.transform = `translate3d(0, ${-orbRise}px, 0)`;
-                lowerCyan.style.transform = `translate3d(0, ${-orbRise * 1.1}px, 0)`;
-            } else {
-                lowerPurple.style.opacity = 0;
-                lowerCyan.style.opacity = 0;
-            }
-        }, { passive: true });
-
         // LÓGICA DEL BUSCADOR (Efecto Highlight y Scroll)
         window.addEventListener('load', () => {
             const hash = window.location.hash.substring(1);
             if(hash) {
                 const targetElement = document.getElementById(hash);
                 if(targetElement) {
+                    // El scroll ahora apunta a la caja correcta internamente
                     targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     targetElement.classList.add('highlight-target');
                     
