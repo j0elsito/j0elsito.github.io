@@ -31,7 +31,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            /* URL absoluta directa para evitar que GitHub tumbe la página con un 404 */
+            /* URL absoluta directa para evitar conflictos de subcarpetas en GitHub Pages */
             background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
             background-size: cover;
             background-position: center;
@@ -189,8 +189,9 @@
         <p class="tagline">Selecciona una categoría para continuar</p>
         
         <div class="cards-stack">
-            <!-- OPCIÓN 1: COMPRAR TELÉFONO -->
-            <a href="catalogo.html" class="deck-card nav-link">
+            <!-- CORRECCIÓN CLAVE: El enlace debe coincidir EXACTAMENTE con el nombre del archivo en GitHub, incluyendo mayúsculas y extensión. -->
+            <!-- El archivo en tu repositorio se llama 'Catalogo.htm' (con 'C' mayúscula y extensión '.htm') -->
+            <a href="Catalogo.htm" class="deck-card nav-link">
                 <div class="icon-box">📱</div>
                 <div class="card-info">
                     <span class="card-title">Comprar Teléfono</span>
@@ -244,8 +245,17 @@
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 const destination = this.getAttribute('href');
+                
+                // Si es un enlace externo (como WhatsApp o Instagram), no aplicamos la animación de salida
+                if (destination.startsWith('http')) return;
+
+                // Evitamos que salte de golpe para hacer la animación primero
                 e.preventDefault();
+                
+                // Aplicamos la clase de salida (difumina y desvanece)
                 document.getElementById('menu-container').classList.add('fade-out');
+                
+                // Esperamos 400 milisegundos (el tiempo de la animación) y hacemos el cambio de página oficial
                 setTimeout(() => {
                     window.location.href = destination;
                 }, 400);
