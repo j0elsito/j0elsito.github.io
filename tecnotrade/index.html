@@ -2,83 +2,199 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>TecnoTrade | Store</title>
     <style>
         :root {
             --bg-dark: #030509;
+            --text-main: #ffffff;
+            --text-muted: #86868b;
             --neon-blue: #00f0ff;
-            --neon-green: #39ff14;
             --neon-purple: #bd00ff;
+            --neon-green: #39ff14;
             --neon-cyan: #00ffcc;
+            --card-glass: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(255, 255, 255, 0.08);
         }
+
+        html, body { width: 100%; height: 100%; overflow: hidden; }
 
         body {
-            margin: 0; padding: 0; min-height: 100vh;
-            background-color: var(--bg-dark);
-            color: #fff;
-            font-family: 'SF Pro Display', -apple-system, sans-serif;
-            overflow-x: hidden;
+            margin: 0; padding: 0;
+            background-color: var(--bg-dark); color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
             display: flex; flex-direction: column; align-items: center;
+            overscroll-behavior: none;
         }
 
-        /* 1. HERO Y PROMO BAR (Para que se sienta activo) */
+        /* FONDO DINÁMICO (Estable) */
+        .motion-bg-container {
+            position: fixed; top: -20px; left: -20px; right: -20px; bottom: -20px; z-index: -3;
+            background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
+            background-size: cover; background-position: center;
+            filter: contrast(1.15) brightness(0.35) blur(3px);
+            pointer-events: none; animation: bgBreathe 12s infinite alternate ease-in-out;
+        }
+
+        .dynamic-aurora {
+            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; z-index: -2;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.05), transparent 60%),
+                        radial-gradient(circle at 80% 20%, rgba(189, 0, 255, 0.05), transparent 50%);
+            animation: auroraSpin 20s infinite linear; pointer-events: none;
+        }
+
+        /* 1. ANNOUNCEMENT BAR (Estilo Apple Store) */
         .promo-bar {
             width: 90%; max-width: 480px;
-            background: linear-gradient(90deg, rgba(0, 240, 255, 0.1), transparent);
-            border-left: 3px solid var(--neon-blue);
-            padding: 10px 15px;
-            margin-top: 20px;
-            border-radius: 8px;
-            font-size: 12px;
-            color: var(--neon-blue);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid var(--neon-blue);
+            padding: 10px 16px; margin-top: 15px; border-radius: 12px;
+            font-size: 11px; font-weight: 700; color: #fff;
             display: flex; align-items: center; justify-content: space-between;
+            animation: fadeInDown 0.8s ease forwards;
         }
+        .promo-bar span:last-child { color: var(--neon-blue); letter-spacing: 0.5px; }
 
-        /* 2. DISEÑO DE TARJETAS DE VENTA */
+        /* 2. HEADER Y LOGO */
+        .header-section {
+            text-align: center; margin-top: 20px; margin-bottom: 20px; z-index: 10;
+            animation: fadeIn 1s 0.2s forwards; opacity: 0;
+        }
+        .header-section img {
+            width: 65px; height: 65px; border-radius: 20px;
+            border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            margin-bottom: 8px; animation: pulseGlow 3s infinite alternate;
+        }
+        .header-section h1 {
+            font-size: 34px; font-weight: 900; letter-spacing: -1px; margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-glow), var(--neon-blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .panama-slang {
+            font-size: 12px; color: #94a3b8; font-weight: 500;
+            margin-top: 6px; max-width: 280px; line-height: 1.4;
+        }
+        .panama-slang span { color: var(--neon-cyan); font-weight: 700; }
+
+        /* 3. GRID DE TIENDA (Layout Híbrido) */
         .grid-wrapper {
             width: 90%; max-width: 480px;
             display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: 16px; margin-top: 20px;
+            gap: 14px; z-index: 10;
         }
 
+        /* TARJETAS COMERCIALES INTERACTIVAS */
         .glass-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 24px;
-            padding: 20px; text-decoration: none; color: white;
-            position: relative; overflow: hidden;
-            transition: all 0.3s ease;
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass); border-radius: 26px;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 16px; display: flex; flex-direction: column;
+            text-decoration: none; color: var(--text-main); position: relative; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            opacity: 0; transition: all 0.2s ease;
         }
+        .glass-card { animation: cardEntrance 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        .glass-card:nth-child(1) { animation-delay: 0.1s; }
+        .glass-card:nth-child(2) { animation-delay: 0.2s; }
+        .glass-card:nth-child(3) { animation-delay: 0.3s; }
+        .glass-card:nth-child(4) { animation-delay: 0.4s; }
 
-        /* Badge para sensación de tienda */
+        .glass-card:active { transform: scale(0.94); background: rgba(255,255,255,0.06); }
+
+        /* Badges de Conversión */
         .sale-badge {
             position: absolute; top: 12px; right: 12px;
-            font-size: 9px; font-weight: 800; padding: 3px 8px;
-            border-radius: 12px; text-transform: uppercase;
+            font-size: 9px; font-weight: 800; padding: 4px 8px;
+            border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; z-index: 2;
         }
-        .badge-new { background: var(--neon-blue); color: #000; }
-        .badge-hot { background: var(--neon-green); color: #000; }
+        .badge-new { background: rgba(0, 240, 255, 0.15); color: var(--neon-blue); border: 1px solid rgba(0, 240, 255, 0.3); }
+        .badge-hot { background: rgba(57, 255, 20, 0.15); color: var(--neon-green); border: 1px solid rgba(57, 255, 20, 0.3); }
 
-        .glass-card:active { transform: scale(0.95); border-color: white; }
-
-        /* Iconos de Venta */
-        .vector-icon {
-            width: 45px; height: 45px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px; margin-bottom: 15px;
+        /* VECTORES GRAFICOS */
+        .image-visual-space {
+            width: 100%; height: 75px; background: rgba(255,255,255,0.01);
+            border-radius: 14px; margin-bottom: 12px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 20px;
         }
+        .vector-icon {
+            position: relative; background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255,255,255,0.15);
+            display: flex; justify-content: center; align-items: center;
+            transform: scale(0.65); animation: floatAmbient 4s ease-in-out infinite alternate;
+        }
+        .card-buy .vector-icon { animation-delay: 0s; }
+        .card-sell .vector-icon { animation-delay: 1s; }
+        .card-repair .vector-icon { animation-delay: 2s; }
+        .card-laptop .vector-icon { animation-delay: 3s; }
 
-        .card-title { font-size: 14px; font-weight: 800; }
-        .card-desc { font-size: 10px; color: #a1a1aa; margin-top: 4px; }
+        /* Formas CSS */
+        .v-phone { width: 55px; height: 100px; border-radius: 14px; }
+        .v-phone::before { content:''; position:absolute; top:8px; left:8px; width:15px; height:25px; border:2px solid rgba(255,255,255,0.15); border-radius:6px; }
+        
+        .v-cash { width: 90px; height: 50px; border-radius: 10px; }
+        .v-cash::before { content:'$'; position:absolute; font-size: 20px; font-weight: bold; color: rgba(255,255,255,0.4); }
+        .v-cash::after { content:''; position:absolute; width: 30px; height: 30px; border: 2px dashed rgba(255,255,255,0.2); border-radius: 50%; }
+
+        .v-repair { width: 60px; height: 70px; border-radius: 10px; border-style: dashed; }
+        .v-repair::before { content:'⚙'; position:absolute; font-size: 28px; color: rgba(255,255,255,0.4); }
+
+        .v-laptop { width: 90px; height: 55px; border-radius: 6px 6px 0 0; border-bottom: 8px solid rgba(255,255,255,0.2); }
+        .v-laptop::before { content:''; position:absolute; top: 5px; width: 70px; height: 40px; border: 2px solid rgba(255,255,255,0.1); border-radius: 4px; }
+
+        /* Textos de Venta */
+        .card-title { font-size: 15px; font-weight: 800; margin: 0 0 4px 0; letter-spacing: -0.2px; }
+        .card-desc { font-size: 11px; color: var(--text-muted); line-height: 1.3; }
+
+        /* 4. BOTONES CTAs PREMIUM (Abajo) */
+        .cta-container {
+            width: 90%; max-width: 480px;
+            display: flex; gap: 14px; margin-top: 25px; z-index: 10;
+            animation: fadeIn 1s 0.8s forwards; opacity: 0;
+        }
+        .btn-action {
+            flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 14px 0; border-radius: 16px; text-decoration: none;
+            font-size: 12px; font-weight: 800; letter-spacing: 0.5px;
+            backdrop-filter: blur(10px); transition: transform 0.2s;
+        }
+        .btn-action:active { transform: scale(0.95); }
+        
+        .btn-whatsapp {
+            background: rgba(57, 255, 20, 0.1); border: 1px solid rgba(57, 255, 20, 0.4);
+            color: var(--neon-green); box-shadow: inset 0 0 15px rgba(57, 255, 20, 0.1);
+        }
+        .btn-location {
+            background: rgba(0, 240, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.4);
+            color: var(--neon-cyan); box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.1);
+        }
+        .btn-icon { width: 16px; height: 16px; filter: invert(1); }
+        .btn-whatsapp .btn-icon { filter: invert(70%) sepia(80%) saturate(400%) hue-rotate(70deg) brightness(120%); }
+        .btn-location .btn-icon { filter: invert(70%) sepia(80%) saturate(400%) hue-rotate(150deg) brightness(120%); }
+
+        /* Animaciones */
+        @keyframes bgBreathe { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+        @keyframes auroraSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); } 100% { box-shadow: 0 0 35px rgba(0, 240, 255, 0.5); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes cardEntrance { 0% { opacity: 0; transform: translateY(40px) scale(0.9); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes floatAmbient { 0% { transform: scale(0.65) translateY(0px); } 100% { transform: scale(0.65) translateY(-8px); } }
+
+        /* Destello Haptico */
+        .screen-flash {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease-out;
+        }
+        .flash-active { opacity: 1 !important; }
     </style>
 </head>
 <body>
 
-    <!-- Fondo -->
-    <div class="motion-bg-container" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png'); background-size: cover; filter: brightness(0.3);"></div>
+    <div class="screen-flash" id="flash-fx"></div>
+    <div class="motion-bg-container"></div>
+    <div class="dynamic-aurora"></div>
 
     <!-- Promo Bar -->
     <div class="promo-bar">
@@ -87,45 +203,65 @@
     </div>
 
     <!-- Header -->
-    <div style="text-align: center; margin-top: 30px;">
-        <h1 style="font-size: 32px; font-weight: 800;">TecnoTrade</h1>
-        <p style="font-size: 12px; color: #888;">Bienvenido al Hub. Toca una categoría y <b>resolvemos tu vuelta de una.</b></p>
+    <div class="header-section">
+        <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" alt="TecnoTrade">
+        <h1>TecnoTrade</h1>
+        <p class="panama-slang">Bienvenido al Hub. Toca una categoría y <span>resolvemos tu vuelta de una.</span></p>
     </div>
 
-    <!-- Grid de Ventas -->
+    <!-- Grid de Navegación/Ventas -->
     <div class="grid-wrapper">
-        <a href="catalogo.html" class="glass-card">
+        <a href="catalogo.html" class="glass-card nav-trigger">
             <span class="sale-badge badge-new">NUEVO</span>
-            <div class="vector-icon">📱</div>
+            <div class="image-visual-space"><div class="vector-icon v-phone"></div></div>
             <div class="card-title">Comprar Equipo</div>
-            <div class="card-desc">Stock disponible al mejor precio.</div>
+            <div class="card-desc">Equipos con garantía al mejor precio.</div>
         </a>
 
-        <a href="vender.html" class="glass-card">
-            <div class="vector-icon">💵</div>
+        <a href="vender.html" class="glass-card nav-trigger">
+            <div class="image-visual-space"><div class="vector-icon v-cash"></div></div>
             <div class="card-title">Vender Equipo</div>
-            <div class="card-desc">Trade-in rápido en efectivo.</div>
+            <div class="card-desc">Trade-in rápido y seguro.</div>
         </a>
 
-        <a href="reparar.html" class="glass-card">
+        <a href="reparar.html" class="glass-card nav-trigger">
             <span class="sale-badge badge-hot">ACTIVO</span>
-            <div class="vector-icon">🔧</div>
+            <div class="image-visual-space"><div class="vector-icon v-repair"></div></div>
             <div class="card-title">Servicio Técnico</div>
-            <div class="card-desc">Reparación profesional garantizada.</div>
+            <div class="card-desc">Reparación profesional y confiable.</div>
         </a>
 
-        <a href="laptops.html" class="glass-card">
-            <div class="vector-icon">💻</div>
+        <a href="laptops.html" class="glass-card nav-trigger">
+            <div class="image-visual-space"><div class="vector-icon v-laptop"></div></div>
             <div class="card-title">Laptops & Sistemas</div>
             <div class="card-desc">Optimización y mantenimiento.</div>
         </a>
     </div>
 
-    <!-- Footer de Conversión -->
-    <div style="margin-top: 30px; display: flex; gap: 20px;">
-        <a href="https://wa.me/50767966691" style="background: var(--neon-green); color: #000; padding: 10px 20px; border-radius: 20px; font-size: 12px; font-weight: 800; text-decoration: none;">WHATSAPP</a>
-        <a href="https://maps.app.goo.gl/search/Panama" style="background: var(--neon-cyan); color: #000; padding: 10px 20px; border-radius: 20px; font-size: 12px; font-weight: 800; text-decoration: none;">UBICACIÓN</a>
+    <!-- Botones CTAs Premium Base -->
+    <div class="cta-container">
+        <a href="https://wa.me/50767966691" target="_blank" class="btn-action btn-whatsapp">
+            <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" class="btn-icon" alt="WA">
+            WHATSAPP
+        </a>
+        <a href="https://maps.app.goo.gl/search/Panama" target="_blank" class="btn-action btn-location">
+            <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" class="btn-icon" alt="Loc">
+            UBICACIÓN
+        </a>
     </div>
 
+    <script>
+        // Navegación con feedback táctil (Flash Effect)
+        document.querySelectorAll('.nav-trigger').forEach(card => {
+            card.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetUrl = this.getAttribute('href');
+                
+                document.getElementById('flash-fx').classList.add('flash-active');
+                setTimeout(() => document.getElementById('flash-fx').classList.remove('flash-active'), 100);
+                setTimeout(() => window.location.assign(targetUrl), 350);
+            });
+        });
+    </script>
 </body>
 </html>
