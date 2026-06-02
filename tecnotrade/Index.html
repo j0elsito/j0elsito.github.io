@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TecnoTrade | Bienvenida</title>
+    <style>
+        :root {
+            --bg-light: #f0f2f5;
+            --text-dark: #1d1d1f;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --border-glass: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
+            background-size: cover;
+            background-position: center;
+            filter: contrast(0.9) brightness(1.1);
+        }
+
+        .overlay {
+            background: rgba(240, 242, 245, 0.8);
+            backdrop-filter: blur(20px);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 { font-size: 48px; font-weight: 800; margin-bottom: 40px; letter-spacing: -2px; }
+
+        .menu-grid { display: flex; flex-direction: column; gap: 15px; }
+
+        .btn-option {
+            padding: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .btn-option:hover {
+            background: #fff;
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .social-footer {
+            position: absolute;
+            bottom: 40px;
+            display: flex;
+            gap: 30px;
+            z-index: 2;
+        }
+
+        .social-icon { width: 30px; height: 30px; opacity: 0.6; transition: opacity 0.3s; }
+        .social-icon:hover { opacity: 1; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div class="container">
+        <h1>TecnoTrade</h1>
+        <div class="menu-grid">
+            <a href="catalogo.html" class="btn-option">Comprar Teléfono</a>
+            <a href="vender.html" class="btn-option">Vender mi dispositivo</a>
+            <a href="reparar.html" class="btn-option">Reparar equipo</a>
+            <a href="laptops.html" class="btn-option">Laptops & Sistemas</a>
+        </div>
+    </div>
+
+    <div class="social-footer">
+        <a href="https://wa.me/50767966691"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" class="social-icon"></a>
+        <a href="https://www.instagram.com/tecnotradepty/"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="social-icon"></a>
+    </div>
+</body>
+</html>
