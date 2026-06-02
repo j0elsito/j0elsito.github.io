@@ -12,7 +12,7 @@
             --neon-blue: #00f0ff;
             --neon-purple: #bd00ff;
             --neon-green: #39ff14;
-            --card-glass: rgba(255, 255, 255, 0.03);
+            --card-glass: rgba(255, 255, 255, 0.02);
             --border-glass: rgba(255, 255, 255, 0.08);
         }
 
@@ -28,7 +28,7 @@
             perspective: 1200px;
         }
 
-        /* FONDO LÍQUIDO GENERATIVO (Tendencia Viral TikTok) */
+        /* FONDO LÍQUIDO CON MÁSCARA DE DIFUMINADO DINÁMICO */
         .cyber-bg {
             position: fixed;
             top: 0;
@@ -40,48 +40,50 @@
             background-position: center;
             background-repeat: no-repeat;
             z-index: -2;
-            filter: contrast(1.1) brightness(0.8);
+            filter: contrast(1.1) brightness(0.7) blur(0px);
+            will-change: filter, transform;
+            transition: filter 0.3s ease-out, transform 0.3s cubic-bezier(0.1, 0.8, 0.3, 1);
         }
 
-        /* Orbes de luz líquida neón moviéndose en segundo plano */
+        /* Orbes de luz líquida neón en segundo plano */
         .neon-orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(120px);
+            filter: blur(130px);
             z-index: -1;
-            opacity: 0.35;
+            opacity: 0.3;
             mix-blend-mode: screen;
             pointer-events: none;
             will-change: transform;
         }
         .orb-1 {
-            width: 450px;
-            height: 450px;
+            width: 500px;
+            height: 500px;
             background: var(--neon-blue);
             top: -10%;
             left: -10%;
-            animation: floatOrb 12s infinite alternate ease-in-out;
+            animation: floatOrb 14s infinite alternate ease-in-out;
         }
         .orb-2 {
-            width: 500px;
-            height: 500px;
+            width: 550px;
+            height: 550px;
             background: var(--neon-purple);
             bottom: -10%;
             right: -10%;
-            animation: floatOrb 16s infinite alternate-reverse ease-in-out;
+            animation: floatOrb 18s infinite alternate-reverse ease-in-out;
         }
 
         @keyframes floatOrb {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(80px, 50px) scale(1.2); }
+            100% { transform: translate(90px, 60px) scale(1.25); }
         }
 
-        /* HEADER ASIMÉTRICO / CREADOR DE TENDENCIA */
+        /* HEADER PREMIUM ASIMÉTRICO */
         header {
             max-width: 1100px;
             margin: 30px auto;
             padding: 30px;
-            background: rgba(4, 6, 10, 0.4);
+            background: rgba(4, 6, 10, 0.5);
             border: 1px solid var(--border-glass);
             border-radius: 32px;
             backdrop-filter: blur(30px);
@@ -89,7 +91,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.15);
             animation: dropHeader 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -103,10 +105,10 @@
             width: 65px;
             height: 65px;
             border-radius: 22px;
-            border: 2px solid rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.25);
             box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
             transform: rotate(-5deg);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         header:hover .brand-logo {
             transform: rotate(355deg) scale(1.1);
@@ -142,10 +144,11 @@
             color: #fff;
             position: relative;
             overflow: hidden;
-            transition: transform 0.2s;
-            background: rgba(255,255,255,0.03);
+            transition: transform 0.2s, box-shadow 0.2s;
+            background: rgba(255,255,255,0.02);
             border: 1px solid var(--border-glass);
         }
+        
         .nav-link::before {
             content: '';
             position: absolute;
@@ -155,10 +158,14 @@
         }
         .nav-link:hover::before { left: 100%; }
         .nav-link:hover { transform: translateY(-3px); }
-        .link-ws:hover { border-color: var(--neon-green); box-shadow: 0 0 20px rgba(57,255,20,0.2); }
-        .link-ig:hover { border-color: var(--neon-purple); box-shadow: 0 0 20px rgba(189,0,255,0.2); }
+        
+        .link-ws:hover { border-color: var(--neon-green); box-shadow: 0 0 25px rgba(57,255,20,0.3); }
+        .link-ig:hover { border-color: var(--neon-purple); box-shadow: 0 0 25px rgba(189,0,255,0.3); }
 
-        /* CUADRÍCULA DE TARJETAS FLUIDAS TRIDIMENSIONALES */
+        .link-ws { background-color: rgba(34, 197, 94, 0.1); }
+        .link-ig { background-color: rgba(219, 39, 119, 0.1); }
+
+        /* CUADRÍCULA DE TARJETAS 3D FLUIDAS */
         .grid-wrapper {
             max-width: 1150px;
             margin: 40px auto;
@@ -173,35 +180,50 @@
             background: var(--card-glass);
             border: 1px solid var(--border-glass);
             border-radius: 36px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             padding: 24px;
             display: flex;
             flex-direction: column;
             position: relative;
             transform-style: preserve-3d;
             will-change: transform, box-shadow;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            transition: border-color 0.4s, box-shadow 0.3s;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            transition: border-color 0.4s, box-shadow 0.2s, transform 0.1s ease;
             opacity: 0;
             animation: cardEntrance 0.8s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+            overflow: hidden;
         }
 
-        /* Retardos en cascada TikTok */
-        .glass-card:nth-child(1) { animation-delay: 0.1s; }
-        .glass-card:nth-child(2) { animation-delay: 0.2s; }
-        .glass-card:nth-child(3) { animation-delay: 0.3s; }
-        .glass-card:nth-child(4) { animation-delay: 0.4s; }
-        .glass-card:nth-child(5) { animation-delay: 0.5s; }
-        .glass-card:nth-child(6) { animation-delay: 0.6s; }
-        .glass-card:nth-child(7) { animation-delay: 0.7s; }
-        .glass-card:nth-child(8) { animation-delay: 0.8s; }
+        /* Efecto destello de Cristal Reflectivo (Glow Line Sweep) */
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -60%; width: 30%; height: 200%;
+            background: linear-gradient(rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(30deg);
+            transition: 0.8s;
+            pointer-events: none;
+        }
+        .glass-card:hover::after {
+            left: 140%;
+        }
 
-        /* INTERFACES GRÁFICAS INTERACTIVAS (Contenedor de Imagen de Concepto) */
+        /* Retardos de animación */
+        .glass-card:nth-child(1) { animation-delay: 0.05s; }
+        .glass-card:nth-child(2) { animation-delay: 0.1s; }
+        .glass-card:nth-child(3) { animation-delay: 0.15s; }
+        .glass-card:nth-child(4) { animation-delay: 0.2s; }
+        .glass-card:nth-child(5) { animation-delay: 0.25s; }
+        .glass-card:nth-child(6) { animation-delay: 0.3s; }
+        .glass-card:nth-child(7) { animation-delay: 0.35s; }
+        .glass-card:nth-child(8) { animation-delay: 0.4s; }
+
+        /* ESPACIO VISUAL HOLOGRÁFICO */
         .image-visual-space {
             width: 100%;
             height: 160px;
-            background: rgba(255,255,255,0.02);
+            background: rgba(255,255,255,0.01);
             border-radius: 24px;
             margin-bottom: 20px;
             display: flex;
@@ -213,34 +235,31 @@
             transform: translateZ(40px);
         }
 
-        /* Dibujo Vectorial Interactivo del Smartphone (Efecto Holograma Holográfico) */
+        /* Silueta holográfica del teléfono */
         .vector-phone {
             width: 70px;
             height: 120px;
-            border: 3px solid rgba(255,255,255,0.3);
+            border: 3px solid rgba(255,255,255,0.2);
             border-radius: 16px;
             position: relative;
             transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            background: rgba(0, 0, 0, 0.2);
-            box-shadow: 0 0 20px rgba(255,255,255,0.05);
+            background: rgba(0, 0, 0, 0.3);
             display: flex;
             justify-content: center;
         }
-        /* Dynamic Camera Module */
         .vector-phone::before {
             content: '';
             position: absolute;
             top: 10px; left: 10px; width: 22px; height: 35px;
-            border: 2px solid rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.15);
             border-radius: 8px;
         }
         .glass-card:hover .vector-phone {
-            transform: scale(1.12) rotateY(15deg) rotateX(-10deg) translateY(-5px);
+            transform: scale(1.15) rotateY(20deg) rotateX(-10deg) translateY(-5px);
             border-color: var(--neon-blue);
             box-shadow: 0 0 30px rgba(0, 240, 255, 0.4), inset 0 0 15px rgba(0,240,255,0.1);
         }
 
-        /* Variación del Holograma para Android */
         .android-card:hover .vector-phone {
             border-color: var(--neon-green) !important;
             box-shadow: 0 0 30px rgba(57, 255, 20, 0.4) !important;
@@ -265,7 +284,7 @@
             transform: translateZ(30px);
         }
 
-        /* LISTA ULTRA LÍQUIDA DE MODELOS */
+        /* LISTA DE MODELOS */
         .list-container {
             display: flex;
             flex-direction: column;
@@ -277,19 +296,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             padding: 16px 20px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.03);
             text-decoration: none;
             color: #fff;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .interactive-row:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.07);
             border-color: var(--neon-blue);
-            transform: scale(1.03) translateZ(15px);
+            transform: scale(1.02) translateZ(10px);
             box-shadow: 0 10px 25px rgba(0, 240, 255, 0.15);
         }
 
@@ -308,10 +327,10 @@
             font-size: 13px;
             font-weight: 800;
             color: #fff;
-            background: rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.05);
             padding: 6px 14px;
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.08);
             transition: background 0.3s, color 0.3s;
         }
         .interactive-row:hover .model-price {
@@ -319,7 +338,6 @@
             color: #000;
         }
 
-        /* ANIMACIONES DE ENTRADA GENERAL */
         @keyframes dropHeader {
             from { opacity: 0; transform: translateY(-50px); filter: blur(10px); }
             to { opacity: 1; transform: translateY(0); filter: blur(0); }
@@ -338,12 +356,11 @@
 </head>
 <body>
 
-    <!-- Fondos Combinados Interactivos -->
+    <!-- Fondo líquido y Orbes con difuminado automático -->
     <div class="cyber-bg" id="parallax-bg"></div>
     <div class="neon-orb orb-1"></div>
     <div class="neon-orb orb-2"></div>
 
-    <!-- Encabezado Estilo Creador -->
     <header>
         <div class="logo-block">
             <img class="brand-logo" src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" alt="TecnoTrade Logo">
@@ -358,7 +375,6 @@
         </div>
     </header>
 
-    <!-- Enrejado de Tarjetas -->
     <main class="grid-wrapper">
 
         <!-- TARGETA: CONSULTA TU ANDROID -->
@@ -410,7 +426,7 @@
                 </a>
                 <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2017%20Plus.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="interactive-row" target="_blank">
                     <span class="model-name">iPhone 17 Plus</span>
-                    <span class="variant-price model-price">Desde 1000$</span>
+                    <span class="model-price">Desde 1000$</span>
                 </a>
                 <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2017%20Pro.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="interactive-row" target="_blank">
                     <span class="model-name">iPhone 17 Pro</span>
@@ -540,7 +556,7 @@
         </div>
 
         <!-- SERIE IPHONE 12 -->
-        <div class="product-card glass-card">
+        <div class="glass-card">
             <div class="image-visual-space">
                 <div class="vector-phone"></div>
             </div>
@@ -569,7 +585,7 @@
         </div>
 
         <!-- SERIE IPHONE 11 -->
-        <div class="product-card glass-card">
+        <div class="glass-card">
             <div class="image-visual-space">
                 <div class="vector-phone"></div>
             </div>
@@ -595,18 +611,24 @@
 
     </main>
 
-    <!-- MOTOR DE FUSIÓN DE COMPONENTES INTERACTIVOS (3D TILT & PARALLAX SCROLL) -->
+    <!-- MOTOR INTERACTIVO AVANZADO (SCROLL BLUR + 3D TILT) -->
     <script>
         const parallaxBg = document.getElementById('parallax-bg');
         const cards = document.querySelectorAll('.glass-card');
 
-        // 1. Efecto Scroll Parallax Avanzado
+        // Transición de Difuminado y Movimiento Líquido Dinámico por Scroll
         window.addEventListener('scroll', () => {
             let offset = window.pageYOffset;
-            parallaxBg.style.transform = `translateY(${offset * 0.15}px) scale(${1 + (offset * 0.0001)})`;
+            
+            // A más scroll, más blur y menos brillo para fundir el fondo suavemente
+            let blurAmount = Math.min(offset * 0.015, 8); // Límite de 8px de difuminado
+            let brightnessAmount = Math.max(0.7 - (offset * 0.0005), 0.35); // Límite de oscurecimiento
+
+            parallaxBg.style.filter = `contrast(1.1) brightness(${brightnessAmount}) blur(${blurAmount}px)`;
+            parallaxBg.style.transform = `translateY(${offset * 0.12}px) scale(${1 + (offset * 0.00008)})`;
         });
 
-        // 2. Efecto Giro Físico 3D (Tilt) con Sensor de Cursor
+        // Inclinación física 3D en las tarjetas
         if (window.innerWidth > 768) {
             cards.forEach(card => {
                 card.addEventListener('mousemove', (e) => {
@@ -614,13 +636,11 @@
                     const x = (e.clientX - rect.left) / rect.width - 0.5;
                     const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-                    // Ángulo de inclinación pronunciado pero elegante
                     const degX = (y * -22).toFixed(2);
                     const degY = (x * 22).toFixed(2);
 
                     card.style.transform = `rotateX(${degX}deg) rotateY(${degY}deg) scale3d(1.04, 1.04, 1.04)`;
                     
-                    // Sombra de luz cambiante integrada
                     if(card.classList.contains('android-card')) {
                         card.style.boxShadow = `${-degY * 2}px ${degX * 2}px 40px rgba(57, 255, 20, 0.15), 0 15px 40px rgba(0,0,0,0.4)`;
                     } else {
@@ -628,7 +648,6 @@
                     }
                 });
 
-                // Reset de fuerzas físicas
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
                     card.style.boxShadow = `0 15px 35px rgba(0,0,0,0.2)`;
