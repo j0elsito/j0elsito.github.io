@@ -28,76 +28,76 @@
             perspective: 1000px;
         }
 
-        /* CONTENEDOR OPTIMIZADO: EVITA CORTES VISIBLES */
+        /* LIENZO DE CONTROL TOTAL PARA EL FONDO COMPUESTO */
         .motion-bg-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 130%;
             z-index: -2;
             overflow: hidden;
             background: var(--bg-dark);
             pointer-events: none;
+            will-change: transform;
+            /* La transición del contenedor unificado suaviza el scroll */
+            transition: transform 0.4s cubic-bezier(0.1, 0.6, 0.2, 1);
         }
 
-        /* FONDO PRINCIPAL CON MÁSCARA LÍQUIDA DE DIFUMINADO EN LA BASE */
+        /* FONDO METÁLICO CON DESVANECIMIENTO INTEGRADO EN LA MATRIZ */
         .cyber-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 80%; /* Deja espacio libre en la zona inferior para la aurora */
             background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             filter: contrast(1.15) brightness(0.75) blur(0px);
-            will-change: transform, filter;
-            /* Máscara webkit para fundir el borde inferior directamente a negro absoluto */
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%);
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%);
+            will-change: filter;
+            transition: filter 0.4s ease-out;
+            /* Máscara de fusión física: disuelve el metal líquido de forma invisible */
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0.4) 75%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0.4) 75%, rgba(0,0,0,0) 100%);
+            z-index: 1;
         }
 
-        /* SISTEMA DE ORBES MEZCLADOS EN EL VACÍO INFERIOR */
+        /* AURORA DE ORBES NEÓN (Anclados al mismo contenedor para evitar desfases) */
         .neon-orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(120px);
+            filter: blur(130px);
             mix-blend-mode: screen;
-            will-change: transform, opacity;
-        }
-        .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: var(--neon-blue);
-            top: -10%; left: -10%;
             opacity: 0.25;
+            z-index: 0;
         }
-        .orb-2 {
-            width: 500px;
-            height: 500px;
+        .orb-top-left {
+            width: 450px; height: 450px;
+            background: var(--neon-blue);
+            top: 5%; left: 5%;
+        }
+        .orb-mid-right {
+            width: 500px; height: 500px;
             background: var(--neon-purple);
-            top: 20%; right: -10%;
+            top: 35%; right: 5%;
+        }
+        /* Orbes inferiores de mezcla creativa para la parte baja del catálogo */
+        .orb-bottom-left {
+            width: 550px; height: 550px;
+            background: var(--neon-purple);
+            bottom: 5%; left: 2%;
             opacity: 0.2;
         }
-        /* Orbes inferiores creativos de transición continua */
-        .orb-3 {
-            width: 600px;
-            height: 500px;
-            background: var(--neon-purple);
-            bottom: -25%; left: -5%;
-            opacity: 0.12;
-        }
-        .orb-4 {
-            width: 500px;
-            height: 500px;
-            background: var(--neon-blue);
-            bottom: -20%; right: 15%;
-            opacity: 0.15;
+        .orb-bottom-right {
+            width: 600px; height: 600px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+            bottom: -5%; right: 10%;
+            opacity: 0.22;
         }
 
-        /* HEADER PREMIUM ASIMÉTRICO */
+        /* HEADER PREMIUM */
         header {
             max-width: 1100px;
             margin: 30px auto;
@@ -190,7 +190,7 @@
             animation: cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Retardos optimizados */
+        /* Retardos de la cascada */
         .glass-card:nth-child(1) { animation-delay: 0.05s; }
         .glass-card:nth-child(2) { animation-delay: 0.1s; }
         .glass-card:nth-child(3) { animation-delay: 0.15s; }
@@ -276,7 +276,7 @@
             transform: translateZ(30px);
         }
 
-        /* LISTA DE MODELOS LÍQUIDA */
+        /* LISTA DE MODELOS */
         .list-container {
             display: flex;
             flex-direction: column;
@@ -339,13 +339,13 @@
 </head>
 <body>
 
-    <!-- CAJA DE CONTROL DE MOVIMIENTO (ACELERACIÓN POR HARDWARE) -->
-    <div class="motion-bg-container">
-        <div class="cyber-bg" id="parallax-bg"></div>
-        <div class="neon-orb orb-1" id="orb-1"></div>
-        <div class="neon-orb orb-2" id="orb-2"></div>
-        <div class="neon-orb orb-3" id="orb-3"></div>
-        <div class="neon-orb orb-4" id="orb-4"></div>
+    <!-- MATRIZ DE FONDO UNIFICADA (Evita cortes y desfases de scroll) -->
+    <div class="motion-bg-container" id="master-bg">
+        <div class="cyber-bg" id="metal-layer"></div>
+        <div class="neon-orb orb-top-left"></div>
+        <div class="neon-orb orb-mid-right"></div>
+        <div class="neon-orb orb-bottom-left"></div>
+        <div class="neon-orb orb-bottom-right"></div>
     </div>
 
     <header>
@@ -598,36 +598,28 @@
 
     </main>
 
-    <!-- SCRIPT DE OPTIMIZACIÓN Y ANIMACIÓN EN TIEMPO REAL (GPU DRIVEN) -->
+    <!-- MOTOR DE MOTION GRAPHICS DEFINITIVO (TRANSICIÓN INTEGRADA) -->
     <script>
-        const parallaxBg = document.getElementById('parallax-bg');
-        const orb1 = document.getElementById('orb-1');
-        const orb2 = document.getElementById('orb-2');
-        const orb3 = document.getElementById('orb-3');
-        const orb4 = document.getElementById('orb-4');
+        const masterBg = document.getElementById('master-bg');
+        const metalLayer = document.getElementById('metal-layer');
         const cards = document.querySelectorAll('.glass-card');
 
-        // Escucha pasiva para maximizar rendimiento en dispositivos móviles (evita Jank)
         window.addEventListener('scroll', () => {
             let offset = window.pageYOffset;
             
-            // 1. TRANSFORMACIÓN DE HIPER-BLUR OPTIMIZADA
-            let blurValue = Math.min(offset * 0.05, 30); // Desenfoque aumentado hasta 30px
-            let darkValue = Math.max(0.75 - (offset * 0.001), 0.15); // Disolución a negro profundo
-            
-            // translate3d activa la aceleración por hardware en la GPU
-            parallaxBg.style.filter = `contrast(1.2) brightness(${darkValue}) blur(${blurValue}px)`;
-            parallaxBg.style.transform = `translate3d(0, ${offset * 0.15}px, 0) scale(${1 + (offset * 0.0001)})`;
+            // 1. TRANSFORMACIÓN EXAGERADA DE BLUR (Hasta 35px para disolución total)
+            let dynamicBlur = Math.min(offset * 0.06, 35);
+            let targetBrightness = Math.max(0.75 - (offset * 0.0012), 0.1); 
 
-            // 2. SISTEMA DE DIALÉCTICA LUMÍNICA INFERIOR (Aurora Scroll Engine)
-            // Desplazamiento asíncrono controlado de los orbes para dar profundidad sin cortes
-            orb1.style.transform = `translate3d(0, ${offset * 0.2}px, 0)`;
-            orb2.style.transform = `translate3d(0, ${offset * -0.1}px, 0)`;
-            orb3.style.transform = `translate3d(0, ${offset * -0.4}px, 0) scale(${1 + (offset * 0.0003)})`;
-            orb4.style.transform = `translate3d(0, ${offset * -0.35}px, 0)`;
+            metalLayer.style.filter = `contrast(1.2) brightness(${targetBrightness}) blur(${dynamicBlur}px)`;
+
+            // 2. MOVIMIENTO COORDINADO EN 3D (Desaparece la línea divisoria por completo)
+            // Desplazamos todo el lienzo unificado a una tasa fija multiplicada para mantener consistencia
+            masterBg.style.transform = `translate3d(0, ${offset * 0.22}px, 0) scale(${1 + (offset * 0.00008)})`;
+
         }, { passive: true });
 
-        // INCLINACIÓN FÍSICA 3D (Desactivado en móviles de forma nativa para ahorrar CPU)
+        // INCLINACIÓN FÍSICA 3D DE TARJETAS
         if (window.innerWidth > 768) {
             cards.forEach(card => {
                 card.addEventListener('mousemove', (e) => {
