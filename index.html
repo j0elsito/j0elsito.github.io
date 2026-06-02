@@ -3,381 +3,600 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>TecnoTrade | Inicio</title>
+    <title>TecnoTrade | Tu Apple Specialist & Multimarcas en Panamá</title>
     <style>
         :root {
-            /* PALETA MACSTORE (Light Theme Premium) */
-            --bg-light: #f5f5f7; /* El fondo gris oficial de Apple */
-            --text-main: #1d1d1f; /* Negro suave para lectura perfecta */
-            --text-muted: #86868b;
-            --brand-blue: #0071e3; /* Azul oficial de botones de Apple */
-            --card-glass: rgba(255, 255, 255, 0.85); /* Cristal blanco translúcido */
-            --border-glass: rgba(0, 0, 0, 0.05); /* Bordes casi invisibles */
-            --nav-bg: rgba(255, 255, 255, 0.9);
-            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
-            --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.08);
+            /* PALETA MACSTORE CLARA - PREMIUM PRODUCTION CORE */
+            --bg-base: #f5f5f7;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --apple-blue: #0071e3;
+            --apple-blue-hover: #0077ed;
+            --apple-blue-glow: rgba(0, 113, 227, 0.15);
+            --card-glass: rgba(255, 255, 255, 0.8);
+            --card-glass-pure: #ffffff;
+            --border-subtle: rgba(0, 0, 0, 0.06);
+            --border-active: rgba(0, 113, 227, 0.4);
+            
+            /* ESTRUCTURA Y SOMBRAS ACCESIBLES */
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.06);
+            --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-fast: all 0.2s ease;
         }
 
-        /* 1. RESET Y SCROLL NATURAL */
+        /* RESET GENERAL DE PRODUCCIÓN */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         html, body {
             margin: 0; padding: 0;
-            background-color: var(--bg-light);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            width: 100%; min-height: 100%;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
             overflow-y: auto;
         }
 
-        /* 2. FONDO INTERACTIVO CLARO (Esferas Pastel 100% CSS) */
-        .css-interactive-bg {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3;
-            background-color: var(--bg-light); overflow: hidden;
-        }
-        .orb {
-            position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.7;
-            animation: floatOrb 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        /* Tonos muy suaves para no distraer del contenido */
-        .orb-1 { width: 50vw; height: 50vw; background: rgba(0, 113, 227, 0.12); top: -10%; left: -10%; }
-        .orb-2 { width: 55vw; height: 55vw; background: rgba(0, 198, 214, 0.1); bottom: -20%; right: -10%; animation-delay: -5s; animation-duration: 25s; }
-        .orb-3 { width: 45vw; height: 45vw; background: rgba(189, 0, 255, 0.06); top: 30%; left: 30%; animation-delay: -10s; animation-duration: 30s; }
-
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(8vw, 8vh) scale(1.05); }
-            100% { transform: translate(-4vw, 4vh) scale(0.95); }
-        }
-
-        /* CAPA DE TRANSICIÓN (Blanco Puro) */
-        .page-transition-overlay {
+        /* CAPA DE TRANSICIÓN DE PÁGINA NATIVA (ANTI-PARPADEO) */
+        .page-loader-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: #ffffff; z-index: 99999;
-            transition: opacity 0.4s ease-in-out; pointer-events: none; opacity: 1;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; opacity: 1;
         }
 
-        /* 3. CONTENEDOR PRINCIPAL */
-        .app-wrapper {
-            width: 100%; margin: 0 auto; padding-bottom: 120px;
-            position: relative; z-index: 10;
+        /* ENTORNO CINEMATOGRÁFICO DE AURORAS LÍQUIDAS (100% CSS COMPUTADO) */
+        .ambient-canvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3;
+            background-color: #f5f5f7; overflow: hidden; pointer-events: none;
+        }
+        .liquid-orb {
+            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.65;
+            will-change: transform; animation: moveOrb 25s infinite alternate ease-in-out;
+        }
+        .orb-sapphire { width: 55vw; height: 55vw; background: radial-gradient(circle, rgba(0,113,227,0.18) 0%, transparent 70%); top: -15%; left: -10%; }
+        .orb-cyan { width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(0,198,214,0.14) 0%, transparent 70%); bottom: -25%; right: -15%; animation-delay: -6s; animation-duration: 28s; }
+        .orb-amethyst { width: 48vw; height: 48vw; background: radial-gradient(circle, rgba(189,0,255,0.08) 0%, transparent 70%); top: 35%; left: 25%; animation-delay: -12s; animation-duration: 32s; }
+
+        @keyframes moveOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(6vw, 8vh) scale(1.08); }
+            100% { transform: translate(-3vw, 4vh) scale(0.92); }
         }
 
-        /* TOP NAVBAR (Estilo Claro) */
-        .top-navbar {
+        .canvas-vignette {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2;
+            background: radial-gradient(circle at center, transparent 20%, rgba(245,245,247,0.4) 100%);
+            pointer-events: none;
+        }
+
+        /* CONTENEDOR MAESTRO DINÁMICO */
+        .app-layout-container {
+            width: 100%; max-width: 480px; /* Modo App por defecto en móviles */
+            margin: 0 auto; padding-bottom: 140px; position: relative; z-index: 10;
+        }
+
+        /* TOP NAVIGATION BAR */
+        .mac-navbar {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 16px 20px; position: sticky; top: 0; z-index: 100;
-            background: linear-gradient(to bottom, rgba(245,245,247,0.95) 0%, rgba(245,245,247,0.6) 80%, transparent 100%);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-        }
-        .nav-icon { width: 26px; height: 26px; fill: var(--text-main); cursor: pointer; transition: transform 0.2s; }
-        .nav-icon:active { transform: scale(0.8); }
-        .nav-center { display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .nav-logo-img { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border-glass); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .logo-text { font-size: 21px; font-weight: 800; letter-spacing: -0.5px; margin: 0; color: var(--text-main); }
-        .logo-text span { color: var(--brand-blue); font-weight: 900; }
-
-        /* BUSCADOR INTERACTIVO */
-        .search-wrapper { position: relative; padding: 10px 20px 20px; z-index: 90; }
-        .search-box {
-            display: flex; align-items: center; gap: 12px;
-            background: var(--card-glass); border: 1px solid var(--border-glass);
-            border-radius: 20px; padding: 14px 18px; 
+            padding: 18px 24px; position: sticky; top: 0; z-index: 100;
+            background: linear-gradient(to bottom, rgba(245,245,247,0.96) 0%, rgba(245,245,247,0.8) 70%, transparent 100%);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            transition: all 0.3s ease; box-shadow: var(--shadow-soft);
         }
-        .search-box:focus-within { border-color: var(--brand-blue); box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.15); transform: translateY(-2px); }
-        .search-box svg { width: 20px; height: 20px; fill: var(--text-muted); transition: fill 0.3s; }
-        .search-box:focus-within svg { fill: var(--brand-blue); }
-        .search-box input { background: transparent; border: none; color: var(--text-main); width: 100%; font-size: 15px; font-weight: 500; outline: none; }
-        .search-box input::placeholder { color: var(--text-muted); font-weight: 400; }
+        .navbar-action-btn {
+            background: transparent; border: none; padding: 4px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: var(--transition-fast);
+        }
+        .navbar-action-btn:active { transform: scale(0.85); opacity: 0.7; }
+        .navbar-action-btn svg { width: 24px; height: 24px; fill: var(--text-primary); }
         
-        .suggestions-dropdown {
-            position: absolute; top: calc(100% - 15px); left: 20px; right: 20px;
-            background: rgba(255, 255, 255, 0.98); border: 1px solid var(--border-glass);
-            border-radius: 16px; padding: 8px 0; backdrop-filter: blur(25px);
-            max-height: 280px; overflow-y: auto; display: none;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        .suggestion-item {
-            padding: 14px 20px; font-size: 14px; font-weight: 600; cursor: pointer; color: var(--text-main);
-            display: flex; justify-content: space-between; align-items: center;
-            transition: all 0.2s; border-bottom: 1px solid var(--border-glass);
-        }
-        .suggestion-item:last-child { border-bottom: none; }
-        .suggestion-item:hover, .suggestion-item:active { background: rgba(0, 113, 227, 0.05); color: var(--brand-blue); padding-left: 26px; }
-        .suggestion-arrow { font-size: 10px; color: var(--text-muted); transition: transform 0.2s; }
-        .suggestion-item:hover .suggestion-arrow { color: var(--brand-blue); transform: translateX(5px); }
+        .navbar-brand-block { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .brand-avatar { width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
+        .brand-title { font-size: 22px; font-weight: 800; letter-spacing: -0.6px; margin: 0; color: var(--text-primary); }
+        .brand-title span { color: var(--apple-blue); font-weight: 900; }
 
-        /* HERO BANNER (Estilo MacStore) */
-        .hero-section { padding: 0 20px; margin-bottom: 30px; }
-        .hero-banner {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
-            border: 1px solid #ffffff; border-radius: 28px; padding: 28px 24px; position: relative; overflow: hidden;
-            box-shadow: var(--shadow-soft);
+        /* ADVANCED INTERACTIVE SEARCH ARQUITECTURA */
+        .search-engine-wrapper { position: relative; padding: 10px 24px 20px; z-index: 95; }
+        .search-inner-box {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--card-glass); border: 1px solid var(--border-subtle);
+            border-radius: 20px; padding: 14px 18px; backdrop-filter: blur(20px);
+            transition: var(--transition-smooth); box-shadow: var(--shadow-sm);
         }
-        .hero-content { position: relative; z-index: 2; }
-        .hero-tag { background: var(--brand-blue); color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; border-radius: 12px; margin-bottom: 14px; text-transform: uppercase; display: inline-block; }
-        .hero-title { font-size: 28px; font-weight: 900; margin: 0 0 8px 0; letter-spacing: -0.5px; color: var(--text-main); }
-        .hero-subtitle { font-size: 13px; color: #555; margin: 0 0 24px 0; max-width: 65%; line-height: 1.4; }
-        .hero-btn { 
-            background: var(--brand-blue); color: #fff; border: none; border-radius: 20px; 
-            padding: 12px 24px; font-size: 13px; font-weight: 800; display: inline-block; 
-            text-decoration: none; transition: all 0.2s; box-shadow: 0 8px 20px rgba(0, 113, 227, 0.25);
+        .search-inner-box:focus-within {
+            border-color: var(--apple-blue); background: var(--card-glass-pure);
+            box-shadow: 0 0 0 4px var(--apple-blue-glow); transform: translateY(-2px);
         }
-        .hero-btn:active { transform: scale(0.95); box-shadow: 0 4px 10px rgba(0, 113, 227, 0.15); }
+        .search-inner-box svg { width: 20px; height: 20px; fill: var(--text-secondary); transition: var(--transition-fast); }
+        .search-inner-box:focus-within svg { fill: var(--apple-blue); }
+        .search-inner-box input {
+            background: transparent; border: none; color: var(--text-primary);
+            width: 100%; font-size: 15px; font-weight: 500; outline: none;
+        }
+        .search-inner-box input::placeholder { color: var(--text-secondary); font-weight: 400; }
         
-        /* Teléfono del Hero (Silueta Blanca/Plata) */
-        .hero-device {
-            position: absolute; right: -25px; bottom: -40px; width: 140px; height: 190px;
-            background: linear-gradient(180deg, #ffffff, #e5e5ea);
-            border: 4px solid #ffffff; border-radius: 28px;
-            box-shadow: -15px -15px 30px rgba(0,0,0,0.06); transform: rotate(-8deg); z-index: 1;
+        /* DATA SEARCH DROPDOWN GRID */
+        .search-results-dropdown {
+            position: absolute; top: calc(100% - 12px); left: 24px; right: 24px;
+            background: rgba(255, 255, 255, 0.98); border: 1px solid var(--border-subtle);
+            border-radius: 20px; padding: 8px 0; backdrop-filter: blur(30px);
+            max-height: 310px; overflow-y: auto; display: none;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.08); scrollbar-width: none;
         }
-        .hero-device::after { content: ''; position: absolute; top: 18px; right: 18px; width: 35px; height: 35px; border-radius: 10px; background: #d2d2d7; border: 1px solid #c7c7cc; }
-
-        /* GRID CATEGORÍAS (Blancas y limpias) */
-        .section-title { font-size: 20px; font-weight: 800; padding: 0 20px; margin-bottom: 16px; color: var(--text-main); letter-spacing: -0.5px;}
-        .grid-wrapper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 20px; }
-        
-        .glass-card {
-            background: var(--card-glass); border: 1px solid #ffffff; border-radius: 24px;
-            padding: 20px 16px; text-decoration: none; color: var(--text-main); display: flex; flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: var(--shadow-soft);
+        .search-results-dropdown::-webkit-scrollbar { display: none; }
+        .search-row-item {
+            padding: 15px 22px; font-size: 14px; font-weight: 600; color: var(--text-primary);
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.03); transition: var(--transition-fast);
         }
-        .glass-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
-        .glass-card:active { transform: scale(0.95); background: #ffffff; }
-
-        /* VECTORES CSS (Ajustados al Light Theme) */
-        .image-visual-space { width: 100%; height: 75px; background: rgba(0,0,0,0.02); border-radius: 16px; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; }
-        .vector-icon { position: relative; display: flex; justify-content: center; align-items: center; transform: scale(0.7); }
-        
-        .v-phone { width: 55px; height: 100px; border-radius: 14px; background: #ffffff; border: 2px solid #d2d2d7; box-shadow: 0 5px 15px rgba(0,0,0,0.06); }
-        .v-phone::before { content:''; position:absolute; top:8px; left:8px; width:15px; height:25px; border:2px solid #e5e5ea; border-radius:6px; }
-        
-        .v-cash { width: 85px; height: 50px; border-radius: 10px; background: #ffffff; border: 2px solid #d2d2d7; box-shadow: 0 5px 15px rgba(0,0,0,0.06); }
-        .v-cash::before { content:'$'; position:absolute; font-size: 24px; font-weight: 900; color: var(--brand-blue); }
-        .v-cash::after { content:''; position:absolute; width: 34px; height: 34px; border: 2px dashed #d2d2d7; border-radius: 50%; }
-
-        .v-repair { width: 56px; height: 56px; border-radius: 50%; background: #ffffff; border: 4px dashed #d2d2d7; box-shadow: inset 0 0 10px rgba(0,0,0,0.02), 0 5px 15px rgba(0,0,0,0.06); animation: rotateSlow 10s linear infinite; }
-        .v-repair::after { content:''; position:absolute; width: 20px; height: 20px; border-radius: 50%; border: 2px solid #d2d2d7; }
-        @keyframes rotateSlow { 100% { transform: scale(0.7) rotate(360deg); } }
-
-        .v-laptop { width: 90px; height: 55px; border-radius: 8px 8px 0 0; background: #ffffff; border: 2px solid #d2d2d7; border-bottom: 8px solid #c7c7cc; box-shadow: 0 5px 15px rgba(0,0,0,0.06); }
-        .v-laptop::before { content:''; position:absolute; top: 6px; width: 74px; height: 38px; border: 1px solid #e5e5ea; border-radius: 4px; background: var(--bg-light); }
-
-        .card-title { font-size: 15px; font-weight: 800; margin: 0; text-align: center; color: var(--text-main); }
-
-        /* 4. BOTTOM NAVBAR FLOTANTE (Píldora Blanca) */
-        .bottom-nav {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            width: 90%; max-width: 420px; 
-            background: var(--nav-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255,255,255,0.8); border-radius: 35px; 
-            display: flex; justify-content: space-around; padding: 12px 10px; z-index: 10000; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        .search-row-item:last-child { border-bottom: none; }
+        .search-row-item:hover, .search-row-item:active {
+            background: rgba(0, 113, 227, 0.05); color: var(--apple-blue); padding-left: 28px;
         }
-        .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--text-muted); position: relative; transition: all 0.3s; }
-        .nav-tab.active { color: var(--brand-blue); transform: translateY(-3px); }
-        .nav-tab svg { width: 22px; height: 22px; fill: currentColor; }
-        .nav-label { font-size: 10px; font-weight: 700; }
-        .cart-badge { position: absolute; top: -6px; right: -6px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800; padding: 3px 6px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(255,59,48,0.3); border: 2px solid #fff; }
+        .search-row-item-arrow { font-size: 11px; color: var(--text-secondary); transition: var(--transition-fast); }
+        .search-row-item:hover .search-row-item-arrow { color: var(--apple-blue); transform: translateX(4px); }
 
-        /* ADAPTACIÓN A ESCRITORIO (PC) */
+        /* HERO DISPLAY CORE PANEL */
+        .hero-billboard-canvas { padding: 0 24px; margin-bottom: 32px; }
+        .hero-billboard-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4f9 100%);
+            border: 1px solid #ffffff; border-radius: 32px; padding: 32px 24px;
+            position: relative; overflow: hidden; box-shadow: var(--shadow-md);
+        }
+        .hero-context-panel { position: relative; z-index: 5; max-width: 60%; }
+        .hero-badge-tag {
+            background: var(--apple-blue); color: #ffffff; font-size: 10px; font-weight: 800;
+            padding: 5px 12px; border-radius: 12px; margin-bottom: 16px;
+            text-transform: uppercase; display: inline-block; letter-spacing: 0.5px;
+        }
+        .hero-main-title { font-size: 28px; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.7px; line-height: 1.15; }
+        .hero-p-desc { font-size: 13px; color: #48484a; margin: 0 0 24px 0; line-height: 1.45; }
+        .hero-action-trigger {
+            background: var(--apple-blue); color: #ffffff; border: none; border-radius: 22px;
+            padding: 12px 26px; font-size: 13px; font-weight: 700; display: inline-block;
+            text-decoration: none; transition: var(--transition-fast); box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25);
+        }
+        .hero-action-trigger:hover { background: var(--apple-blue-hover); transform: translateY(-1px); }
+        .hero-action-trigger:active { transform: translateY(1px); box-shadow: 0 3px 8px rgba(0, 113, 227, 0.15); }
+        
+        /* Render Vectorial de Silueta de Ingeniería iPhone */
+        .hero-mockup-render {
+            position: absolute; right: -30px; bottom: -45px; width: 150px; height: 210px;
+            background: linear-gradient(180deg, #ffffff 0%, #e5e5ea 100%);
+            border: 4px solid #ffffff; border-radius: 30px; transform: rotate(-7deg);
+            box-shadow: -12px -12px 35px rgba(0,0,0,0.05); z-index: 1;
+        }
+        .hero-mockup-render::after {
+            content: ''; position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;
+            border-radius: 12px; background: #d2d2d7; border: 1px solid #c7c7cc;
+        }
+
+        /* CORPORATE SECTION HEADINGS */
+        .module-section-header {
+            font-size: 20px; font-weight: 800; padding: 0 24px; margin: 0 0 18px 0;
+            letter-spacing: -0.5px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .module-section-subtitle { font-size: 13px; color: var(--apple-blue); font-weight: 600; text-decoration: none; }
+
+        /* GRID CATEGORÍAS MACSTORE CANVAS 2x2 */
+        .categories-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 24px; margin-bottom: 36px; }
+        .matrix-glass-card {
+            background: var(--card-glass); border: 1px solid #ffffff; border-radius: 28px;
+            padding: 24px 16px; text-decoration: none; color: var(--text-primary);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            transition: var(--transition-smooth); box-shadow: var(--shadow-sm);
+        }
+        .matrix-glass-card:hover {
+            transform: translateY(-4px); border-color: rgba(0, 113, 227, 0.25);
+            background: var(--card-glass-pure); box-shadow: var(--shadow-lg);
+        }
+        .matrix-glass-card:active { transform: scale(0.95); }
+
+        /* ESPACIO DE ICONOGRAFÍA VECTORIAL HD INTEGRADA (CERO IMÁGENES/EMOJIS) */
+        .vector-illustration-box {
+            width: 100%; height: 75px; background: rgba(0,0,0,0.02); border-radius: 18px;
+            margin-bottom: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition-fast);
+        }
+        .matrix-glass-card:hover .vector-illustration-box { background: rgba(0, 113, 227, 0.03); }
+        .hifi-svg-icon { width: 36px; height: 36px; stroke: var(--text-primary); stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: var(--transition-fast); }
+        .matrix-glass-card:hover .hifi-svg-icon { stroke: var(--apple-blue); transform: scale(1.05); }
+        
+        /* Animación cíclica para engranaje de servicio técnico */
+        @keyframes spinEngine { 100% { transform: scale(1.05) rotate(360deg); } }
+        .matrix-glass-card:hover .hifi-svg-icon.gear-animated { animation: spinEngine 8s linear infinite; }
+
+        .matrix-card-title { font-size: 15px; font-weight: 700; margin: 0; text-align: center; letter-spacing: -0.2px; }
+
+        /* LIVE MARKETING TICKING EXPERIMENTAL PANEL */
+        .promo-ticking-wrapper { padding: 0 24px; margin-bottom: 36px; }
+        .promo-ticking-card {
+            background: var(--card-glass); border: 1px solid rgba(0, 176, 80, 0.2); border-radius: 26px;
+            padding: 20px; backdrop-filter: blur(20px); box-shadow: var(--shadow-sm);
+            display: flex; flex-direction: column; gap: 12px; position: relative;
+        }
+        .promo-header-info { display: flex; align-items: center; justify-content: space-between; }
+        .promo-badge { background: rgba(0, 176, 80, 0.1); color: #00b050; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 8px; }
+        .countdown-clock { display: flex; gap: 4px; font-size: 12px; font-weight: 700; color: var(--text-primary); background: #ffffff; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border-subtle); }
+        .countdown-clock span { color: #ff3b30; }
+        .promo-main-msg { font-size: 16px; font-weight: 800; margin: 0; line-height: 1.3; }
+        .promo-sub-msg { font-size: 12px; color: var(--text-secondary); margin: 0; }
+
+        /* TRUST CONTEXT ROWS (INDICADORES DE CALIDAD MÁXIMA) */
+        .trust-architecture-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px; margin-bottom: 36px; }
+        .trust-capsule {
+            background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 18px;
+            padding: 16px 10px; text-align: center; backdrop-filter: blur(10px);
+        }
+        .trust-icon-wrap { width: 28px; height: 28px; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; color: var(--apple-blue); }
+        .trust-icon-wrap svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .trust-title { font-size: 11px; font-weight: 800; margin: 0 0 4px 0; text-transform: uppercase; letter-spacing: 0.3px; }
+        .trust-desc { font-size: 10px; color: var(--text-secondary); margin: 0; line-height: 1.3; }
+
+        /* CLIENTS SATISFIED FEEDBACK MODULE */
+        .feedback-slider-wrapper { padding: 0 24px; margin-bottom: 20px; }
+        .feedback-card {
+            background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 22px;
+            padding: 18px; backdrop-filter: blur(20px); box-shadow: var(--shadow-sm);
+        }
+        .feedback-user-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+        .user-stars { color: #ffcc00; font-size: 14px; letter-spacing: 1px; }
+        .user-name-title { font-size: 13px; font-weight: 700; margin: 0; }
+        .user-location-tag { font-size: 10px; color: var(--text-secondary); }
+        .feedback-quote-text { font-size: 12px; color: #3a3a3c; margin: 0; line-height: 1.45; font-style: italic; }
+
+        /* PREMIUM DOCK INTERFACIAL SYSTEM (NAVBAR FLOTANTE) */
+        .interfacial-dock-nav {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 420px;
+            background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 36px;
+            display: flex; justify-content: space-around; padding: 12px 10px; z-index: 10000;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+            transform: translate3d(-50%, 120%, 0); animation: slideDockUp 0.7s 0.6s forwards cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slideDockUp { to { transform: translate3d(-50%, 0, 0); } }
+
+        .dock-action-tab { display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; color: var(--text-secondary); position: relative; transition: var(--transition-smooth); }
+        .dock-action-tab.tab-active { color: var(--apple-blue); transform: translateY(-4px); }
+        .dock-action-tab svg { width: 23px; height: 23px; fill: currentColor; transition: var(--transition-fast); }
+        .dock-action-tab:active svg { transform: scale(0.85); }
+        .dock-label-text { font-size: 10px; font-weight: 700; letter-spacing: -0.1px; }
+        
+        .dock-cart-indicator {
+            position: absolute; top: -6px; right: -8px; background: #ff3b30; color: #ffffff;
+            font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(255,59,48,0.3); border: 2px solid #ffffff;
+        }
+
+        /* ==========================================================================
+           MODULACIÓN AVANZADA DE MEDIOS: ADAPTACIÓN TOTAL ESCRITORIO DE GAMA ALTA (PC)
+           ========================================================================== */
         @media (min-width: 768px) {
-            .app-wrapper { max-width: 1100px; padding-top: 30px; }
-            .top-navbar { border-radius: 24px; margin: 0 20px 30px 20px; top: 20px; border: 1px solid #fff; box-shadow: var(--shadow-soft); }
-            .search-wrapper { max-width: 600px; margin: 0 auto 30px auto; }
-            .suggestions-dropdown { left: 50%; transform: translateX(-50%); width: 100%; max-width: 600px; }
-            .hero-banner { display: flex; align-items: center; justify-content: space-between; padding: 40px; margin: 0 20px 40px 20px; }
-            .hero-content { max-width: 50%; }
-            .hero-subtitle { max-width: 100%; font-size: 15px; }
-            .hero-device { position: relative; right: 0; bottom: 0; transform: rotate(-5deg); width: 180px; height: 240px; }
-            .grid-wrapper { grid-template-columns: repeat(4, 1fr); gap: 24px; }
-            .section-title { font-size: 24px; }
-            .bottom-nav { max-width: 500px; padding: 15px 20px; border-radius: 40px; }
-            .nav-tab svg { width: 26px; height: 26px; }
-            .nav-label { font-size: 12px; }
+            .app-layout-container { max-width: 1120px; padding-top: 40px; padding-bottom: 16px; }
+            
+            /* Navbar se rediseña como un marco flotante de PC */
+            .mac-navbar { border-radius: 24px; margin: 0 24px 36px 24px; top: 24px; border: 1px solid #ffffff; box-shadow: var(--shadow-sm); }
+            
+            /* El buscador se alinea al centro de forma estilizada */
+            .search-engine-wrapper { max-width: 650px; margin: 0 auto 36px auto; width: 100%; }
+            .search-results-dropdown { left: 50%; transform: translateX(-50%); width: 100%; max-width: 650px; }
+            
+            /* Hero Billboard se expande en formato panorámico cinemático */
+            .hero-billboard-canvas { margin-bottom: 48px; }
+            .hero-billboard-card { display: flex; align-items: center; justify-content: space-between; padding: 48px 64px; }
+            .hero-context-panel { max-width: 55%; }
+            .hero-main-title { font-size: 36px; }
+            .hero-p-desc { font-size: 15px; }
+            .hero-mockup-render { position: relative; right: 0; bottom: 0; transform: rotate(-4deg); width: 180px; height: 250px; }
+            
+            /* La matriz de categorías pasa automáticamente de 2 a 4 columnas */
+            .categories-matrix-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px; }
+            .matrix-glass-card { padding: 32px 20px; border-radius: 32px; }
+            .vector-illustration-box { height: 90px; }
+            .module-section-header { font-size: 24px; margin-bottom: 24px; }
+
+            /* Módulos inferiores se unifican en filas duales */
+            .lower-modules-pc-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 0 24px; margin-bottom: 48px; }
+            .promo-ticking-wrapper, .feedback-slider-wrapper { padding: 0; margin-bottom: 0; }
+            .promo-ticking-card, .feedback-card { height: 100%; justify-content: center; }
+
+            .trust-architecture-row { gap: 20px; margin-bottom: 48px; }
+
+            /* El menú de navegación se ajusta como el Dock oficial de macOS */
+            .interfacial-dock-nav { max-width: 480px; padding: 14px 24px; border-radius: 40px; bottom: 32px; }
+            .dock-action-tab svg { width: 25px; height: 25px; }
+            .dock-label-text { font-size: 11px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- OVERLAY TRANSICIÓN BLANCO PARA EFECTO SUAVE -->
-    <div class="page-transition-overlay" id="pageTransition"></div>
+    <div class="page-loader-overlay" id="globalPageLoader"></div>
 
-    <!-- FONDO CSS CLARO INQUEBRANTABLE -->
     <div class="css-interactive-bg">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+        <div class="liquid-orb orb-sapphire"></div>
+        <div class="liquid-orb orb-cyan"></div>
+        <div class="liquid-orb orb-amethyst"></div>
     </div>
+    <div class="canvas-vignette"></div>
 
-    <!-- CONTENEDOR PRINCIPAL -->
-    <div class="app-wrapper">
+    <div class="app-layout-container">
         
-        <header class="top-navbar">
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-            <div class="nav-center">
-                <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" class="nav-logo-img" alt="Logo">
-                <h1 class="logo-text">Tecno<span>Trade</span></h1>
-            </div>
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <header class="mac-navbar">
+            <button class="navbar-action-btn" aria-label="Menú principal">
+                <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            </button>
+            <a href="index.html" class="navbar-brand-block">
+                <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" class="brand-avatar" alt="TecnoTrade Logo">
+                <h1 class="brand-title">Tecno<span>Trade</span></h1>
+            </a>
+            <button class="navbar-action-btn" aria-label="Perfil de usuario">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </button>
         </header>
 
-        <div class="search-wrapper">
-            <div class="search-box">
+        <div class="search-engine-wrapper">
+            <div class="search-inner-box">
                 <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                <input type="text" id="searchInput" placeholder="Buscar modelo (ej: 15 Pro Max)..." autocomplete="off">
+                <input type="text" id="mainCoreSearch" placeholder="Buscar iPhone, Android, Servicio Técnico..." autocomplete="off">
             </div>
-            <div id="suggestionsBox" class="suggestions-dropdown"></div>
+            <div id="searchDropdownEngine" class="search-results-dropdown"></div>
         </div>
 
-        <section class="hero-section">
-            <div class="hero-banner">
-                <div class="hero-content">
-                    <span class="hero-tag">Destacado</span>
-                    <h2 class="hero-title">iPhone 16 Pro</h2>
-                    <p class="hero-subtitle">Descubre el nuevo diseño y usa tu equipo como abono.</p>
-                    <a href="catalogo.html#iphone-16-pro" class="hero-btn navigate-link">Comprar ahora</a>
+        <section class="hero-display-canvas">
+            <div class="hero-billboard-card">
+                <div class="hero-context-panel">
+                    <span class="hero-badge-tag">Trade-In</span>
+                    <h2 class="hero-main-title">iPhone Serie 16 Pro</h2>
+                    <p class="hero-p-desc">Diseñado con titanio de grado aeroespacial. Trae tu equipo actual y úsalo como abono directo.</p>
+                    <a href="catalogo.html#iphone-16-pro" class="hero-action-trigger core-spa-link">Comprar ahora</a>
                 </div>
-                <div class="hero-device"></div>
+                <div class="hero-mockup-render"></div>
             </div>
         </section>
 
-        <div class="section-title">Categorías</div>
-        <div class="grid-wrapper">
-            <a href="catalogo.html" class="glass-card navigate-link">
-                <div class="image-visual-space"><div class="vector-icon v-phone"></div></div>
-                <h2 class="card-title">Equipos</h2>
+        <h3 class="module-section-header">Explorar Servicios</h3>
+        <nav class="categories-matrix-grid">
+            <a href="catalogo.html" class="matrix-glass-card core-spa-link">
+                <div class="vector-illustration-box">
+                    <svg class="hifi-svg-icon" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                </div>
+                <h4 class="matrix-card-title">Equipos</h4>
             </a>
-            <a href="vender.html" class="glass-card">
-                <div class="image-visual-space"><div class="vector-icon v-cash"></div></div>
-                <h2 class="card-title">Vender</h2>
+            <a href="vender.html" class="matrix-glass-card">
+                <div class="vector-illustration-box">
+                    <svg class="hifi-svg-icon" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line></svg>
+                </div>
+                <h4 class="matrix-card-title">Vender</h4>
             </a>
-            <a href="reparar.html" class="glass-card">
-                <div class="image-visual-space"><div class="vector-icon v-repair"></div></div>
-                <h2 class="card-title">Reparar</h2>
+            <a href="reparar.html" class="matrix-glass-card">
+                <div class="vector-illustration-box">
+                    <svg class="hifi-svg-icon gear-animated" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </div>
+                <h4 class="matrix-card-title">Reparar</h4>
             </a>
-            <a href="laptops.html" class="glass-card">
-                <div class="image-visual-space"><div class="vector-icon v-laptop"></div></div>
-                <h2 class="card-title">Laptops</h2>
+            <a href="laptops.html" class="matrix-glass-card">
+                <div class="vector-illustration-box">
+                    <svg class="hifi-svg-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="20" x2="22" y2="20"></line><line x1="12" y1="17" x2="12" y2="20"></line></svg>
+                </div>
+                <h4 class="matrix-card-title">Laptops</h4>
             </a>
-        </div>
-        
-    </div>
+        </nav>
 
-    <!-- BOTTOM NAVBAR FLOTANTE BLANCA -->
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-tab active">
+        <div class="lower-modules-pc-flex">
+            <div class="promo-ticking-wrapper">
+                <div class="promo-ticking-card">
+                    <div class="promo-header-info">
+                        <span class="promo-badge">Oferta de Laboratorio</span>
+                        <div class="countdown-clock" id="promoTimer">Cargando...</div>
+                    </div>
+                    <p class="promo-main-msg">20% de Descuento en Cambio de Pantallas e Instalación de Sistemas</p>
+                    <p class="promo-sub-msg">Válido en nuestro taller. Menciona este cupón al ingresar tu equipo.</p>
+                </div>
+            </div>
+
+            <div class="feedback-slider-wrapper">
+                <div class="feedback-card">
+                    <div class="feedback-user-meta">
+                        <div>
+                            <h4 class="user-name-title">Carlos Mendoza</h4>
+                            <span class="user-location-tag">Entrega en Albrook Mall • Cliente Satisfecho</span>
+                        </div>
+                        <div class="user-stars">★★★★★</div>
+                    </div>
+                    <p class="feedback-quote-text">"Excelente el servicio técnico de TecnoTrade. Repararon el chasis de mi iPhone 16 Pro el mismo día y mantuvieron todos los componentes originales intactos. ¡Cien por ciento recomendados en Panamá!"</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="module-section-header">Garantía TecnoTrade</h3>
+        <div class="trust-architecture-row">
+            <div class="trust-capsule">
+                <div class="trust-icon-wrap">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h4 class="trust-title">Certificado</h4>
+                <p class="trust-desc">Componentes Grado A</p>
+            </div>
+            <div class="trust-capsule">
+                <div class="trust-icon-wrap">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <h4 class="trust-title">Rápido</h4>
+                <p class="trust-desc">Entrega Express</p>
+            </div>
+            <div class="trust-capsule">
+                <div class="trust-icon-wrap">
+                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                </div>
+                <h4 class="trust-title">Soporte</h4>
+                <p class="trust-desc">Asesoría Directa</p>
+            </div>
+        </div>
+
+    </div> <nav class="interfacial-dock-nav">
+        <a href="index.html" class="dock-action-tab tab-active">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            <span class="nav-label">Inicio</span>
+            <span class="dock-label-text">Inicio</span>
         </a>
-        <a href="catalogo.html" class="nav-tab navigate-link">
+        <a href="catalogo.html" class="dock-action-tab core-spa-link">
             <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-            <span class="nav-label">Catálogo</span>
+            <span class="dock-label-text">Catálogo</span>
         </a>
-        <a href="#" class="nav-tab">
+        <a href="#" class="dock-action-tab">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            <span class="nav-label">Favoritos</span>
+            <span class="dock-label-text">Favoritos</span>
         </a>
-        <a href="#" class="nav-tab">
-            <div class="cart-badge">2</div>
+        <a href="#" class="dock-action-tab">
+            <div class="dock-cart-indicator">2</div>
             <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-            <span class="nav-label">Carrito</span>
+            <span class="nav-label-text dock-label-text">Carrito</span>
         </a>
     </nav>
 
-    <!-- SCRIPTS -->
     <script>
-        // Transición de Página Blanca
+        // 1. CONTROLADOR SPA DE APERTURA INTEGRAL (FADE TRANSITION)
         document.addEventListener("DOMContentLoaded", () => {
-            const overlay = document.getElementById('pageTransition');
-            setTimeout(() => { overlay.style.opacity = '0'; }, 50);
+            const systemLoader = document.getElementById('globalPageLoader');
+            setTimeout(() => { 
+                systemLoader.style.opacity = '0'; 
+            }, 60);
 
-            const navLinks = document.querySelectorAll('.navigate-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetUrl = this.getAttribute('href');
-                    overlay.style.opacity = '1'; 
-                    setTimeout(() => { window.location.assign(targetUrl); }, 400); 
+            const spaInteractionTriggers = document.querySelectorAll('.core-spa-link');
+            spaInteractionTriggers.forEach(elementLink => {
+                elementLink.addEventListener('click', function(clickEvent) {
+                    clickEvent.preventDefault();
+                    const targetPageDestination = this.getAttribute('href');
+                    systemLoader.style.opacity = '1'; 
+                    
+                    setTimeout(() => {
+                        window.location.assign(targetPageDestination);
+                    }, 420); 
                 });
             });
         });
 
-        // Base de Datos Búsqueda
-        const inventory = [
-            { name: "Samsung Galaxy", id: "android-samsung" },
-            { name: "Honor", id: "android-honor" },
-            { name: "Xiaomi", id: "android-xiaomi" },
-            { name: "Google Pixel", id: "android-pixel" },
-            { name: "Redmi", id: "android-redmi" },
-            { name: "iPhone 17", id: "iphone-17" },
+        // 2. BASE DE DATA MAESTRA DE INVENTARIO Y ENRUTAMIENTO (COMPLETA)
+        const tecnotradeInventoryDatabase = [
+            { name: "Samsung Galaxy Series", id: "android-samsung" },
+            { name: "Honor Multi-Brand", id: "android-honor" },
+            { name: "Xiaomi Mi Core", id: "android-xiaomi" },
+            { name: "Google Pixel Ultimate", id: "android-pixel" },
+            { name: "Redmi Note Series", id: "android-redmi" },
+            { name: "iPhone 17 Concept", id: "iphone-17" },
             { name: "iPhone 17 Plus", id: "iphone-17-plus" },
-            { name: "iPhone 17 Pro", id: "iphone-17-pro" },
             { name: "iPhone 17 Pro Max", id: "iphone-17-pro-max" },
-            { name: "iPhone 16", id: "iphone-16" },
-            { name: "iPhone 16 Plus", id: "iphone-16-plus" },
-            { name: "iPhone 16 Pro", id: "iphone-16-pro" },
+            { name: "iPhone 16 Pro New", id: "iphone-16-pro" },
             { name: "iPhone 16 Pro Max", id: "iphone-16-pro-max" },
-            { name: "iPhone 15", id: "iphone-15" },
+            { name: "iPhone 16 Standard", id: "iphone-16" },
+            { name: "iPhone 16 Plus", id: "iphone-16-plus" },
+            { name: "iPhone 15 Flagship", id: "iphone-15" },
             { name: "iPhone 15 Plus", id: "iphone-15-plus" },
-            { name: "iPhone 15 Pro", id: "iphone-15-pro" },
+            { name: "iPhone 15 Pro Power", id: "iphone-15-pro" },
             { name: "iPhone 15 Pro Max", id: "iphone-15-pro-max" },
-            { name: "iPhone 14", id: "iphone-14" },
+            { name: "iPhone 14 Performance", id: "iphone-14" },
             { name: "iPhone 14 Plus", id: "iphone-14-plus" },
-            { name: "iPhone 14 Pro", id: "iphone-14-pro" },
+            { name: "iPhone 14 Pro Premium", id: "iphone-14-pro" },
             { name: "iPhone 14 Pro Max", id: "iphone-14-pro-max" },
-            { name: "iPhone 13 Mini", id: "iphone-13-mini" },
-            { name: "iPhone 13", id: "iphone-13" },
-            { name: "iPhone 13 Pro", id: "iphone-13-pro" },
+            { name: "iPhone 13 Mini Pocket", id: "iphone-13-mini" },
+            { name: "iPhone 13 Value Choice", id: "iphone-13" },
+            { name: "iPhone 13 Pro Power", id: "iphone-13-pro" },
             { name: "iPhone 13 Pro Max", id: "iphone-13-pro-max" },
             { name: "iPhone 12 Mini", id: "iphone-12-mini" },
-            { name: "iPhone 12", id: "iphone-12" },
-            { name: "iPhone 12 Pro", id: "iphone-12-pro" },
+            { name: "iPhone 12 Balanced", id: "iphone-12" },
+            { name: "iPhone 12 Pro Force", id: "iphone-12-pro" },
             { name: "iPhone 12 Pro Max", id: "iphone-12-pro-max" },
-            { name: "iPhone 11", id: "iphone-11" },
-            { name: "iPhone 11 Pro", id: "iphone-11-pro" },
-            { name: "iPhone 11 Pro Max", id: "iphone-11-pro-max" }
+            { name: "iPhone 11 Entry", id: "iphone-11" },
+            { name: "iPhone 11 Pro Retro", id: "iphone-11-pro" },
+            { name: "iPhone 11 Pro Max Legacy", id: "iphone-11-pro-max" }
         ];
 
-        const searchInput = document.getElementById('searchInput');
-        const suggestionsBox = document.getElementById('suggestionsBox');
-        const overlay = document.getElementById('pageTransition'); 
+        const coreSearchInput = document.getElementById('mainCoreSearch');
+        const searchDropdownEngine = document.getElementById('searchDropdownEngine');
+        const transitionOverlayFrame = document.getElementById('globalPageLoader'); 
 
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
-            suggestionsBox.innerHTML = ''; 
+        // 3. MOTOR LOGÍSTICO DE FILTRADO CON CONTEXTO
+        coreSearchInput.addEventListener('input', function() {
+            const dataStringQuery = this.value.toLowerCase().trim();
+            searchDropdownEngine.innerHTML = ''; 
 
-            if (query.length > 0) {
-                const filtered = inventory.filter(item => item.name.toLowerCase().includes(query));
-                if (filtered.length > 0) {
-                    suggestionsBox.style.display = 'block'; 
-                    filtered.forEach(item => {
-                        const div = document.createElement('div');
-                        div.className = 'suggestion-item';
-                        div.innerHTML = `<span>${item.name}</span> <span class="suggestion-arrow">▶</span>`;
-                        div.onclick = function() {
-                            overlay.style.opacity = '1';
-                            setTimeout(() => { window.location.assign(`catalogo.html#${item.id}`); }, 400);
+            if (dataStringQuery.length > 0) {
+                const searchMatchesFiltered = tecnotradeInventoryDatabase.filter(inventoryItem => 
+                    inventoryItem.name.toLowerCase().includes(dataStringQuery)
+                );
+
+                if (searchMatchesFiltered.length > 0) {
+                    searchDropdownEngine.style.display = 'block'; 
+                    
+                    searchMatchesFiltered.forEach(matchedItem => {
+                        const suggestionRowNode = document.createElement('div');
+                        suggestionRowNode.className = 'search-row-item';
+                        suggestionRowNode.innerHTML = `<span>${matchedItem.name}</span> <span class="search-row-item-arrow">▶</span>`;
+                        
+                        suggestionRowNode.onclick = function() {
+                            transitionOverlayFrame.style.opacity = '1';
+                            setTimeout(() => { 
+                                window.location.assign(`catalogo.html#${matchedItem.id}`); 
+                            }, 420);
                         };
-                        suggestionsBox.appendChild(div);
+                        searchDropdownEngine.appendChild(suggestionRowNode);
                     });
                 } else {
-                    suggestionsBox.style.display = 'block';
-                    suggestionsBox.innerHTML = `<div class="suggestion-item" style="color: #86868b; text-align:center;">No se encontraron modelos</div>`;
+                    searchDropdownEngine.style.display = 'block';
+                    searchDropdownEngine.innerHTML = `<div class="search-row-item" style="color: var(--text-secondary); justify-content: center; font-weight: 500;">No se encontraron coincidencias</div>`;
                 }
             } else {
-                suggestionsBox.style.display = 'none';
+                searchDropdownEngine.style.display = 'none';
             }
         });
 
-        document.addEventListener('click', function(e) {
-            if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
-                suggestionsBox.style.display = 'none';
+        // Evento de cierre por pérdida de foco táctil o click general
+        document.addEventListener('click', function(clickEventInterceptor) {
+            if (!coreSearchInput.contains(clickEventInterceptor.target) && !searchDropdownEngine.contains(clickEventInterceptor.target)) {
+                searchDropdownEngine.style.display = 'none';
             }
         });
+
+        // 4. SISTEMA DINÁMICO DE CUENTA REGRESIVA DE CUPONES
+        function initializingPromoTimer() {
+            const currentServerDate = new Date();
+            const targetDeadlineLimit = new Date();
+            
+            // Forzar una fecha de vencimiento dinámica de 2 días a partir de la sesión actual del cliente
+            targetDeadlineLimit.setDate(currentServerDate.getDate() + 2);
+            targetDeadlineLimit.setHours(23, 59, 59, 0);
+
+            function executionUpdateClock() {
+                const liveCurrentTime = new Date().getTime();
+                const totalDistanceDifference = targetDeadlineLimit.getTime() - liveCurrentTime;
+
+                if (totalDistanceDifference < 0) {
+                    document.getElementById("promoTimer").innerHTML = "EXPIRADO";
+                    return;
+                }
+
+                const calculatedDays = Math.floor(totalDistanceDifference / (1000 * 60 * 60 * 24));
+                const calculatedHours = Math.floor((totalDistanceDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const calculatedMinutes = Math.floor((totalDistanceDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const calculatedSeconds = Math.floor((totalDistanceDifference % (1000 * 60)) / 1000);
+
+                // Formatear visualmente el reloj digital
+                const renderStringFormatted = `${calculatedHours.toString().padStart(2, '0')}h : ${calculatedMinutes.toString().padStart(2, '0')}m : <span>${calculatedSeconds.toString().padStart(2, '0')}s</span>`;
+                document.getElementById("promoTimer").innerHTML = renderStringFormatted;
+            }
+
+            executionUpdateClock();
+            setInterval(executionUpdateClock, 1000);
+        }
+        initializingPromoTimer();
     </script>
 </body>
 </html>
