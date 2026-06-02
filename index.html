@@ -6,205 +6,220 @@
     <title>TecnoTrade | Inicio</title>
     <style>
         :root {
-            --bg-dark: #030509;
-            --text-main: #ffffff;
-            --text-glow: #a2c4ec;
+            /* PALETA MODO CLARO (Light Theme) */
+            --bg-light: #f5f5f7;
+            --text-main: #1d1d1f;
             --text-muted: #86868b;
-            --neon-blue: #00f0ff;
-            --neon-purple: #bd00ff;
-            --neon-green: #39ff14;
-            --neon-cyan: #00ffcc;
-            --card-glass: rgba(255, 255, 255, 0.03);
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --nav-bg: rgba(10, 10, 15, 0.95);
+            --brand-blue: #0071e3; /* Azul estilo Apple Store */
+            --brand-cyan: #00c6d6;
+            --card-glass: rgba(255, 255, 255, 0.75);
+            --border-glass: rgba(0, 0, 0, 0.06);
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
-        /* 1. RESET Y FONDO BASE */
+        /* 1. RESET Y SCROLL NATURAL */
         html, body {
-            width: 100%; height: 100%; margin: 0; padding: 0;
-            overflow: hidden; 
-            background-color: var(--bg-dark); /* Color de respaldo mientras carga la imagen */
+            margin: 0; padding: 0;
+            background-color: var(--bg-light);
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
-        /* 2. CAPA DE IMAGEN INTERACTIVA (Ruta Local Directa - Infalible) */
-        .motion-bg-container {
-            position: fixed; top: -20px; left: -20px; right: -20px; bottom: -20px; 
-            z-index: 1; /* Está encima del fondo negro base */
-            background-image: url('chatliquidmetal1.png'); /* Llamada directa al archivo */
-            background-size: cover; background-position: center; 
-            filter: contrast(1.1) brightness(0.65);
-            pointer-events: none;
-            animation: bgBreathe 15s infinite alternate ease-in-out;
+        /* 2. FONDO INTERACTIVO CLARO (Pastel Orbs) */
+        .css-interactive-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3;
+            background-color: var(--bg-light); overflow: hidden;
         }
-        @keyframes bgBreathe { 
-            0% { transform: scale(1); filter: contrast(1.1) brightness(0.60); } 
-            100% { transform: scale(1.05); filter: contrast(1.15) brightness(0.70); } 
+        .orb {
+            position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.8;
+            animation: floatOrb 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Colores suaves para el fondo */
+        .orb-1 { width: 45vw; height: 45vw; background: rgba(0, 113, 227, 0.15); top: -10%; left: -10%; }
+        .orb-2 { width: 50vw; height: 50vw; background: rgba(0, 198, 214, 0.12); bottom: -20%; right: -10%; animation-delay: -5s; animation-duration: 25s; }
+        .orb-3 { width: 40vw; height: 40vw; background: rgba(189, 0, 255, 0.08); top: 30%; left: 30%; animation-delay: -10s; animation-duration: 30s; }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(10vw, 10vh) scale(1.1); }
+            100% { transform: translate(-5vw, 5vh) scale(0.9); }
         }
 
-        /* 3. CAPA DE AURORAS */
-        .dynamic-aurora {
-            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; 
-            z-index: 2; /* Encima de la imagen */
-            background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.05), transparent 60%),
-                        radial-gradient(circle at 80% 20%, rgba(189, 0, 255, 0.05), transparent 50%);
-            animation: auroraSpin 25s infinite linear; pointer-events: none;
-        }
-        @keyframes auroraSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* 4. CONTENEDOR PRINCIPAL (Todo el UI) */
-        .app-container {
-            width: 100%; height: 100vh; overflow-y: auto; overflow-x: hidden;
-            padding-bottom: 120px; scrollbar-width: none; scroll-behavior: smooth;
-            position: relative; z-index: 10; /* Encima de todas las capas de fondo */
-        }
-        .app-container::-webkit-scrollbar { display: none; }
-
-        /* OVERLAY TRANSICIÓN SUAVE */
+        /* OVERLAY TRANSICIÓN (Blanco) */
         .page-transition-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--bg-dark); z-index: 99999;
+            background-color: #ffffff; z-index: 99999;
             transition: opacity 0.4s ease-in-out; pointer-events: none; opacity: 1;
         }
 
-        /* TOP NAVBAR */
+        /* 3. CONTENEDOR PRINCIPAL */
+        .app-wrapper {
+            width: 100%; margin: 0 auto; padding-bottom: 120px;
+            position: relative; z-index: 10;
+        }
+
+        /* TOP NAVBAR (Clara) */
         .top-navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 16px 20px; position: sticky; top: 0; z-index: 100;
-            background: linear-gradient(to bottom, rgba(3,5,9,0.95) 0%, rgba(3,5,9,0.7) 70%, rgba(3,5,9,0) 100%);
+            background: linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.6) 80%, transparent 100%);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            transform: translateY(-20px); opacity: 0; animation: slideDown 0.6s 0.2s forwards ease-out;
         }
-        @keyframes slideDown { to { transform: translateY(0); opacity: 1; } }
-        
-        .nav-icon { width: 26px; height: 26px; fill: #fff; opacity: 0.9; cursor: pointer; transition: transform 0.2s; }
+        .nav-icon { width: 26px; height: 26px; fill: var(--text-main); cursor: pointer; transition: transform 0.2s; }
         .nav-icon:active { transform: scale(0.8); }
         .nav-center { display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .nav-logo-img { width: 34px; height: 34px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
-        .logo-text { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; margin: 0; }
-        .logo-text span { color: var(--neon-cyan); }
+        .nav-logo-img { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border-glass); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .logo-text { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; margin: 0; color: var(--text-main); }
+        .logo-text span { color: var(--brand-blue); }
 
-        /* BUSCADOR INTERACTIVO */
-        .search-wrapper { position: relative; padding: 15px 20px; margin-bottom: 5px; z-index: 90; opacity: 0; animation: fadeIn 0.8s 0.4s forwards; }
+        /* BUSCADOR INTERACTIVO (Claro) */
+        .search-wrapper { position: relative; padding: 10px 20px 20px; z-index: 90; }
         .search-box {
             display: flex; align-items: center; gap: 12px;
-            background: rgba(255,255,255,0.04); border: 1px solid var(--border-glass);
-            border-radius: 18px; padding: 14px 18px; backdrop-filter: blur(10px);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--card-glass); border: 1px solid var(--border-glass);
+            border-radius: 20px; padding: 14px 18px; 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            transition: all 0.3s ease; box-shadow: var(--shadow-soft);
         }
-        .search-box:focus-within { border-color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0, 255, 204, 0.15); background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+        .search-box:focus-within { border-color: var(--brand-blue); box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.15); transform: translateY(-2px); }
         .search-box svg { width: 20px; height: 20px; fill: var(--text-muted); transition: fill 0.3s; }
-        .search-box:focus-within svg { fill: var(--neon-cyan); }
-        .search-box input { background: transparent; border: none; color: #fff; width: 100%; font-size: 15px; font-weight: 500; outline: none; }
-        .search-box input::placeholder { color: var(--text-muted); font-weight: 400; }
+        .search-box:focus-within svg { fill: var(--brand-blue); }
+        .search-box input { background: transparent; border: none; color: var(--text-main); width: 100%; font-size: 15px; font-weight: 500; outline: none; }
+        .search-box input::placeholder { color: var(--text-muted); }
         
+        /* Dropdown Blanco */
         .suggestions-dropdown {
-            position: absolute; top: calc(100% - 10px); left: 20px; right: 20px;
-            background: rgba(10, 10, 15, 0.95); border: 1px solid var(--border-glass);
-            border-radius: 16px; padding: 8px 0; backdrop-filter: blur(20px);
+            position: absolute; top: calc(100% - 15px); left: 20px; right: 20px;
+            background: rgba(255, 255, 255, 0.98); border: 1px solid var(--border-glass);
+            border-radius: 16px; padding: 8px 0; backdrop-filter: blur(25px);
             max-height: 280px; overflow-y: auto; display: none;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
         .suggestion-item {
-            padding: 14px 20px; font-size: 14px; font-weight: 600; cursor: pointer; color: #e2e8f0;
+            padding: 14px 20px; font-size: 14px; font-weight: 600; cursor: pointer; color: var(--text-main);
             display: flex; justify-content: space-between; align-items: center;
-            transition: background 0.2s, padding-left 0.2s;
+            transition: all 0.2s; border-bottom: 1px solid var(--border-glass);
         }
-        .suggestion-item:hover, .suggestion-item:active { background: rgba(0, 255, 204, 0.1); color: var(--neon-cyan); padding-left: 26px; }
+        .suggestion-item:last-child { border-bottom: none; }
+        .suggestion-item:hover { background: rgba(0, 113, 227, 0.05); color: var(--brand-blue); padding-left: 26px; }
         .suggestion-arrow { font-size: 10px; color: var(--text-muted); transition: transform 0.2s; }
-        .suggestion-item:hover .suggestion-arrow { color: var(--neon-cyan); transform: translateX(5px); }
+        .suggestion-item:hover .suggestion-arrow { color: var(--brand-blue); transform: translateX(5px); }
 
-        /* HERO BANNER */
-        .hero-section { padding: 0 20px; margin-bottom: 25px; opacity: 0; animation: fadeInUp 0.8s 0.5s forwards; }
+        /* HERO BANNER (Claro y Fresco) */
+        .hero-section { padding: 0 20px; margin-bottom: 25px; }
         .hero-banner {
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%);
-            border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 28px; padding: 28px 24px; position: relative; overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,245,255,0.8) 100%);
+            border: 1px solid var(--border-glass); border-radius: 28px; padding: 28px 24px; position: relative; overflow: hidden;
+            box-shadow: var(--shadow-soft); backdrop-filter: blur(15px);
         }
-        .hero-tag { background: #fff; color: #000; font-size: 10px; font-weight: 800; padding: 5px 12px; border-radius: 12px; margin-bottom: 14px; text-transform: uppercase; display: inline-block; box-shadow: 0 0 15px rgba(255,255,255,0.3); }
-        .hero-title { font-size: 26px; font-weight: 900; margin: 0 0 8px 0; letter-spacing: -0.5px; }
-        .hero-subtitle { font-size: 13px; color: var(--text-muted); margin: 0 0 24px 0; max-width: 65%; line-height: 1.4; }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-tag { background: var(--text-main); color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; border-radius: 12px; margin-bottom: 14px; text-transform: uppercase; display: inline-block; }
+        .hero-title { font-size: 26px; font-weight: 900; margin: 0 0 8px 0; letter-spacing: -0.5px; color: var(--text-main); }
+        .hero-subtitle { font-size: 13px; color: #555; margin: 0 0 24px 0; max-width: 65%; line-height: 1.4; }
         .hero-btn { 
-            background: var(--text-main); color: var(--bg-dark); border: none; border-radius: 20px; 
+            background: var(--brand-blue); color: #ffffff; border: none; border-radius: 20px; 
             padding: 12px 24px; font-size: 13px; font-weight: 800; display: inline-block; 
-            text-decoration: none; transition: all 0.2s; box-shadow: 0 8px 20px rgba(255,255,255,0.2);
+            text-decoration: none; transition: all 0.2s; box-shadow: 0 8px 20px rgba(0, 113, 227, 0.3);
         }
-        .hero-btn:active { transform: scale(0.95); box-shadow: 0 4px 10px rgba(255,255,255,0.1); }
+        .hero-btn:active { transform: scale(0.95); box-shadow: 0 4px 10px rgba(0, 113, 227, 0.2); }
         
+        /* Teléfono del Hero invertido a blanco */
         .hero-device {
             position: absolute; right: -25px; bottom: -40px; width: 140px; height: 190px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.01));
-            border: 2px solid rgba(255,255,255,0.2); border-radius: 28px;
-            box-shadow: -15px -15px 40px rgba(0,0,0,0.5); transform: rotate(-8deg);
+            background: linear-gradient(180deg, rgba(255,255,255,1), rgba(240,240,245,1));
+            border: 2px solid rgba(0,0,0,0.05); border-radius: 28px;
+            box-shadow: -15px -15px 30px rgba(0,0,0,0.05); transform: rotate(-8deg); z-index: 1;
         }
-        .hero-device::after { content: ''; position: absolute; top: 18px; right: 18px; width: 35px; height: 35px; border-radius: 10px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); }
+        .hero-device::after { content: ''; position: absolute; top: 18px; right: 18px; width: 35px; height: 35px; border-radius: 10px; background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05); }
 
-        /* GRID CATEGORÍAS 2x2 */
-        .section-title { font-size: 18px; font-weight: 800; padding: 0 20px; margin-bottom: 16px; opacity: 0; animation: fadeIn 0.8s 0.6s forwards; }
-        .grid-wrapper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 20px; opacity: 0; animation: fadeInUp 0.8s 0.7s forwards; }
+        /* GRID CATEGORÍAS (Cristal Esmerilado) */
+        .section-title { font-size: 18px; font-weight: 800; padding: 0 20px; margin-bottom: 16px; color: var(--text-main); }
+        .grid-wrapper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 20px; }
         
         .glass-card {
             background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 24px;
             padding: 20px 16px; text-decoration: none; color: var(--text-main); display: flex; flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(20px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            transition: all 0.2s ease; box-shadow: var(--shadow-soft);
         }
-        .glass-card:active { transform: scale(0.93); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+        .glass-card:hover { transform: translateY(-5px); border-color: rgba(0, 113, 227, 0.3); background: rgba(255,255,255,0.9); box-shadow: 0 15px 35px rgba(0,0,0,0.08); }
+        .glass-card:active { transform: scale(0.95); }
 
-        /* VECTORES CSS PUROS */
-        .image-visual-space { width: 100%; height: 75px; background: rgba(255,255,255,0.02); border-radius: 16px; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; }
+        /* VECTORES CSS (Ajustados a modo claro) */
+        .image-visual-space { width: 100%; height: 75px; background: rgba(0,0,0,0.02); border-radius: 16px; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; }
         .vector-icon { position: relative; display: flex; justify-content: center; align-items: center; transform: scale(0.7); }
         
-        .v-phone { width: 55px; height: 100px; border-radius: 14px; background: rgba(0, 0, 0, 0.5); border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .v-phone::before { content:''; position:absolute; top:8px; left:8px; width:15px; height:25px; border:2px solid rgba(255,255,255,0.15); border-radius:6px; }
+        /* Teléfono Claro */
+        .v-phone { width: 55px; height: 100px; border-radius: 14px; background: #ffffff; border: 2px solid rgba(0,0,0,0.15); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .v-phone::before { content:''; position:absolute; top:8px; left:8px; width:15px; height:25px; border:2px solid rgba(0,0,0,0.1); border-radius:6px; }
         
-        .v-cash { width: 85px; height: 50px; border-radius: 10px; background: rgba(0, 0, 0, 0.5); border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .v-cash::before { content:'$'; position:absolute; font-size: 22px; font-weight: 900; color: rgba(255,255,255,0.5); }
-        .v-cash::after { content:''; position:absolute; width: 34px; height: 34px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 50%; }
+        /* Billete Claro */
+        .v-cash { width: 85px; height: 50px; border-radius: 10px; background: #ffffff; border: 2px solid rgba(0,0,0,0.15); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .v-cash::before { content:'$'; position:absolute; font-size: 22px; font-weight: 900; color: var(--brand-blue); }
+        .v-cash::after { content:''; position:absolute; width: 34px; height: 34px; border: 2px dashed rgba(0,0,0,0.15); border-radius: 50%; }
 
-        .v-repair { width: 56px; height: 56px; border-radius: 50%; background: rgba(0, 0, 0, 0.5); border: 4px dashed rgba(255,255,255,0.2); box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.5); animation: rotateSlow 10s linear infinite; }
-        .v-repair::after { content:''; position:absolute; width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); }
-        @keyframes rotateSlow { 100% { transform: scale(0.7) rotate(360deg); } }
+        /* Engranaje Claro */
+        .v-repair { width: 56px; height: 56px; border-radius: 50%; background: #ffffff; border: 4px dashed rgba(0,0,0,0.15); box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 8px 20px rgba(0,0,0,0.08); animation: rotateSlow 10s linear infinite; }
+        .v-repair::after { content:''; position:absolute; width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.15); }
+        
+        /* Laptop Clara */
+        .v-laptop { width: 90px; height: 55px; border-radius: 8px 8px 0 0; background: #ffffff; border: 2px solid rgba(0,0,0,0.15); border-bottom: 8px solid rgba(0,0,0,0.25); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .v-laptop::before { content:''; position:absolute; top: 6px; width: 74px; height: 38px; border: 1px solid rgba(0,0,0,0.08); border-radius: 4px; background: rgba(0,0,0,0.02); }
 
-        .v-laptop { width: 90px; height: 55px; border-radius: 8px 8px 0 0; background: rgba(0, 0, 0, 0.5); border: 2px solid rgba(255,255,255,0.2); border-bottom: 8px solid rgba(255,255,255,0.4); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .v-laptop::before { content:''; position:absolute; top: 6px; width: 74px; height: 38px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; background: rgba(255,255,255,0.02); }
+        .card-title { font-size: 15px; font-weight: 800; margin: 0; text-align: center; color: var(--text-main); }
 
-        .card-title { font-size: 15px; font-weight: 800; margin: 0; text-align: center; letter-spacing: -0.2px; }
-
-        /* BOTTOM NAVBAR FIJA */
+        /* 4. BOTTOM NAVBAR FLOTANTE (Modo Claro) */
         .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%;
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
+            width: 90%; max-width: 420px; 
             background: var(--nav-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-around; padding: 14px 0 24px 0; 
-            z-index: 10000; transform: translateY(100%); animation: slideUp 0.6s 0.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(0,0,0,0.08); border-radius: 35px; 
+            display: flex; justify-content: space-around; padding: 12px 10px; z-index: 10000; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
         }
-        @keyframes slideUp { to { transform: translateY(0); } }
-
-        .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; color: var(--text-muted); position: relative; transition: color 0.2s; }
-        .nav-tab.active { color: var(--neon-cyan); }
-        .nav-tab svg { width: 22px; height: 22px; fill: currentColor; transition: transform 0.2s; }
-        .nav-tab:active svg { transform: scale(0.85); }
+        .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--text-muted); position: relative; transition: all 0.3s; }
+        .nav-tab.active { color: var(--brand-blue); transform: translateY(-3px); }
+        .nav-tab svg { width: 22px; height: 22px; fill: currentColor; }
         .nav-label { font-size: 10px; font-weight: 700; }
-        
-        .cart-badge { position: absolute; top: -5px; right: -8px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800; padding: 2px 5px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-dark); box-shadow: 0 2px 5px rgba(255,59,48,0.4); }
+        .cart-badge { position: absolute; top: -6px; right: -6px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800; padding: 3px 6px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(255,59,48,0.3); border: 2px solid #fff; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* ADAPTACIÓN A ESCRITORIO (PC) */
+        @media (min-width: 768px) {
+            .app-wrapper { max-width: 1100px; padding-top: 30px; }
+            .top-navbar { border-radius: 24px; margin: 0 20px 30px 20px; top: 20px; border: 1px solid var(--border-glass); }
+            .search-wrapper { max-width: 600px; margin: 0 auto 30px auto; }
+            .suggestions-dropdown { left: 50%; transform: translateX(-50%); width: 100%; max-width: 600px; }
+            .hero-banner { display: flex; align-items: center; justify-content: space-between; padding: 40px; margin: 0 20px 40px 20px; }
+            .hero-content { max-width: 50%; }
+            .hero-subtitle { max-width: 100%; font-size: 15px; }
+            .hero-device { position: relative; right: 0; bottom: 0; transform: rotate(-5deg); width: 180px; height: 240px; }
+            .grid-wrapper { grid-template-columns: repeat(4, 1fr); gap: 24px; }
+            .section-title { font-size: 22px; }
+            .bottom-nav { max-width: 500px; padding: 15px 20px; border-radius: 40px; }
+            .nav-tab svg { width: 26px; height: 26px; }
+            .nav-label { font-size: 12px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- OVERLAY PARA TRANSICIÓN SUAVE (Efecto SPA) -->
+    <!-- OVERLAY TRANSICIÓN BLANCO -->
     <div class="page-transition-overlay" id="pageTransition"></div>
 
-    <!-- AQUÍ ESTÁ EL FONDO GARANTIZADO -->
-    <div class="motion-bg-container"></div>
-    <div class="dynamic-aurora"></div>
+    <!-- EL NUEVO FONDO CSS CLARO (Orbes Pastel) -->
+    <div class="css-interactive-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
-    <div class="app-container">
+    <div class="app-wrapper">
         
-        <!-- TOP NAVBAR -->
+        <!-- TOP NAVBAR CLARA -->
         <header class="top-navbar">
             <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
             <div class="nav-center">
@@ -223,18 +238,20 @@
             <div id="suggestionsBox" class="suggestions-dropdown"></div>
         </div>
 
-        <!-- HERO BANNER -->
+        <!-- HERO BANNER CLARO -->
         <section class="hero-section">
             <div class="hero-banner">
-                <span class="hero-tag">Destacado</span>
-                <h2 class="hero-title">iPhone 16 Pro</h2>
-                <p class="hero-subtitle">Descubre el nuevo diseño y usa tu equipo como abono.</p>
-                <a href="catalogo.html#iphone-16-pro" class="hero-btn navigate-link">Comprar ahora</a>
+                <div class="hero-content">
+                    <span class="hero-tag">Destacado</span>
+                    <h2 class="hero-title">iPhone 16 Pro</h2>
+                    <p class="hero-subtitle">Descubre el nuevo diseño y usa tu equipo como abono.</p>
+                    <a href="catalogo.html#iphone-16-pro" class="hero-btn navigate-link">Comprar ahora</a>
+                </div>
                 <div class="hero-device"></div>
             </div>
         </section>
 
-        <!-- CATEGORÍAS 2x2 -->
+        <!-- CATEGORÍAS (Cristal Esmerilado) -->
         <div class="section-title">Categorías</div>
         <div class="grid-wrapper">
             <a href="catalogo.html" class="glass-card navigate-link">
@@ -255,9 +272,9 @@
             </a>
         </div>
         
-    </div> <!-- Fin app-container -->
+    </div>
 
-    <!-- BOTTOM NAVBAR -->
+    <!-- BOTTOM NAVBAR FLOTANTE CLARA -->
     <nav class="bottom-nav">
         <a href="index.html" class="nav-tab active">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
