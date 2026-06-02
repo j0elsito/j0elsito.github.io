@@ -28,7 +28,7 @@
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
             overflow-x: hidden;
-            perspective: 1000px;
+            /* La perspectiva 3D global fue removida de aquí para no romper la barra fija */
         }
 
         /* MATRIZ DE FONDO Y ORBES */
@@ -68,6 +68,7 @@
         .grid-wrapper {
             max-width: 1150px; margin: 40px auto; padding: 0 20px 120px 20px;
             display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; transform-style: preserve-3d;
+            perspective: 1200px; /* La perspectiva se queda solo aquí para no afectar la barra */
         }
         .glass-card {
             background: var(--card-glass); border: 1px solid var(--border-glass);
@@ -126,11 +127,12 @@
             100% { transform: scale(1) translateZ(10px); }
         }
 
-        /* BOTTOM NAVBAR (Igual al Index) */
+        /* BOTTOM NAVBAR (Fija 100%) */
         .bottom-nav {
             position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px;
             background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-around; padding: 12px 0 20px 0; z-index: 1000;
+            border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-around; padding: 12px 0 20px 0; 
+            z-index: 9999; /* Prioridad máxima sobre toda la pantalla */
         }
         .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--text-muted); position: relative; }
         .nav-tab.active { color: var(--neon-cyan); }
@@ -377,7 +379,7 @@
     </nav>
 
     <script>
-        // LÓGICA DE AURORAS Y SCROLL (Mantenida de tu versión original)
+        // LÓGICA DE AURORAS Y SCROLL
         const masterBg = document.getElementById('master-bg');
         const metalLayer = document.getElementById('metal-layer');
         const lowerPurple = document.getElementById('lower-purple');
@@ -405,20 +407,15 @@
 
         // LÓGICA DEL BUSCADOR (Efecto Highlight y Scroll)
         window.addEventListener('load', () => {
-            // Leer el ID de la URL (ej: catalogo.html#iphone-15-pro)
             const hash = window.location.hash.substring(1);
             if(hash) {
                 const targetElement = document.getElementById(hash);
                 if(targetElement) {
-                    // Hacer scroll suave hasta el elemento
                     targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    // Agregar la clase que hace brillar el contenedor
                     targetElement.classList.add('highlight-target');
                     
-                    // Opcional: quitar el brillo después de 4 segundos
                     setTimeout(() => {
                         targetElement.classList.remove('highlight-target');
-                        // Limpiar la URL para que no vuelva a saltar si recarga la página
                         history.replaceState(null, null, ' ');
                     }, 4000);
                 }
