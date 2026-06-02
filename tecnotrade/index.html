@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TecnoTrade | Menú</title>
+    <title>TecnoTrade | Dashboard</title>
     <style>
         :root {
-            --bg-light: #f5f5f7;
-            --text-dark: #1d1d1f;
-            --text-muted: #86868b;
-            --glass-card: rgba(255, 255, 255, 0.55);
-            --border-glass: rgba(0, 0, 0, 0.08);
-            --card-shadow: rgba(0, 0, 0, 0.04);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
         }
 
         * {
@@ -21,133 +19,275 @@
         }
 
         body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
-            height: 100vh;
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-color: #050505;
+            /* Activamos la perspectiva 3D global */
+            perspective: 1200px;
         }
 
-        /* FONDO BLANCO GRISÁCEO TENUE Y BORROSO */
-        .glass-overlay {
-            background: rgba(245, 245, 247, 0.78);
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
-            width: 100%;
-            height: 100%;
+        /* 1. COLORIMETRÍA FLUIDA ANIMADA (Sin imágenes de fondo) */
+        .fluid-mesh {
             position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #000000 40%),
+                        radial-gradient(circle at 80% 20%, #312e81 0%, transparent 40%),
+                        radial-gradient(circle at 20% 80%, #0f172a 0%, transparent 40%);
+            background-size: 150% 150%;
+            animation: fluidMotion 12s ease-in-out infinite alternate;
+            z-index: -2;
+            filter: blur(60px);
         }
 
-        /* CONTENEDOR PRINCIPAL WITH ENTRANCE ANIMATION */
-        .main-wrapper {
-            position: relative;
-            z-index: 2;
-            width: 92%;
-            max-width: 420px;
+        @keyframes fluidMotion {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-5%, 5%) scale(1.05); }
+            100% { transform: translate(5%, -5%) scale(1); }
+        }
+
+        /* 2. TEXTURA DE RUIDO CRISTALINO (Estilo Mica de Windows) */
+        .noise-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            opacity: 0.04;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 3. CONTENEDOR PRINCIPAL FLOTANTE */
+        .dashboard-wrapper {
+            width: 90%;
+            max-width: 460px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: dropIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .header-section {
             text-align: center;
-            animation: appEntrance 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            margin-bottom: 20px;
         }
 
-        h1 {
-            font-size: 38px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            letter-spacing: -1px;
+        .header-section h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
         }
 
-        .tagline {
-            font-size: 14px;
+        .header-section p {
+            font-size: 15px;
             color: var(--text-muted);
-            margin-bottom: 35px;
             font-weight: 500;
         }
 
-        /* CONTENEDOR DE CARTAS */
-        .cards-stack {
+        /* 4. TARJETAS 3D INTERACTIVAS */
+        .tilt-card {
+            position: relative;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 24px;
             display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        /* DISEÑO DE CARTAS DE BARAJA INDIVIDUALES */
-        .deck-card {
-            background: var(--glass-card);
-            border: 1px solid var(--border-glass);
-            border-radius: 20px;
-            padding: 18px 20px;
+            align-items: center;
+            gap: 20px;
             text-decoration: none;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            box-shadow: 0 4px 10px var(--card-shadow);
-            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
-                        background-color 0.3s ease, 
-                        box-shadow 0.3s ease;
+            color: var(--text-main);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            cursor: pointer;
+            will-change: transform;
+            /* La transición física al soltar el botón */
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        border-color 0.3s ease;
         }
 
-        .deck-card:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+        /* Efecto Glow de Windows al pasar el ratón */
+        .tilt-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
         }
 
-        .icon-box {
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 0, 0, 0.04);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .card-info {
-            text-align: left;
-        }
-
-        .card-title {
-            display: block;
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: -0.2px;
-            margin-bottom: 2px;
-        }
-
-        .card-desc {
-            display: block;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .arrow-indicator {
-            margin-left: auto;
-            font-size: 14px;
-            color: var(--text-muted);
-            opacity: 0.5;
-            transition: transform 0.3s ease;
-        }
-        .deck-card:hover .arrow-indicator {
-            transform: translateX(3px);
+        .tilt-card:hover::before {
             opacity: 1;
         }
 
-        /* ICONOS FINALES EN LA BASE */
-        .minimal-footer {
+        .tilt-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 5. ELEMENTOS INTERNOS DE LA TARJETA (Efecto Parallax) */
+        .card-icon {
+            font-size: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            /* Levanta el icono en el eje Z para el efecto 3D */
+            transform: translateZ(30px);
+        }
+
+        .card-text {
+            display: flex;
+            flex-direction: column;
+            transform: translateZ(20px);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* REDES SOCIALES MINIMALISTAS */
+        .social-bar {
             position: absolute;
             bottom: 40px;
             display: flex;
             gap: 30px;
+            z-index: 10;
+        }
+
+        .social-icon {
+            width: 24px;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+            filter: invert(1); /* Pone los iconos blancos si son negros */
+        }
+
+        .social-icon:hover {
+            opacity: 1;
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        @keyframes dropIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondos de Colorimetría Fluida y Textura -->
+    <div class="fluid-mesh"></div>
+    <div class="noise-layer"></div>
+
+    <div class="dashboard-wrapper">
+        <div class="header-section">
+            <h1>TecnoTrade</h1>
+            <p>Ecosistema de Servicios Tecnológicos</p>
+        </div>
+
+        <!-- Botones con IDs específicos para el enrutamiento seguro -->
+        <a id="btn-catalogo" class="tilt-card">
+            <div class="card-icon">📱</div>
+            <div class="card-text">
+                <span class="card-title">Comprar Teléfono</span>
+                <span class="card-subtitle">Catálogo interactivo de equipos</span>
+            </div>
+        </a>
+
+        <a href="vender.html" class="tilt-card">
+            <div class="card-icon">💵</div>
+            <div class="card-text">
+                <span class="card-title">Trade-In</span>
+                <span class="card-subtitle">Cotiza tu dispositivo actual</span>
+            </div>
+        </a>
+
+        <a href="reparar.html" class="tilt-card">
+            <div class="card-icon">⚙️</div>
+            <div class="card-text">
+                <span class="card-title">Servicio Técnico</span>
+                <span class="card-subtitle">Pantallas, baterías y placa base</span>
+            </div>
+        </a>
+
+        <a href="laptops.html" class="tilt-card">
+            <div class="card-icon">💻</div>
+            <div class="card-text">
+                <span class="card-title">Sistemas y Laptops</span>
+                <span class="card-desc">Reparación y formateo</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="social-bar">
+        <a href="https://wa.me/50767966691" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" class="social-icon"></a>
+        <a href="https://www.instagram.com/tecnotradepty/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="social-icon"></a>
+    </div>
+
+    <!-- MOTOR FÍSICO 3D Y REDIRECCIÓN SEGURA -->
+    <script>
+        // 1. SOLUCIÓN DEFINITIVA DE ENRUTAMIENTO (Ruta Relativa Segura)
+        document.getElementById('btn-catalogo').addEventListener('click', () => {
+            // Esto le dice al navegador que busque exactamente "catalogo.html" en la misma carpeta donde está parado
+            window.location.assign('./catalogo.html'); 
+        });
+
+        // 2. FÍSICA DE INCLINACIÓN 3D Y GLOW DINÁMICO
+        const cards = document.querySelectorAll('.tilt-card');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Centro de la tarjeta
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                // Cálculos de rotación (intensidad regulada)
+                const rotateX = ((y - centerY) / centerY) * -12;
+                const rotateY = ((x - centerX) / centerX) * 12;
+
+                // Aplica la rotación 3D
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+
+                // Actualiza las variables para el Glow que sigue el dedo/ratón
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+
+            // Restablecer posición al soltar/quitar el ratón
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+    </script>
+</body>
+</html>
