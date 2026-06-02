@@ -23,7 +23,8 @@
         html, body {
             width: 100%; height: 100%; margin: 0; padding: 0;
             overflow: hidden; 
-            background-color: var(--bg-dark); color: var(--text-main);
+            background-color: transparent; /* CORRECCIÓN: Fondo transparente para no tapar la imagen */
+            color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
@@ -39,27 +40,30 @@
         .app-container {
             width: 100%; height: 100vh; overflow-y: auto; overflow-x: hidden;
             padding-bottom: 120px; scrollbar-width: none; scroll-behavior: smooth;
+            position: relative; z-index: 10; /* CORRECCIÓN: Mantiene el contenido por encima del fondo */
         }
         .app-container::-webkit-scrollbar { display: none; }
 
-        /* FONDO INTERACTIVO (Tu nueva imagen actualizada) */
+        /* FONDO INTERACTIVO 100% VISIBLE Y NÍTIDO */
         .motion-bg-container {
-            position: fixed; top: -20px; left: -20px; right: -20px; bottom: -20px; z-index: -2;
+            position: fixed; top: -20px; left: -20px; right: -20px; bottom: -20px; 
+            z-index: 0; /* CORRECCIÓN: Capa base correcta */
             background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/4e90195cfb8c2a54007fa1a3b3f68ee0a5b2725c/chatliquidmetal1.png');
             background-size: cover; background-position: center; 
-            filter: contrast(1.15) brightness(0.4) blur(2px);
+            filter: contrast(1.1) brightness(0.65); /* CORRECCIÓN: Sin blur y con mejor brillo */
             pointer-events: none;
             animation: bgBreathe 15s infinite alternate ease-in-out;
         }
         @keyframes bgBreathe { 
-            0% { transform: scale(1); filter: contrast(1.15) brightness(0.35) blur(2px); } 
-            100% { transform: scale(1.05); filter: contrast(1.2) brightness(0.45) blur(0px); } 
+            0% { transform: scale(1); filter: contrast(1.1) brightness(0.60); } 
+            100% { transform: scale(1.05); filter: contrast(1.15) brightness(0.70); } 
         }
 
         .dynamic-aurora {
-            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; z-index: -1;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.04), transparent 60%),
-                        radial-gradient(circle at 80% 20%, rgba(189, 0, 255, 0.04), transparent 50%);
+            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; 
+            z-index: 1; /* CORRECCIÓN: Entre el fondo y el contenido */
+            background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.05), transparent 60%),
+                        radial-gradient(circle at 80% 20%, rgba(189, 0, 255, 0.05), transparent 50%);
             animation: auroraSpin 25s infinite linear; pointer-events: none;
         }
         @keyframes auroraSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -179,207 +183,4 @@
             border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-around; padding: 14px 0 24px 0; 
             z-index: 10000; transform: translateY(100%); animation: slideUp 0.6s 0.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
         }
-        @keyframes slideUp { to { transform: translateY(0); } }
-
-        .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; color: var(--text-muted); position: relative; transition: color 0.2s; }
-        .nav-tab.active { color: var(--neon-cyan); }
-        .nav-tab svg { width: 22px; height: 22px; fill: currentColor; transition: transform 0.2s; }
-        .nav-tab:active svg { transform: scale(0.85); }
-        .nav-label { font-size: 10px; font-weight: 700; }
-        
-        .cart-badge { position: absolute; top: -5px; right: -8px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800; padding: 2px 5px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-dark); box-shadow: 0 2px 5px rgba(255,59,48,0.4); }
-
-        /* UTILIDADES DE ANIMACIÓN */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-    </style>
-</head>
-<body>
-
-    <!-- OVERLAY PARA TRANSICIÓN SUAVE (Efecto SPA) -->
-    <div class="page-transition-overlay" id="pageTransition"></div>
-
-    <div class="motion-bg-container"></div>
-    <div class="dynamic-aurora"></div>
-
-    <div class="app-container">
-        
-        <!-- TOP NAVBAR -->
-        <header class="top-navbar">
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-            <div class="nav-center">
-                <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" class="nav-logo-img" alt="Logo">
-                <h1 class="logo-text">Tecno<span>Trade</span></h1>
-            </div>
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-        </header>
-
-        <!-- BUSCADOR INTELIGENTE -->
-        <div class="search-wrapper">
-            <div class="search-box">
-                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                <input type="text" id="searchInput" placeholder="Buscar modelo (ej: 15 Pro Max)..." autocomplete="off">
-            </div>
-            <div id="suggestionsBox" class="suggestions-dropdown"></div>
-        </div>
-
-        <!-- HERO BANNER -->
-        <section class="hero-section">
-            <div class="hero-banner">
-                <span class="hero-tag">Destacado</span>
-                <h2 class="hero-title">iPhone 16 Pro</h2>
-                <p class="hero-subtitle">Descubre el nuevo diseño y usa tu equipo como abono.</p>
-                <a href="catalogo.html#iphone-16-pro" class="hero-btn navigate-link">Comprar ahora</a>
-                <div class="hero-device"></div>
-            </div>
-        </section>
-
-        <!-- CATEGORÍAS 2x2 -->
-        <div class="section-title">Categorías</div>
-        <div class="grid-wrapper">
-            <a href="catalogo.html" class="glass-card navigate-link">
-                <div class="image-visual-space"><div class="vector-icon v-phone"></div></div>
-                <h2 class="card-title">Equipos</h2>
-            </a>
-            <a href="vender.html" class="glass-card">
-                <div class="image-visual-space"><div class="vector-icon v-cash"></div></div>
-                <h2 class="card-title">Vender</h2>
-            </a>
-            <a href="reparar.html" class="glass-card">
-                <div class="image-visual-space"><div class="vector-icon v-repair"></div></div>
-                <h2 class="card-title">Reparar</h2>
-            </a>
-            <a href="laptops.html" class="glass-card">
-                <div class="image-visual-space"><div class="vector-icon v-laptop"></div></div>
-                <h2 class="card-title">Laptops</h2>
-            </a>
-        </div>
-        
-    </div> <!-- Fin app-container -->
-
-    <!-- BOTTOM NAVBAR -->
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-tab active">
-            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            <span class="nav-label">Inicio</span>
-        </a>
-        <a href="catalogo.html" class="nav-tab navigate-link">
-            <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-            <span class="nav-label">Catálogo</span>
-        </a>
-        <a href="#" class="nav-tab">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            <span class="nav-label">Favoritos</span>
-        </a>
-        <a href="#" class="nav-tab">
-            <div class="cart-badge">2</div>
-            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-            <span class="nav-label">Carrito</span>
-        </a>
-    </nav>
-
-    <!-- SCRIPTS -->
-    <script>
-        // 1. SISTEMA DE TRANSICIÓN SUAVE (SPA FEEL)
-        document.addEventListener("DOMContentLoaded", () => {
-            const overlay = document.getElementById('pageTransition');
-            setTimeout(() => { overlay.style.opacity = '0'; }, 50);
-
-            const navLinks = document.querySelectorAll('.navigate-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetUrl = this.getAttribute('href');
-                    overlay.style.opacity = '1'; 
-                    
-                    setTimeout(() => {
-                        window.location.assign(targetUrl);
-                    }, 400); 
-                });
-            });
-        });
-
-        // 2. BASE DE DATOS DEL BUSCADOR (COMPLETA)
-        const inventory = [
-            { name: "Samsung Galaxy", id: "android-samsung" },
-            { name: "Honor", id: "android-honor" },
-            { name: "Xiaomi", id: "android-xiaomi" },
-            { name: "Google Pixel", id: "android-pixel" },
-            { name: "Redmi", id: "android-redmi" },
-            { name: "iPhone 17", id: "iphone-17" },
-            { name: "iPhone 17 Plus", id: "iphone-17-plus" },
-            { name: "iPhone 17 Pro", id: "iphone-17-pro" },
-            { name: "iPhone 17 Pro Max", id: "iphone-17-pro-max" },
-            { name: "iPhone 16", id: "iphone-16" },
-            { name: "iPhone 16 Plus", id: "iphone-16-plus" },
-            { name: "iPhone 16 Pro", id: "iphone-16-pro" },
-            { name: "iPhone 16 Pro Max", id: "iphone-16-pro-max" },
-            { name: "iPhone 15", id: "iphone-15" },
-            { name: "iPhone 15 Plus", id: "iphone-15-plus" },
-            { name: "iPhone 15 Pro", id: "iphone-15-pro" },
-            { name: "iPhone 15 Pro Max", id: "iphone-15-pro-max" },
-            { name: "iPhone 14", id: "iphone-14" },
-            { name: "iPhone 14 Plus", id: "iphone-14-plus" },
-            { name: "iPhone 14 Pro", id: "iphone-14-pro" },
-            { name: "iPhone 14 Pro Max", id: "iphone-14-pro-max" },
-            { name: "iPhone 13 Mini", id: "iphone-13-mini" },
-            { name: "iPhone 13", id: "iphone-13" },
-            { name: "iPhone 13 Pro", id: "iphone-13-pro" },
-            { name: "iPhone 13 Pro Max", id: "iphone-13-pro-max" },
-            { name: "iPhone 12 Mini", id: "iphone-12-mini" },
-            { name: "iPhone 12", id: "iphone-12" },
-            { name: "iPhone 12 Pro", id: "iphone-12-pro" },
-            { name: "iPhone 12 Pro Max", id: "iphone-12-pro-max" },
-            { name: "iPhone 11", id: "iphone-11" },
-            { name: "iPhone 11 Pro", id: "iphone-11-pro" },
-            { name: "iPhone 11 Pro Max", id: "iphone-11-pro-max" }
-        ];
-
-        const searchInput = document.getElementById('searchInput');
-        const suggestionsBox = document.getElementById('suggestionsBox');
-        const overlay = document.getElementById('pageTransition'); 
-
-        // 3. LÓGICA DE BÚSQUEDA Y SUGERENCIAS
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
-            suggestionsBox.innerHTML = ''; 
-
-            if (query.length > 0) {
-                const filtered = inventory.filter(item => item.name.toLowerCase().includes(query));
-
-                if (filtered.length > 0) {
-                    suggestionsBox.style.display = 'block'; 
-                    
-                    filtered.forEach(item => {
-                        const div = document.createElement('div');
-                        div.className = 'suggestion-item';
-                        div.innerHTML = `<span>${item.name}</span> <span class="suggestion-arrow">▶</span>`;
-                        
-                        // Acción con transición al tocar la sugerencia
-                        div.onclick = function() {
-                            overlay.style.opacity = '1';
-                            setTimeout(() => {
-                                window.location.assign(`catalogo.html#${item.id}`);
-                            }, 400);
-                        };
-                        suggestionsBox.appendChild(div);
-                    });
-                } else {
-                    suggestionsBox.style.display = 'block';
-                    suggestionsBox.innerHTML = `<div class="suggestion-item" style="color: #86868b; text-align:center;">No se encontraron modelos</div>`;
-                }
-            } else {
-                suggestionsBox.style.display = 'none';
-            }
-        });
-
-        // Ocultar al tocar fuera
-        document.addEventListener('click', function(e) {
-            if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
-                suggestionsBox.style.display = 'none';
-            }
-        });
-    </script>
-</body>
-</html>
+        @keyframes slideUp { to { transform: translateY(0);
