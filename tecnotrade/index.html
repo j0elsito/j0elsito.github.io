@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TecnoTrade | Cyber-Fluid Catalog</title>
+    <title>TecnoTrade | Motion-Fluid Experience</title>
     <style>
         :root {
-            --bg-dark: #04060a;
+            --bg-dark: #030509;
             --text-main: #ffffff;
             --text-glow: #a2c4ec;
             --neon-blue: #00f0ff;
@@ -28,54 +28,50 @@
             perspective: 1200px;
         }
 
-        /* FONDO LÍQUIDO CON MÁSCARA DE DIFUMINADO DINÁMICO */
-        .cyber-bg {
+        /* LIENZO DE GRAPHICS MOTION PARA EL FONDO LÍQUIDO INTELIGENTE */
+        .motion-bg-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+            background: var(--bg-dark);
+        }
+
+        .cyber-bg {
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
             background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            z-index: -2;
-            filter: contrast(1.1) brightness(0.7) blur(0px);
-            will-change: filter, transform;
-            transition: filter 0.3s ease-out, transform 0.3s cubic-bezier(0.1, 0.8, 0.3, 1);
+            filter: contrast(1.1) brightness(0.7);
+            will-change: transform, filter;
+            transition: transform 0.4s cubic-bezier(0.1, 0.6, 0.2, 1), filter 0.4s ease-out;
         }
 
-        /* Orbes de luz líquida neón en segundo plano */
-        .neon-orb {
+        /* Líneas de trazo cinético (Motion Vector Lines) */
+        .vector-line {
             position: fixed;
-            border-radius: 50%;
-            filter: blur(130px);
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.15), transparent);
+            height: 1px;
+            width: 200%;
             z-index: -1;
-            opacity: 0.3;
-            mix-blend-mode: screen;
             pointer-events: none;
-            will-change: transform;
+            transform: rotate(-15deg);
+            will-change: top;
         }
-        .orb-1 {
-            width: 500px;
-            height: 500px;
-            background: var(--neon-blue);
-            top: -10%;
-            left: -10%;
-            animation: floatOrb 14s infinite alternate ease-in-out;
-        }
-        .orb-2 {
-            width: 550px;
-            height: 550px;
-            background: var(--neon-purple);
-            bottom: -10%;
-            right: -10%;
-            animation: floatOrb 18s infinite alternate-reverse ease-in-out;
-        }
+        .line-1 { top: 25%; animation: slideLine 12s infinite linear; }
+        .line-2 { top: 65%; animation: slideLine 18s infinite linear reverse; }
 
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(90px, 60px) scale(1.25); }
+        @keyframes slideLine {
+            0% { transform: translate(-50%, 0) rotate(-15deg); }
+            100% { transform: translate(25%, 0) rotate(-15deg); }
         }
 
         /* HEADER PREMIUM ASIMÉTRICO */
@@ -83,7 +79,7 @@
             max-width: 1100px;
             margin: 30px auto;
             padding: 30px;
-            background: rgba(4, 6, 10, 0.5);
+            background: rgba(3, 5, 9, 0.6);
             border: 1px solid var(--border-glass);
             border-radius: 32px;
             backdrop-filter: blur(30px);
@@ -95,12 +91,7 @@
             animation: dropHeader 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .logo-block {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
+        .logo-block { display: flex; align-items: center; gap: 20px; }
         .brand-logo {
             width: 65px;
             height: 65px;
@@ -110,9 +101,7 @@
             transform: rotate(-5deg);
             transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        header:hover .brand-logo {
-            transform: rotate(355deg) scale(1.1);
-        }
+        header:hover .brand-logo { transform: rotate(355deg) scale(1.1); }
 
         .logo-title {
             font-size: 38px;
@@ -122,7 +111,6 @@
             background: linear-gradient(90deg, #fff, var(--text-glow), var(--neon-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 10px rgba(0,240,255,0.2));
         }
 
         .subtitle {
@@ -149,23 +137,12 @@
             border: 1px solid var(--border-glass);
         }
         
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-        .nav-link:hover::before { left: 100%; }
-        .nav-link:hover { transform: translateY(-3px); }
-        
         .link-ws:hover { border-color: var(--neon-green); box-shadow: 0 0 25px rgba(57,255,20,0.3); }
         .link-ig:hover { border-color: var(--neon-purple); box-shadow: 0 0 25px rgba(189,0,255,0.3); }
-
         .link-ws { background-color: rgba(34, 197, 94, 0.1); }
         .link-ig { background-color: rgba(219, 39, 119, 0.1); }
 
-        /* CUADRÍCULA DE TARJETAS 3D FLUIDAS */
+        /* CUADRÍCULA DE TARJETAS FLUIDAS */
         .grid-wrapper {
             max-width: 1150px;
             margin: 40px auto;
@@ -195,31 +172,7 @@
             overflow: hidden;
         }
 
-        /* Efecto destello de Cristal Reflectivo (Glow Line Sweep) */
-        .glass-card::after {
-            content: '';
-            position: absolute;
-            top: -50%; left: -60%; width: 30%; height: 200%;
-            background: linear-gradient(rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0) 100%);
-            transform: rotate(30deg);
-            transition: 0.8s;
-            pointer-events: none;
-        }
-        .glass-card:hover::after {
-            left: 140%;
-        }
-
-        /* Retardos de animación */
-        .glass-card:nth-child(1) { animation-delay: 0.05s; }
-        .glass-card:nth-child(2) { animation-delay: 0.1s; }
-        .glass-card:nth-child(3) { animation-delay: 0.15s; }
-        .glass-card:nth-child(4) { animation-delay: 0.2s; }
-        .glass-card:nth-child(5) { animation-delay: 0.25s; }
-        .glass-card:nth-child(6) { animation-delay: 0.3s; }
-        .glass-card:nth-child(7) { animation-delay: 0.35s; }
-        .glass-card:nth-child(8) { animation-delay: 0.4s; }
-
-        /* ESPACIO VISUAL HOLOGRÁFICO */
+        /* ESPACIO VISUAL CON BARRA DE ESCANEO DE MOTION GRAPHICS */
         .image-visual-space {
             width: 100%;
             height: 160px;
@@ -235,7 +188,27 @@
             transform: translateZ(40px);
         }
 
-        /* Silueta holográfica del teléfono */
+        /* Línea láser de escaneo holográfico */
+        .image-visual-space::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            top: -10%;
+            left: 0;
+            animation: scanLaser 3s infinite linear;
+            opacity: 0.7;
+        }
+        .android-card .image-visual-space::after {
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+        }
+
+        @keyframes scanLaser {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+
         .vector-phone {
             width: 70px;
             height: 120px;
@@ -257,9 +230,8 @@
         .glass-card:hover .vector-phone {
             transform: scale(1.15) rotateY(20deg) rotateX(-10deg) translateY(-5px);
             border-color: var(--neon-blue);
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.4), inset 0 0 15px rgba(0,240,255,0.1);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
         }
-
         .android-card:hover .vector-phone {
             border-color: var(--neon-green) !important;
             box-shadow: 0 0 30px rgba(57, 255, 20, 0.4) !important;
@@ -284,7 +256,7 @@
             transform: translateZ(30px);
         }
 
-        /* LISTA DE MODELOS */
+        /* LISTA DE MODELOS LIQUIDA */
         .list-container {
             display: flex;
             flex-direction: column;
@@ -311,18 +283,12 @@
             transform: scale(1.02) translateZ(10px);
             box-shadow: 0 10px 25px rgba(0, 240, 255, 0.15);
         }
-
         .android-card .interactive-row:hover {
             border-color: var(--neon-green);
             box-shadow: 0 10px 25px rgba(57, 255, 20, 0.15);
         }
 
-        .model-name {
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-        }
-
+        .model-name { font-size: 16px; font-weight: 700; }
         .model-price {
             font-size: 13px;
             font-weight: 800;
@@ -333,10 +299,7 @@
             border: 1px solid rgba(255,255,255,0.08);
             transition: background 0.3s, color 0.3s;
         }
-        .interactive-row:hover .model-price {
-            background: #fff;
-            color: #000;
-        }
+        .interactive-row:hover .model-price { background: #fff; color: #000; }
 
         @keyframes dropHeader {
             from { opacity: 0; transform: translateY(-50px); filter: blur(10px); }
@@ -356,10 +319,14 @@
 </head>
 <body>
 
-    <!-- Fondo líquido y Orbes con difuminado automático -->
-    <div class="cyber-bg" id="parallax-bg"></div>
-    <div class="neon-orb orb-1"></div>
-    <div class="neon-orb orb-2"></div>
+    <!-- CAJA DE CONTROL DE MOVIMIENTO PARA EVITAR CORTES DE FONDO -->
+    <div class="motion-bg-container">
+        <div class="cyber-bg" id="parallax-bg"></div>
+    </div>
+    
+    <!-- Elementos Vectoriales de Líneas de Flujo en Tendencia -->
+    <div class="vector-line line-1"></div>
+    <div class="vector-line line-2"></div>
 
     <header>
         <div class="logo-block">
@@ -611,24 +578,26 @@
 
     </main>
 
-    <!-- MOTOR INTERACTIVO AVANZADO (SCROLL BLUR + 3D TILT) -->
+    <!-- MOTOR DE MOTION GRAPHICS AVANZADO (SCROLL MORPHING + DISTORTION) -->
     <script>
         const parallaxBg = document.getElementById('parallax-bg');
         const cards = document.querySelectorAll('.glass-card');
 
-        // Transición de Difuminado y Movimiento Líquido Dinámico por Scroll
+        // Renderizado Dinámico por Scroll (Previene Cortes Físicos del Canvas)
         window.addEventListener('scroll', () => {
             let offset = window.pageYOffset;
             
-            // A más scroll, más blur y menos brillo para fundir el fondo suavemente
-            let blurAmount = Math.min(offset * 0.015, 8); // Límite de 8px de difuminado
-            let brightnessAmount = Math.max(0.7 - (offset * 0.0005), 0.35); // Límite de oscurecimiento
+            // Simulación de Elasticidad Líquida y Deformación Geométrica
+            let blurValue = Math.min(offset * 0.02, 12); // Transición de difuminado suave hasta 12px
+            let darkValue = Math.max(0.7 - (offset * 0.0006), 0.25); // El fondo se oscurece gradualmente al bajar
+            let distortionY = offset * 0.14; // El fondo acompaña el movimiento para evitar el corte recto
 
-            parallaxBg.style.filter = `contrast(1.1) brightness(${brightnessAmount}) blur(${blurAmount}px)`;
-            parallaxBg.style.transform = `translateY(${offset * 0.12}px) scale(${1 + (offset * 0.00008)})`;
+            parallaxBg.style.filter = `contrast(1.15) brightness(${darkValue}) blur(${blurValue}px)`;
+            // El 'scale3d' estira el fondo levemente en base al scroll eliminando los bordes vacíos
+            parallaxBg.style.transform = `translate3d(0, ${distortionY}px, 0) scale3d(${1 + (offset * 0.00012)}, ${1 + (offset * 0.00012)}, 1)`;
         });
 
-        // Inclinación física 3D en las tarjetas
+        // Inclinación Kinestésica de Tarjetas
         if (window.innerWidth > 768) {
             cards.forEach(card => {
                 card.addEventListener('mousemove', (e) => {
