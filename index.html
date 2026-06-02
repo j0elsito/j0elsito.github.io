@@ -42,11 +42,10 @@
         }
         .app-container::-webkit-scrollbar { display: none; }
 
-        /* FONDO INTERACTIVO (Tu nueva imagen) */
+        /* FONDO INTERACTIVO (Tu nueva imagen actualizada) */
         .motion-bg-container {
             position: fixed; top: -20px; left: -20px; right: -20px; bottom: -20px; z-index: -2;
-            /* Se usa la versión 'raw' de GitHub para que renderice la imagen directa */
-            background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/c89f38f2fd98280c9c790f8850a9d1bdc86d051e/chatliquidmetal1.png');
+            background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/4e90195cfb8c2a54007fa1a3b3f68ee0a5b2725c/chatliquidmetal1.png');
             background-size: cover; background-position: center; 
             filter: contrast(1.15) brightness(0.4) blur(2px);
             pointer-events: none;
@@ -162,7 +161,7 @@
         .v-cash::before { content:'$'; position:absolute; font-size: 22px; font-weight: 900; color: rgba(255,255,255,0.5); }
         .v-cash::after { content:''; position:absolute; width: 34px; height: 34px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 50%; }
 
-        /* Icono Reparar (Engranaje/Chip) */
+        /* Icono Reparar (Engranaje) */
         .v-repair { width: 56px; height: 56px; border-radius: 50%; background: rgba(0, 0, 0, 0.5); border: 4px dashed rgba(255,255,255,0.2); box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.5); animation: rotateSlow 10s linear infinite; }
         .v-repair::after { content:''; position:absolute; width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); }
         @keyframes rotateSlow { 100% { transform: scale(0.7) rotate(360deg); } }
@@ -231,7 +230,6 @@
                 <span class="hero-tag">Destacado</span>
                 <h2 class="hero-title">iPhone 16 Pro</h2>
                 <p class="hero-subtitle">Descubre el nuevo diseño y usa tu equipo como abono.</p>
-                <!-- Modificado para activar la transición -->
                 <a href="catalogo.html#iphone-16-pro" class="hero-btn navigate-link">Comprar ahora</a>
                 <div class="hero-device"></div>
             </div>
@@ -286,21 +284,18 @@
         // 1. SISTEMA DE TRANSICIÓN SUAVE (SPA FEEL)
         document.addEventListener("DOMContentLoaded", () => {
             const overlay = document.getElementById('pageTransition');
-            // Desvanece la capa negra al cargar la página
             setTimeout(() => { overlay.style.opacity = '0'; }, 50);
 
-            // Intercepta los clicks hacia el catálogo para hacer fade-out
             const navLinks = document.querySelectorAll('.navigate-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const targetUrl = this.getAttribute('href');
-                    overlay.style.opacity = '1'; // Oscurece la pantalla
+                    overlay.style.opacity = '1'; 
                     
-                    // Espera a que termine la transición para cambiar la URL
                     setTimeout(() => {
                         window.location.assign(targetUrl);
-                    }, 400); // 400ms = tiempo de la animación CSS
+                    }, 400); 
                 });
             });
         });
@@ -343,7 +338,7 @@
 
         const searchInput = document.getElementById('searchInput');
         const suggestionsBox = document.getElementById('suggestionsBox');
-        const overlay = document.getElementById('pageTransition'); // Re-uso para la búsqueda
+        const overlay = document.getElementById('pageTransition'); 
 
         // 3. LÓGICA DE BÚSQUEDA Y SUGERENCIAS
         searchInput.addEventListener('input', function() {
@@ -363,7 +358,7 @@
                         
                         // Acción con transición al tocar la sugerencia
                         div.onclick = function() {
-                            overlay.style.opacity = '1'; // Oscurece
+                            overlay.style.opacity = '1';
                             setTimeout(() => {
                                 window.location.assign(`catalogo.html#${item.id}`);
                             }, 400);
