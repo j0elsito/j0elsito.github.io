@@ -2,111 +2,204 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TecnoTrade | Dashboard</title>
+    <!-- Bloqueo estricto de zoom para evitar que la pantalla se desencuadre -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>TecnoTrade | Welcome</title>
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --bg-dark: #030509;
             --text-main: #ffffff;
-            --text-muted: #a1a1aa;
+            --text-glow: #a2c4ec;
+            --neon-blue: #00f0ff;
+            --neon-purple: #bd00ff;
+            --neon-green: #39ff14;
+            --neon-cyan: #00ffcc;
+            --card-glass: rgba(255, 255, 255, 0.02);
+            --border-glass: rgba(255, 255, 255, 0.08);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* 1. BLOQUEO TOTAL DE FRANJAS NEGRAS AL PELLIZCAR */
+        html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Atrapa la ventana del navegador */
+        }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
             color: var(--text-main);
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-y: auto; /* Solo permite deslizar hacia abajo si es necesario */
+            overflow-x: hidden;
+            overscroll-behavior: none; /* Elimina el efecto rebote que causa las franjas negras */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow-x: hidden;
-            background-color: #030509;
-            perspective: 1200px;
         }
 
-        /* FONDO FIJO QUE NO SE MUEVE CON EL ZOOM NI EL REDIMENSIONADO */
+        /* FONDO INAMOVIBLE */
         .motion-bg-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: -20px; left: -20px; right: -20px; bottom: -20px; /* Ligeramente más grande para tapar cualquier borde */
             z-index: -2;
-            background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/fondoliquidmetal1.png');
+            background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            filter: contrast(1.1) brightness(0.4);
+            filter: contrast(1.15) brightness(0.4) blur(4px);
+            pointer-events: none;
         }
 
-        /* ORBES (Sin porcentajes que se rompan) */
+        /* ORBES DE LUZ */
         .neon-orb {
             position: fixed;
             border-radius: 50%;
             filter: blur(120px);
             z-index: -1;
-            opacity: 0.3;
+            opacity: 0.35;
             pointer-events: none;
         }
-        .orb-1 { width: 40vh; height: 40vh; background: #00f0ff; top: 10%; left: 10%; }
-        .orb-2 { width: 40vh; height: 40vh; background: #bd00ff; bottom: 10%; right: 10%; }
+        .orb-1 { width: 300px; height: 300px; background: var(--neon-blue); top: 5%; left: 5%; }
+        .orb-2 { width: 350px; height: 350px; background: var(--neon-purple); bottom: 5%; right: 5%; }
 
-        /* Dashboard igual al del catálogo */
-        .dashboard-wrapper {
-            width: 90%;
-            max-width: 440px;
+        /* HEADER */
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
             z-index: 10;
+            margin-top: 40px;
+        }
+
+        .header-section img {
+            width: 70px;
+            height: 70px;
+            border-radius: 22px;
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .header-section h1 {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-glow), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 2. DISEÑO EN CUADRÍCULA 2x2 (Formato Cuadrado) */
+        .grid-wrapper {
+            width: 92%;
+            max-width: 500px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Obliga a que sean 2 columnas y 2 filas */
+            gap: 16px;
+            z-index: 10;
+            padding-bottom: 100px; /* Espacio para las redes sociales */
+        }
+
+        /* TARJETAS CUADRADAS */
+        .glass-card {
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 28px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            aspect-ratio: 1 / 1.05; /* Asegura que se vean como un cuadrado perfecto */
             display: flex;
             flex-direction: column;
-            gap: 16px;
-        }
-
-        .header-section { text-align: center; margin-bottom: 30px; }
-        .header-section h1 { font-size: 38px; font-weight: 900; margin-bottom: 5px; }
-        .header-section p { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
-
-        .tilt-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 24px;
-            padding: 20px;
-            display: flex;
             align-items: center;
-            gap: 20px;
+            justify-content: center;
             text-decoration: none;
-            color: white;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            transition: 0.3s;
+            color: var(--text-main);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
         }
 
-        .tilt-card:active { transform: scale(0.97); }
+        .glass-card:active {
+            transform: scale(0.95); /* Efecto hundimiento al tocar */
+        }
 
-        .card-icon {
-            font-size: 28px;
-            background: rgba(255,255,255,0.05);
-            width: 50px;
-            height: 50px;
+        /* ESPACIO VISUAL LIMPIO (SIN LÍNEA LÁSER) */
+        .image-visual-space {
+            width: 80%;
+            height: 55%;
+            background: rgba(255,255,255,0.01);
+            border-radius: 18px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.02);
+            position: relative;
         }
 
-        .card-title { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
-        .card-subtitle { font-size: 13px; color: var(--text-muted); }
+        /* ICONOS VECTORES AJUSTADOS AL NUEVO TAMAÑO */
+        .vector-icon {
+            position: relative;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255,255,255,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: scale(0.7); /* Reducidos para que quepan perfectos en el cuadrado */
+        }
 
+        /* Forma 1: Teléfono */
+        .v-phone { width: 55px; height: 100px; border-radius: 14px; }
+        .v-phone::before { content:''; position:absolute; top:8px; left:8px; width:15px; height:25px; border:2px solid rgba(255,255,255,0.15); border-radius:6px; }
+        
+        /* Forma 2: Billete */
+        .v-cash { width: 90px; height: 50px; border-radius: 10px; }
+        .v-cash::before { content:'$'; position:absolute; font-size: 20px; font-weight: bold; color: rgba(255,255,255,0.4); }
+        .v-cash::after { content:''; position:absolute; width: 30px; height: 30px; border: 2px dashed rgba(255,255,255,0.2); border-radius: 50%; }
+
+        /* Forma 3: Herramienta */
+        .v-repair { width: 60px; height: 70px; border-radius: 10px; border-style: dashed; }
+        .v-repair::before { content:'⚙'; position:absolute; font-size: 28px; color: rgba(255,255,255,0.4); }
+
+        /* Forma 4: Laptop */
+        .v-laptop { width: 90px; height: 55px; border-radius: 6px 6px 0 0; border-bottom: 8px solid rgba(255,255,255,0.2); }
+        .v-laptop::before { content:''; position:absolute; top: 5px; width: 70px; height: 40px; border: 2px solid rgba(255,255,255,0.1); border-radius: 4px; }
+
+        /* COLORES AL TOCAR LA TARJETA */
+        .card-buy:active { border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
+        .card-sell:active { border-color: var(--neon-green); box-shadow: 0 0 20px rgba(57, 255, 20, 0.2); }
+        .card-repair:active { border-color: var(--neon-purple); box-shadow: 0 0 20px rgba(189, 0, 255, 0.2); }
+        .card-laptop:active { border-color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0, 255, 204, 0.2); }
+
+        /* TÍTULOS LIMPIOS */
+        .card-title {
+            font-size: 14px;
+            font-weight: 800;
+            text-align: center;
+            margin: 0;
+            line-height: 1.2;
+            padding: 0 5px;
+        }
+
+        /* REDES SOCIALES EN LA BASE (Fijas) */
         .social-bar {
-            position: absolute;
+            position: fixed;
             bottom: 30px;
             display: flex;
             gap: 30px;
+            z-index: 20;
         }
 
-        .social-icon { width: 25px; filter: invert(1); opacity: 0.5; }
+        .social-icon {
+            width: 24px;
+            opacity: 0.5;
+            filter: invert(1);
+        }
     </style>
 </head>
 <body>
@@ -115,48 +208,47 @@
     <div class="neon-orb orb-1"></div>
     <div class="neon-orb orb-2"></div>
 
-    <div class="dashboard-wrapper">
-        <div class="header-section">
-            <h1>TecnoTrade</h1>
-            <p>Dashboard de servicios</p>
-        </div>
+    <div class="header-section">
+        <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" alt="TecnoTrade">
+        <h1>TecnoTrade</h1>
+    </div>
 
-        <a href="catalogo.html" class="tilt-card">
-            <div class="card-icon">📱</div>
-            <div class="card-text">
-                <div class="card-title">Comprar Teléfono</div>
-                <div class="card-subtitle">Catálogo premium de equipos</div>
+    <!-- CUADRÍCULA ESTILO PANEL DE CONTROL -->
+    <div class="grid-wrapper">
+        
+        <a href="catalogo.html" class="glass-card card-buy">
+            <div class="image-visual-space">
+                <div class="vector-icon v-phone"></div>
             </div>
+            <h2 class="card-title">Comprar<br>Equipo</h2>
         </a>
 
-        <a href="vender.html" class="tilt-card">
-            <div class="card-icon">💵</div>
-            <div class="card-text">
-                <div class="card-title">Vender mi dispositivo</div>
-                <div class="card-subtitle">Trade-in inmediato</div>
+        <a href="vender.html" class="glass-card card-sell">
+            <div class="image-visual-space">
+                <div class="vector-icon v-cash"></div>
             </div>
+            <h2 class="card-title">Vender<br>Equipo</h2>
         </a>
 
-        <a href="reparar.html" class="tilt-card">
-            <div class="card-icon">🔧</div>
-            <div class="card-text">
-                <div class="card-title">Servicio Técnico</div>
-                <div class="card-subtitle">Reparaciones garantizadas</div>
+        <a href="reparar.html" class="glass-card card-repair">
+            <div class="image-visual-space">
+                <div class="vector-icon v-repair"></div>
             </div>
+            <h2 class="card-title">Servicio<br>Técnico</h2>
         </a>
 
-        <a href="laptops.html" class="tilt-card">
-            <div class="card-icon">💻</div>
-            <div class="card-text">
-                <div class="card-title">Laptops & Sistemas</div>
-                <div class="card-subtitle">Mantenimiento y software</div>
+        <a href="laptops.html" class="glass-card card-laptop">
+            <div class="image-visual-space">
+                <div class="vector-icon v-laptop"></div>
             </div>
+            <h2 class="card-title">Laptops &<br>Sistemas</h2>
         </a>
+
     </div>
 
     <div class="social-bar">
-        <a href="https://wa.me/50767966691"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" class="social-icon"></a>
-        <a href="https://www.instagram.com/tecnotradepty/"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="social-icon"></a>
+        <a href="https://wa.me/50767966691" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" class="social-icon" alt="WhatsApp"></a>
+        <a href="https://www.instagram.com/tecnotradepty/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="social-icon" alt="Instagram"></a>
     </div>
 
 </body>
