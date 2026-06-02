@@ -26,22 +26,24 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            overflow-y: auto; /* Solo permite deslizar hacia abajo si es necesario */
-            overflow-x: hidden;
-            overscroll-behavior: none; /* Elimina el efecto rebote que causa las franjas negras */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+            <script>
+    // Seleccionamos todas las tarjetas del menú
+    const menuCards = document.querySelectorAll('.glass-card');
+
+    menuCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Evitamos el salto de página automático
+            e.preventDefault();
+            const urlDestino = this.getAttribute('href');
+
+            // Le damos 300 milisegundos al navegador para que muestre 
+            // el hundimiento de la tarjeta y la explosión de luz neón
+            setTimeout(() => {
+                window.location.assign(urlDestino);
+            }, 300); 
+        });
+    });
+</script>
 
         /* FONDO INAMOVIBLE */
         .motion-bg-container {
@@ -190,10 +192,42 @@
         .v-laptop::before { content:''; position:absolute; top: 5px; width: 70px; height: 40px; border: 2px solid rgba(255,255,255,0.1); border-radius: 4px; }
 
         /* COLORES AL TOCAR LA TARJETA */
-        .card-buy:active { border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
-        .card-sell:active { border-color: var(--neon-green); box-shadow: 0 0 20px rgba(57, 255, 20, 0.2); }
-        .card-repair:active { border-color: var(--neon-purple); box-shadow: 0 0 20px rgba(189, 0, 255, 0.2); }
-        .card-laptop:active { border-color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0, 255, 204, 0.2); }
+       /* EFECTO HUNDIMIENTO Y EXPLOSIÓN NEÓN AL TOCAR (MOBILE) */
+.glass-card:active {
+    transform: scale(0.92); /* Se hunde más al presionar */
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.card-buy:active { border-color: var(--neon-blue); }
+.card-buy:active .vector-icon { 
+    border-color: var(--neon-blue); 
+    box-shadow: 0 0 40px rgba(0, 240, 255, 0.8); /* Explosión de luz azul */
+    background: rgba(0, 240, 255, 0.1);
+}
+
+.card-sell:active { border-color: var(--neon-green); }
+.card-sell:active .vector-icon { 
+    border-color: var(--neon-green); 
+    box-shadow: 0 0 40px rgba(57, 255, 20, 0.8); /* Explosión verde */
+    background: rgba(57, 255, 20, 0.1);
+}
+.card-sell:active .v-cash::before { color: var(--neon-green); }
+
+.card-repair:active { border-color: var(--neon-purple); }
+.card-repair:active .vector-icon { 
+    border-color: var(--neon-purple); 
+    box-shadow: 0 0 40px rgba(189, 0, 255, 0.8); /* Explosión morada */
+    background: rgba(189, 0, 255, 0.1);
+}
+.card-repair:active .v-repair::before { color: var(--neon-purple); }
+
+.card-laptop:active { border-color: var(--neon-cyan); }
+.card-laptop:active .vector-icon { 
+    border-color: var(--neon-cyan); 
+    box-shadow: 0 0 40px rgba(0, 255, 204, 0.8); /* Explosión cyan */
+    background: rgba(0, 255, 204, 0.1);
+}
+
 
         /* TÍTULOS LIMPIOS */
         .card-title {
