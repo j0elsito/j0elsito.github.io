@@ -39,7 +39,7 @@
             --transition-fast: all 0.2s ease;
         }
 
-        /* --- NUEVO: PALETA MODO OSCURO (DARK THEME) --- */
+        /* PALETA MODO OSCURO DINÁMICA */
         [data-theme="dark"] {
             --bg-base: #000000;
             --text-primary: #f5f5f7;
@@ -52,7 +52,7 @@
             --border-subtle: rgba(255, 255, 255, 0.15);
         }
 
-        /* RESET GENERAL FORZADO */
+        /* RESET GENERAL FORZADO A MODO CLARO */
         *, *::before, *::after {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -67,40 +67,42 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             overflow-y: auto;
-            transition: background-color 0.4s ease, color 0.4s ease; /* Transición suave de tema */
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        /* --- NUEVO: CSS DEL MENÚ LATERAL (SIDEBAR) --- */
+        /* ARQUITECTURA DEL MENÚ LATERAL (SISTEMA DE TRANSFORMACIÓN CORREGIDO) */
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
             z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         .sidebar-overlay.active { opacity: 1; pointer-events: all; }
 
         .sidebar-menu {
-            position: fixed; top: 0; left: -320px; width: 85%; max-width: 320px; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 80%; max-width: 300px; height: 100vh;
             background: var(--card-glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             z-index: 1001; padding: 30px 24px; display: flex; flex-direction: column;
-            box-shadow: 10px 0 30px rgba(0,0,0,0.1); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1); 
+            transform: translateX(-100%); /* Ocultamiento físico infalible fuera de pantalla */
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             border-right: 1px solid var(--border-subtle);
         }
-        .sidebar-menu.active { transform: translateX(320px); }
+        .sidebar-menu.active { transform: translateX(0); }
 
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
         .sidebar-header h2 { font-size: 24px; font-weight: 900; margin: 0; color: var(--text-primary); }
-        .close-menu-btn { background: transparent; border: none; font-size: 24px; color: var(--text-secondary); cursor: pointer; padding: 0; }
+        .close-menu-btn { background: transparent; border: none; font-size: 24px; color: var(--text-secondary); cursor: pointer; padding: 0; display: flex; align-items: center; }
 
-        .sidebar-nav { display: flex; flex-direction: column; gap: 20px; flex-grow: 1; }
+        .sidebar-nav { display: flex; flex-direction: column; gap: 22px; flex-grow: 1; }
         .sidebar-link {
-            text-decoration: none; color: var(--text-primary); font-size: 18px; font-weight: 700;
+            text-decoration: none; color: var(--text-primary); font-size: 17px; font-weight: 700;
             display: flex; align-items: center; gap: 14px; transition: color 0.2s;
         }
         .sidebar-link:hover, .sidebar-link:active { color: var(--apple-blue); }
         .sidebar-link svg { width: 22px; height: 22px; fill: var(--text-secondary); }
         .sidebar-link:hover svg { fill: var(--apple-blue); }
 
-        /* Toggle de Tema Oscuro */
+        /* Interruptor de Modo de Color Estilo Apple */
         .theme-toggle-box {
             background: var(--card-glass-pure); border: 1px solid var(--border-subtle);
             border-radius: 20px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
@@ -111,32 +113,23 @@
         
         .switch { position: relative; display: inline-block; width: 46px; height: 26px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #d2d2d7; transition: .4s; border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute; content: ""; height: 20px; width: 20px;
-            left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #d2d2d7; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
         input:checked + .slider { background-color: var(--apple-blue); }
         input:checked + .slider:before { transform: translateX(20px); }
-        /* --- FIN CSS NUEVO --- */
 
         /* CAPA DE TRANSICIÓN DE PÁGINA */
         .page-loader-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--card-glass-pure); z-index: 99999;
+            background-color: #ffffff; z-index: 99999;
             transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s ease; 
             pointer-events: none; opacity: 1;
         }
 
-        /* ENTORNO CINEMATOGRÁFICO */
+        /* ENTORNO CINEMATOGRÁFICO CLARO */
         .ambient-canvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3;
-            background-color: var(--bg-base); overflow: hidden; pointer-events: none;
-            transition: background-color 0.4s ease;
+            background-color: #f5f5f7; overflow: hidden; pointer-events: none;
         }
         .liquid-orb {
             position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.8;
@@ -162,15 +155,16 @@
         .mac-navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 18px 24px; position: sticky; top: 0; z-index: 100;
-            background: linear-gradient(to bottom, var(--bg-base) 0%, rgba(245,245,247,0) 100%);
+            background: linear-gradient(to bottom, rgba(245,245,247,0.96) 0%, rgba(245,245,247,0.8) 70%, transparent 100%);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
         }
         .navbar-action-btn {
             background: transparent; border: none; padding: 4px; cursor: pointer;
             display: flex; align-items: center; justify-content: center; transition: var(--transition-fast);
+            color: var(--text-primary);
         }
         .navbar-action-btn:active { transform: scale(0.85); opacity: 0.7; }
-        .navbar-action-btn svg { width: 24px; height: 24px; fill: var(--text-primary); transition: fill 0.4s ease;}
+        .navbar-action-btn svg { width: 24px; height: 24px; fill: currentColor; }
         
         .navbar-brand-block { display: flex; align-items: center; gap: 10px; text-decoration: none; }
         .brand-avatar { width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
@@ -220,21 +214,21 @@
         .search-row-item:hover .search-row-item-arrow { color: var(--apple-blue); transform: translateX(4px); }
 
         /* HERO DISPLAY CORE PANEL */
-        .hero-billboard-canvas { padding: 0 24px; margin-bottom: 32px; }
+        .hero-display-canvas { padding: 0 24px; margin-bottom: 32px; }
         .hero-billboard-card {
-            background: linear-gradient(135deg, var(--card-glass-pure) 0%, var(--bg-base) 100%);
-            border: 1px solid var(--border-subtle); border-radius: 32px; padding: 32px 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4f9 100%);
+            border: 1px solid #ffffff; border-radius: 32px; padding: 32px 24px;
             position: relative; overflow: hidden; box-shadow: var(--shadow-md);
             transition: background 0.4s ease, border 0.4s ease;
         }
         .hero-context-panel { position: relative; z-index: 5; max-width: 60%; }
         .hero-badge-tag {
-            background: var(--text-primary); color: var(--bg-base); font-size: 10px; font-weight: 800;
+            background: var(--text-primary); color: #ffffff; font-size: 10px; font-weight: 800;
             padding: 5px 12px; border-radius: 12px; margin-bottom: 16px;
             text-transform: uppercase; display: inline-block; letter-spacing: 0.5px;
         }
         .hero-main-title { font-size: 28px; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.7px; line-height: 1.15; color: var(--text-primary); }
-        .hero-p-desc { font-size: 13px; color: var(--text-secondary); margin: 0 0 24px 0; line-height: 1.45; }
+        .hero-p-desc { font-size: 13px; color: #48484a; margin: 0 0 24px 0; line-height: 1.45; }
         .hero-action-trigger {
             background: var(--apple-blue); color: #ffffff; border: none; border-radius: 22px;
             padding: 12px 26px; font-size: 13px; font-weight: 700; display: inline-block;
@@ -243,17 +237,17 @@
         .hero-action-trigger:hover { background: var(--apple-blue-hover); transform: translateY(-1px); }
         .hero-action-trigger:active { transform: translateY(1px); box-shadow: 0 3px 8px rgba(0, 113, 227, 0.15); }
         
-        /* Mockup iPhone */
+        /* Mockup iPhone Blanco/Plata */
         .hero-mockup-render {
             position: absolute; right: -30px; bottom: -45px; width: 150px; height: 210px;
-            background: linear-gradient(180deg, var(--card-glass-pure) 0%, var(--bg-base) 100%);
-            border: 4px solid var(--card-glass-pure); border-radius: 30px; transform: rotate(-7deg);
+            background: linear-gradient(180deg, #ffffff 0%, #e5e5ea 100%);
+            border: 4px solid #ffffff; border-radius: 30px; transform: rotate(-7deg);
             box-shadow: -12px -12px 35px rgba(0,0,0,0.08); z-index: 1;
             transition: background 0.4s ease, border 0.4s ease;
         }
         .hero-mockup-render::after {
             content: ''; position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;
-            border-radius: 12px; background: rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 12px; background: #d2d2d7; border: 1px solid #c7c7cc;
         }
 
         /* CORPORATE SECTION HEADINGS */
@@ -265,24 +259,24 @@
         /* GRID CATEGORÍAS MACSTORE CANVAS 2x2 */
         .categories-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 24px; margin-bottom: 36px; }
         .matrix-glass-card {
-            background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 28px;
+            background: var(--card-glass); border: 1px solid #ffffff; border-radius: 28px;
             padding: 24px 16px; text-decoration: none; color: var(--text-primary);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             transition: var(--transition-smooth); box-shadow: var(--shadow-sm);
         }
         .matrix-glass-card:hover {
-            transform: translateY(-4px); border-color: var(--apple-blue);
+            transform: translateY(-4px); border-color: rgba(0, 113, 227, 0.25);
             background: var(--card-glass-pure); box-shadow: var(--shadow-lg);
         }
         .matrix-glass-card:active { transform: scale(0.95); }
 
-        /* ICONOS VECTORIALES HD */
+        /* ICONOS VECTORIALES HD (TONOS OSCUROS/BLANCOS) */
         .vector-illustration-box {
             width: 100%; height: 75px; background: rgba(0,0,0,0.03); border-radius: 18px;
             margin-bottom: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition-fast);
         }
-        .matrix-glass-card:hover .vector-illustration-box { background: var(--apple-blue-glow); }
+        .matrix-glass-card:hover .vector-illustration-box { background: rgba(0, 113, 227, 0.05); }
         .hifi-svg-icon { width: 36px; height: 36px; stroke: var(--text-primary); stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: var(--transition-fast); }
         .matrix-glass-card:hover .hifi-svg-icon { stroke: var(--apple-blue); transform: scale(1.05); }
         
@@ -297,13 +291,14 @@
             background: var(--card-glass); border: 1px solid rgba(0, 176, 80, 0.2); border-radius: 26px;
             padding: 20px; backdrop-filter: blur(20px); box-shadow: var(--shadow-sm);
             display: flex; flex-direction: column; gap: 12px; position: relative;
+            transition: background 0.4s ease, border-color 0.4s ease;
         }
-        .promo-header-info { display: flex; align-items: center; justify-content: space-between; }
+        .promo-header-info { display: flex; align-items: center; justify-content: space-between; width: 100%; }
         .promo-badge { background: rgba(0, 176, 80, 0.1); color: #00b050; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 8px; }
-        .countdown-clock { display: flex; gap: 4px; font-size: 12px; font-weight: 700; color: var(--text-primary); background: var(--card-glass-pure); padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border-subtle); }
+        .countdown-clock { display: flex; gap: 4px; font-size: 12px; font-weight: 700; color: var(--text-primary); background: var(--card-glass-pure); padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border-subtle); transition: background-color 0.4s ease; }
         .countdown-clock span { color: #ff3b30; }
-        .promo-main-msg { font-size: 16px; font-weight: 800; margin: 0; line-height: 1.3; }
-        .promo-sub-msg { font-size: 12px; color: var(--text-secondary); margin: 0; }
+        .promo-main-msg { font-size: 16px; font-weight: 800; margin: 0; line-height: 1.3; color: var(--text-primary); text-align: left; }
+        .promo-sub-msg { font-size: 12px; color: var(--text-secondary); margin: 0; text-align: left; }
 
         /* TRUST CONTEXT ROWS */
         .trust-architecture-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px; margin-bottom: 36px; }
@@ -351,6 +346,31 @@
             font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 10px rgba(255,59,48,0.3); border: 2px solid var(--bg-base);
+        }
+
+        /* ADAPTACIÓN TOTAL ESCRITORIO DE GAMA ALTA (PC) */
+        @media (min-width: 768px) {
+            .app-layout-container { max-width: 1120px; padding-top: 40px; padding-bottom: 16px; }
+            .mac-navbar { border-radius: 24px; margin: 0 24px 36px 24px; top: 24px; border: 1px solid #ffffff; box-shadow: var(--shadow-sm); }
+            .search-engine-wrapper { max-width: 650px; margin: 0 auto 36px auto; width: 100%; }
+            .search-results-dropdown { left: 50%; transform: translateX(-50%); width: 100%; max-width: 650px; }
+            .hero-display-canvas { margin-bottom: 48px; }
+            .hero-billboard-card { display: flex; align-items: center; justify-content: space-between; padding: 48px 64px; }
+            .hero-context-panel { max-width: 55%; }
+            .hero-main-title { font-size: 36px; }
+            .hero-p-desc { font-size: 15px; }
+            .hero-mockup-render { position: relative; right: 0; bottom: 0; transform: rotate(-4deg); width: 180px; height: 250px; }
+            .categories-matrix-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px; }
+            .matrix-glass-card { padding: 32px 20px; border-radius: 32px; }
+            .vector-illustration-box { height: 90px; }
+            .module-section-header { font-size: 24px; margin-bottom: 24px; }
+            .lower-modules-pc-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 0 24px; margin-bottom: 48px; }
+            .promo-ticking-wrapper, .feedback-slider-wrapper { padding: 0; margin-bottom: 0; }
+            .promo-ticking-card, .feedback-card { height: 100%; justify-content: center; }
+            .trust-architecture-row { gap: 20px; margin-bottom: 48px; }
+            .interfacial-dock-nav { max-width: 480px; padding: 14px 24px; border-radius: 40px; bottom: 32px; }
+            .dock-action-tab svg { width: 25px; height: 25px; }
+            .dock-label-text { font-size: 11px; }
         }
     </style>
 </head>
@@ -465,14 +485,14 @@
 
         <div class="lower-modules-pc-flex">
             <div class="promo-ticking-wrapper">
-                <div class="promo-ticking-card">
+                <a href="https://github.com/j0elsito/j0elsito.github.io/blob/041f17c882204d64d7c410bd9c02747d89bcf2e8/index.html" class="promo-ticking-card" target="_blank" style="text-decoration: none; display: flex; color: inherit; flex-direction: column;">
                     <div class="promo-header-info">
                         <span class="promo-badge">Oferta de Laboratorio</span>
                         <div class="countdown-clock" id="promoTimer">Cargando...</div>
                     </div>
                     <p class="promo-main-msg">20% de Descuento en Cambio de Pantallas e Instalación de Sistemas</p>
                     <p class="promo-sub-msg">Válido en nuestro taller. Menciona este cupón al ingresar tu equipo.</p>
-                </div>
+                </a>
             </div>
 
             <div class="feedback-slider-wrapper">
@@ -537,7 +557,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // --- NUEVO: SISTEMA LÓGICO DEL TEMA (DARK/LIGHT MODE) ---
+            // --- SISTEMA LÓGICO DEL TEMA (DARK/LIGHT MODE) ---
             const themeCheckbox = document.getElementById('themeToggleCheckbox');
             const currentTheme = localStorage.getItem('tecnotrade-theme') || 'light';
             
@@ -555,7 +575,7 @@
                 }
             });
 
-            // --- NUEVO: LÓGICA DEL MENÚ LATERAL (SIDEBAR) ---
+            // --- LÓGICA DEL MENÚ LATERAL (SIDEBAR OPTIMIZADO) ---
             const openMenuBtn = document.getElementById('openMenuBtn');
             const closeMenuBtn = document.getElementById('closeMenuBtn');
             const sidebarMenu = document.getElementById('sidebarMenu');
@@ -587,7 +607,6 @@
                     clickEvent.preventDefault();
                     const targetPageDestination = this.getAttribute('href');
                     
-                    // Ajuste de Transición: Pinta de negro o blanco según el tema activo
                     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
                     systemLoader.style.backgroundColor = isDark ? '#030509' : '#ffffff';
                     systemLoader.style.opacity = '1'; 
@@ -598,7 +617,7 @@
                 });
             });
 
-            // --- NUEVA BASE DE DATOS SINCRONIZADA 1:1 CON EL CATÁLOGO ---
+            // --- BASE DE DATOS SINCRONIZADA EXCLUSIVAMENTE CON EL CONTENIDO DEL CATÁLOGO ---
             const tecnotradeInventoryDatabase = [
                 { name: "Samsung Galaxy Series", id: "android-samsung" },
                 { name: "Honor Multi-Brand", id: "android-honor" },
@@ -635,88 +654,4 @@
                 { name: "iPhone X", id: "iphone-x" },
                 { name: "iPhone XR", id: "iphone-xr" },
                 { name: "iPhone XS", id: "iphone-xs" },
-                { name: "iPhone XS Max", id: "iphone-xs-max" }
-            ];
-
-            const coreSearchInput = document.getElementById('mainCoreSearch');
-            const searchDropdownEngine = document.getElementById('searchDropdownEngine');
-            const transitionOverlayFrame = document.getElementById('globalPageLoader'); 
-
-            // MOTOR LOGÍSTICO DE FILTRADO CON CONTEXTO
-            coreSearchInput.addEventListener('input', function() {
-                const dataStringQuery = this.value.toLowerCase().trim();
-                searchDropdownEngine.innerHTML = ''; 
-
-                if (dataStringQuery.length > 0) {
-                    const searchMatchesFiltered = tecnotradeInventoryDatabase.filter(inventoryItem => 
-                        inventoryItem.name.toLowerCase().includes(dataStringQuery)
-                    );
-
-                    if (searchMatchesFiltered.length > 0) {
-                        searchDropdownEngine.style.display = 'block'; 
-                        
-                        searchMatchesFiltered.forEach(matchedItem => {
-                            const suggestionRowNode = document.createElement('div');
-                            suggestionRowNode.className = 'search-row-item';
-                            suggestionRowNode.innerHTML = `<span>${matchedItem.name}</span> <span class="search-row-item-arrow">▶</span>`;
-                            
-                            suggestionRowNode.onclick = function() {
-                                // Transición dinámica según el tema
-                                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                                transitionOverlayFrame.style.backgroundColor = isDark ? '#030509' : '#ffffff';
-                                transitionOverlayFrame.style.opacity = '1';
-                                setTimeout(() => { 
-                                    window.location.assign(`catalogo.html#${matchedItem.id}`); 
-                                }, 420);
-                            };
-                            searchDropdownEngine.appendChild(suggestionRowNode);
-                        });
-                    } else {
-                        searchDropdownEngine.style.display = 'block';
-                        searchDropdownEngine.innerHTML = `<div class="search-row-item" style="color: var(--text-secondary); justify-content: center; font-weight: 500;">No se encontraron coincidencias</div>`;
-                    }
-                } else {
-                    searchDropdownEngine.style.display = 'none';
-                }
-            });
-
-            // Evento de cierre por pérdida de foco táctil o click general
-            document.addEventListener('click', function(clickEventInterceptor) {
-                if (!coreSearchInput.contains(clickEventInterceptor.target) && !searchDropdownEngine.contains(clickEventInterceptor.target)) {
-                    searchDropdownEngine.style.display = 'none';
-                }
-            });
-
-            // SISTEMA DINÁMICO DE CUENTA REGRESIVA DE CUPONES
-            function initializingPromoTimer() {
-                const currentServerDate = new Date();
-                const targetDeadlineLimit = new Date();
-                
-                targetDeadlineLimit.setDate(currentServerDate.getDate() + 2);
-                targetDeadlineLimit.setHours(23, 59, 59, 0);
-
-                function executionUpdateClock() {
-                    const liveCurrentTime = new Date().getTime();
-                    const totalDistanceDifference = targetDeadlineLimit.getTime() - liveCurrentTime;
-
-                    if (totalDistanceDifference < 0) {
-                        document.getElementById("promoTimer").innerHTML = "EXPIRADO";
-                        return;
-                    }
-
-                    const calculatedHours = Math.floor((totalDistanceDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const calculatedMinutes = Math.floor((totalDistanceDifference % (1000 * 60 * 60)) / (1000 * 60));
-                    const calculatedSeconds = Math.floor((totalDistanceDifference % (1000 * 60)) / 1000);
-
-                    const renderStringFormatted = `${calculatedHours.toString().padStart(2, '0')}h : ${calculatedMinutes.toString().padStart(2, '0')}m : <span>${calculatedSeconds.toString().padStart(2, '0')}s</span>`;
-                    document.getElementById("promoTimer").innerHTML = renderStringFormatted;
-                }
-
-                executionUpdateClock();
-                setInterval(executionUpdateClock, 1000);
-            }
-            initializingPromoTimer();
-        });
-    </script>
-</body>
-</html>
+                { name: "iPhone XS
