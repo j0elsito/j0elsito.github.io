@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TecnoTrade | Catálogo iPhone</title>
+    <title>TecnoTrade | Catálogo Premium</title>
     <style>
         :root {
-            --text-color: #ffffff;
-            --text-muted: #a0aec0;
-            --accent-color: #A2C4ECE6;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --border-color: rgba(255, 255, 255, 0.12);
-            --whatsapp-color: #25D366;
-            --instagram-color: #E1306C;
-            --badge-bg: rgba(255, 255, 255, 0.1);
+            --text-color: #0f172a; /* Texto principal oscuro para contraste premium */
+            --text-muted: #475569;
+            --accent-color: #3b82f6; /* Azul eléctrico llamativo */
+            --card-bg: rgba(255, 255, 255, 0.45); /* Cristal claro translúcido */
+            --border-color: rgba(255, 255, 255, 0.6);
+            --whatsapp-color: #22c55e;
+            --instagram-color: #db2777;
+            --badge-bg: rgba(59, 130, 246, 0.1);
         }
 
         body {
@@ -32,20 +32,20 @@
 
         header {
             max-width: 1060px;
-            margin: 0 auto;
+            margin: 20px auto 0 auto;
             padding: 24px 20px;
-            border-bottom: 1px solid var(--border-color);
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
             gap: 20px;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
+            border-radius: 24px;
             box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
         .brand-container {
@@ -59,7 +59,8 @@
             height: 55px;
             object-fit: contain;
             border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
         .header-text {
@@ -73,7 +74,7 @@
             font-weight: 800;
             letter-spacing: -1px;
             margin: 0;
-            background: linear-gradient(135deg, #ffffff 0%, var(--accent-color) 100%);
+            background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.1;
@@ -85,6 +86,7 @@
             margin: 0;
             letter-spacing: 1px;
             text-transform: uppercase;
+            font-weight: 600;
         }
 
         .social-links {
@@ -99,6 +101,7 @@
             font-weight: 600;
             text-decoration: none;
             color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             transition: transform 0.2s, opacity 0.2s;
         }
 
@@ -110,9 +113,10 @@
         .btn-ws { background-color: var(--whatsapp-color); }
         .btn-ig { background-color: var(--instagram-color); }
 
+        /* Cuadrícula de Catálogo */
         .catalog-container {
             max-width: 1100px;
-            margin: 40px auto;
+            margin: 30px auto;
             padding: 0 20px 80px 20px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -122,23 +126,25 @@
         .product-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 24px;
+            border-radius: 28px;
             overflow: hidden;
-            transition: border-color 0.3s;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            transition: transform 0.3s ease, border-color 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             display: flex;
             flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
         }
 
         .product-card:hover {
-            border-color: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
 
         .card-header-info {
             padding: 24px 24px 15px 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
         }
 
         .series-title {
@@ -146,17 +152,20 @@
             font-size: 24px;
             font-weight: 700;
             letter-spacing: -0.5px;
+            color: #0f172a;
         }
 
         .series-status {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--accent-color);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             display: block;
             margin-bottom: 4px;
+            font-weight: 700;
         }
 
+        /* Lista de Variaciones */
         .variants-list {
             padding: 20px 24px 24px 24px;
             display: flex;
@@ -169,34 +178,46 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.5);
             padding: 14px 18px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
             text-decoration: none;
             color: var(--text-color);
-            transition: background 0.2s, transform 0.2s, border-color 0.2s;
+            transition: background 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
 
         .variant-item:hover {
-            background: rgba(255, 255, 255, 0.09);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: #ffffff;
+            border-color: var(--accent-color);
             transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
         .variant-name {
             font-size: 15px;
             font-weight: 600;
+            color: #1e293b;
         }
 
         .variant-price {
             font-size: 14px;
             font-weight: 700;
-            color: #fff;
-            background: var(--badge-bg);
-            padding: 5px 12px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--accent-color);
+            background: #ffffff;
+            padding: 6px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        /* Variante especial para Android */
+        .android-card .variant-price {
+            color: #16a34a;
+            background: rgba(34, 197, 94, 0.08);
+        }
+        .android-card .variant-item:hover {
+            border-color: #22c55e;
         }
 
         @media (max-width: 600px) {
@@ -204,10 +225,15 @@
                 flex-direction: column;
                 text-align: center;
                 padding: 20px;
+                margin: 10px;
             }
             .brand-container {
                 flex-direction: column;
                 gap: 10px;
+            }
+            .social-links {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -219,18 +245,46 @@
             <img class="brand-logo" src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" alt="TecnoTrade Logo">
             <div class="header-text">
                 <h1 class="logo">TecnoTrade</h1>
-                <p class="subtitle">Disponibilidad de iPhone</p>
+                <p class="subtitle">Catálogo de Smartphones</p>
             </div>
         </div>
         <div class="social-links">
-            <a href="https://wa.me/50767966691?text=Hola!%20Me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20los%20modelos%20de%20iPhone%20disponibles." class="social-btn btn-ws" target="_blank">WhatsApp</a>
+            <a href="https://wa.me/50767966691?text=Hola!%20Me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20los%20modelos%20disponibles." class="social-btn btn-ws" target="_blank">WhatsApp</a>
             <a href="https://www.instagram.com/tecnotradepty/" class="social-btn btn-ig" target="_blank">Instagram</a>
         </div>
     </header>
 
     <main class="catalog-container">
 
-        <!-- SERIE IPHONE 17 -->
+        <div class="product-card android-card">
+            <div class="card-header-info">
+                <span class="series-status" style="color: #16a34a;">Múltiples Marcas</span>
+                <h2 class="series-title">Consulta tu Android</h2>
+            </div>
+            <div class="variants-list">
+                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Samsung.%20%C2%BFQu%C3%A9%20modelos%20tienen%20disponibles?" class="variant-item" target="_blank">
+                    <span class="variant-name">Samsung</span>
+                    <span class="variant-price">Cotizar</span>
+                </a>
+                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Honor.%20%C2%BFQu%C3%A9%20modelos%20tienen%20disponibles?" class="variant-item" target="_blank">
+                    <span class="variant-name">Honor</span>
+                    <span class="variant-price">Cotizar</span>
+                </a>
+                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Xiaomi.%20%C2%BFQu%C3%A9%20modelos%20tienen%20disponibles?" class="variant-item" target="_blank">
+                    <span class="variant-name">Xiaomi</span>
+                    <span class="variant-price">Cotizar</span>
+                </a>
+                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Google%20Pixel.%20%C2%BFQu%C3%A9%20modelos%20tienen%20disponibles?" class="variant-item" target="_blank">
+                    <span class="variant-name">Pixel</span>
+                    <span class="variant-price">Cotizar</span>
+                </a>
+                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Redmi.%20%C2%BFQu%C3%A9%20modelos%20tienen%20disponibles?" class="variant-item" target="_blank">
+                    <span class="variant-name">Redmi</span>
+                    <span class="variant-price">Cotizar</span>
+                </a>
+            </div>
+        </div>
+
         <div class="product-card">
             <div class="card-header-info">
                 <span class="series-status">Próximo Lanzamiento</span>
@@ -241,174 +295,4 @@
                     <span class="variant-name">iPhone 17</span>
                     <span class="variant-price">Desde 850$</span>
                 </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2017%20Plus.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 17 Plus</span>
-                    <span class="variant-price">Desde 1000$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2017%20Pro.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 17 Pro</span>
-                    <span class="variant-price">Desde 1100$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2017%20Pro%20Max.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 17 Pro Max</span>
-                    <span class="variant-price">Desde 1200$</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- SERIE IPHONE 16 -->
-        <div class="product-card">
-            <div class="card-header-info">
-                <span class="series-status">Último Modelo</span>
-                <h2 class="series-title">iPhone Serie 16</h2>
-            </div>
-            <div class="variants-list">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2016.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 16</span>
-                    <span class="variant-price">Desde 525$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2016%20Plus.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 16 Plus</span>
-                    <span class="variant-price">Desde 560$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2016%20Pro.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 16 Pro</span>
-                    <span class="variant-price">Desde 650$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2016%20Pro%20Max.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 16 Pro Max</span>
-                    <span class="variant-price">Desde 740$</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- SERIE IPHONE 15 -->
-        <div class="product-card">
-            <div class="card-header-info">
-                <span class="series-status">Popular</span>
-                <h2 class="series-title">iPhone Serie 15</h2>
-            </div>
-            <div class="variants-list">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2015.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 15</span>
-                    <span class="variant-price">Desde 350$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2015%20Plus.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 15 Plus</span>
-                    <span class="variant-price">Desde 400$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2015%20Pro.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 15 Pro</span>
-                    <span class="variant-price">Desde 450$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2015%20Pro%20Max.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 15 Pro Max</span>
-                    <span class="variant-price">Desde 540$</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- SERIE IPHONE 14 -->
-        <div class="product-card">
-            <div class="card-header-info">
-                <span class="series-status">Disponible</span>
-                <h2 class="series-title">iPhone Serie 14</h2>
-            </div>
-            <div class="variants-list">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2014.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 14</span>
-                    <span class="variant-price">Desde 250$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2014%20Plus.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 14 Plus</span>
-                    <span class="variant-price">Desde 270$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2014%20Pro.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 14 Pro</span>
-                    <span class="variant-price">Desde 330$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2014%20Pro%20Max.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 14 Pro Max</span>
-                    <span class="variant-price">Desde 400$</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- SERIE IPHONE 13 -->
-        <div class="product-card">
-            <div class="card-header-info">
-                <span class="series-status">Calidad / Precio</span>
-                <h2 class="series-title">iPhone Serie 13</h2>
-            </div>
-            <div class="variants-list">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2013%20Mini.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 13 Mini</span>
-                    <span class="variant-price">Desde 200$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2013.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 13</span>
-                    <span class="variant-price">Desde 225$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2013%20Pro.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 13 Pro</span>
-                    <span class="variant-price">Desde 300$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2013%20Pro%20Max.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 13 Pro Max</span>
-                    <span class="variant-price">Desde 340$</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- SERIE IPHONE 12 -->
-        <div class="product-card">
-            <div class="card-header-info">
-                <span class="series-status">Económico</span>
-                <h2 class="series-title">iPhone Serie 12</h2>
-            </div>
-            <div class="variants-list">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2012%20Mini.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 12 Mini</span>
-                    <span class="variant-price">Desde 125$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2012.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 12</span>
-                    <span class="variant-price">Desde 150$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2012%20Pro.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 12 Pro</span>
-                    <span class="variant-price">Desde 200$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2012%20Pro%20Max.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 12 Pro Max</span>
-                    <span class="variant-price">Desde 250$</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- SERIE IPHONE 11 -->
-        <div class="product-card">
-            <div class="card-header-info">
-                <span class="series-status">Económico</span>
-                <h2 class="series-title">iPhone Serie 11</h2>
-            </div>
-            <div class="variants-list">
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2011.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 11</span>
-                    <span class="variant-price">Desde 130$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2011%20Pro.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 11 Pro</span>
-                    <span class="variant-price">Desde 150$</span>
-                </a>
-                <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20conocer%20la%20disponibilidad%20y%20detalles%20del%20iPhone%2011%20Pro%20Max.%20%C2%BFMe%20podr%C3%ADan%20brindar%20informaci%C3%B3n?" class="variant-item" target="_blank">
-                    <span class="variant-name">iPhone 11 Pro Max</span>
-                    <span class="variant-price">Desde 190$</span>
-                </a>
-            </div>
-        </div>
-
-    </main>
-
-</body>
-</html>
+                <a href="
