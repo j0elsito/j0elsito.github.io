@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TecnoTrade | Motion-Fluid Experience</title>
+    <title>TecnoTrade | Cyber-Fluid Experience</title>
     <style>
         :root {
             --bg-dark: #030509;
@@ -28,7 +28,7 @@
             perspective: 1200px;
         }
 
-        /* LIENZO DE GRAPHICS MOTION PARA EL FONDO LÍQUIDO INTELIGENTE */
+        /* CONTENEDOR DE MOTION GRAPHICS PARA EL FONDO COMPUESTO */
         .motion-bg-container {
             position: fixed;
             top: 0;
@@ -42,23 +42,73 @@
 
         .cyber-bg {
             position: absolute;
-            top: -5%;
-            left: -5%;
-            width: 110%;
-            height: 110%;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
             background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            filter: contrast(1.1) brightness(0.7);
+            filter: contrast(1.15) brightness(0.75) blur(0px);
             will-change: transform, filter;
             transition: transform 0.4s cubic-bezier(0.1, 0.6, 0.2, 1), filter 0.4s ease-out;
         }
 
-        /* Líneas de trazo cinético (Motion Vector Lines) */
+        /* SISTEMA DE ORBES DE LUZ FLUIDA (Continuidad Estética Inferior) */
+        .neon-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: -1;
+            opacity: 0.25;
+            mix-blend-mode: screen;
+            pointer-events: none;
+            will-change: transform, opacity;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+        /* Orbe superior izquierdo original */
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--neon-blue);
+            top: -10%;
+            left: -10%;
+            animation: floatOrb1 15s infinite alternate ease-in-out;
+        }
+        /* Orbe inferior derecho original */
+        .orb-2 {
+            width: 550px;
+            height: 550px;
+            background: var(--neon-purple);
+            bottom: -5%;
+            right: -5%;
+            animation: floatOrb2 20s infinite alternate-reverse ease-in-out;
+        }
+        /* NUEVO Orbe Inferior de Apoyo Líquido (Centro Izquierda) */
+        .orb-3 {
+            width: 600px;
+            height: 450px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            bottom: -20%;
+            left: -10%;
+            opacity: 0.15;
+            transform: translateY(100px);
+        }
+
+        @keyframes floatOrb1 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, 40px) scale(1.15); }
+        }
+        @keyframes floatOrb2 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-80px, -50px) scale(1.2); }
+        }
+
+        /* Líneas de trazo cinético */
         .vector-line {
             position: fixed;
-            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.15), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.12), transparent);
             height: 1px;
             width: 200%;
             z-index: -1;
@@ -66,8 +116,8 @@
             transform: rotate(-15deg);
             will-change: top;
         }
-        .line-1 { top: 25%; animation: slideLine 12s infinite linear; }
-        .line-2 { top: 65%; animation: slideLine 18s infinite linear reverse; }
+        .line-1 { top: 30%; animation: slideLine 14s infinite linear; }
+        .line-2 { top: 70%; animation: slideLine 20s infinite linear reverse; }
 
         @keyframes slideLine {
             0% { transform: translate(-50%, 0) rotate(-15deg); }
@@ -172,7 +222,7 @@
             overflow: hidden;
         }
 
-        /* ESPACIO VISUAL CON BARRA DE ESCANEO DE MOTION GRAPHICS */
+        /* ESPACIO VISUAL CON BARRA DE ESCANEO */
         .image-visual-space {
             width: 100%;
             height: 160px;
@@ -188,7 +238,6 @@
             transform: translateZ(40px);
         }
 
-        /* Línea láser de escaneo holográfico */
         .image-visual-space::after {
             content: '';
             position: absolute;
@@ -256,7 +305,7 @@
             transform: translateZ(30px);
         }
 
-        /* LISTA DE MODELOS LIQUIDA */
+        /* LISTA DE MODELOS */
         .list-container {
             display: flex;
             flex-direction: column;
@@ -319,12 +368,15 @@
 </head>
 <body>
 
-    <!-- CAJA DE CONTROL DE MOVIMIENTO PARA EVITAR CORTES DE FONDO -->
     <div class="motion-bg-container">
         <div class="cyber-bg" id="parallax-bg"></div>
     </div>
     
-    <!-- Elementos Vectoriales de Líneas de Flujo en Tendencia -->
+    <!-- Ecosistema de Orbes de Iluminación Fluida -->
+    <div class="neon-orb orb-1"></div>
+    <div class="neon-orb orb-2"></div>
+    <div class="neon-orb orb-3" id="dynamic-orb-3"></div>
+
     <div class="vector-line line-1"></div>
     <div class="vector-line line-2"></div>
 
@@ -578,26 +630,33 @@
 
     </main>
 
-    <!-- MOTOR DE MOTION GRAPHICS AVANZADO (SCROLL MORPHING + DISTORTION) -->
+    <!-- MOTOR DE MOTION GRAPHICS AVANZADO (HYPER-BLUR & AMBIENT AURORA GLOW) -->
     <script>
         const parallaxBg = document.getElementById('parallax-bg');
+        const dynamicOrb3 = document.getElementById('dynamic-orb-3');
         const cards = document.querySelectorAll('.glass-card');
 
-        // Renderizado Dinámico por Scroll (Previene Cortes Físicos del Canvas)
         window.addEventListener('scroll', () => {
             let offset = window.pageYOffset;
             
-            // Simulación de Elasticidad Líquida y Deformación Geométrica
-            let blurValue = Math.min(offset * 0.02, 12); // Transición de difuminado suave hasta 12px
-            let darkValue = Math.max(0.7 - (offset * 0.0006), 0.25); // El fondo se oscurece gradualmente al bajar
-            let distortionY = offset * 0.14; // El fondo acompaña el movimiento para evitar el corte recto
+            // 1. RENDEREADO DE HIPER-BLUR (Exagerado y ultra fluido)
+            let hyperBlur = Math.min(offset * 0.035, 24); // Desenfoque expandido hasta un límite de 24px
+            let darkFactor = Math.max(0.75 - (offset * 0.0008), 0.2); // El metal se desvanece de forma profunda
+            let distortionY = offset * 0.14; 
 
-            parallaxBg.style.filter = `contrast(1.15) brightness(${darkValue}) blur(${blurValue}px)`;
-            // El 'scale3d' estira el fondo levemente en base al scroll eliminando los bordes vacíos
-            parallaxBg.style.transform = `translate3d(0, ${distortionY}px, 0) scale3d(${1 + (offset * 0.00012)}, ${1 + (offset * 0.00012)}, 1)`;
+            parallaxBg.style.filter = `contrast(1.2) brightness(${darkFactor}) blur(${hyperBlur}px)`;
+            parallaxBg.style.transform = `translate3d(0, ${distortionY}px, 0) scale3d(${1 + (offset * 0.00015)}, ${1 + (offset * 0.00015)}, 1)`;
+
+            // 2. CONTROL EN TIEMPO REAL DEL AMBIENT NEON GLOW INFERIOR
+            // A medida que el usuario baja, el orbe inferior asciende y se intensifica
+            let orbRise = offset * 0.45;
+            let orbOpacity = Math.min(0.15 + (offset * 0.0004), 0.5); // Incrementa la presencia del neón abajo
+            
+            dynamicOrb3.style.transform = `translate3d(0, ${-orbRise}px, 0) scale(${1 + (offset * 0.0002)})`;
+            dynamicOrb3.style.opacity = orbOpacity;
         });
 
-        // Inclinación Kinestésica de Tarjetas
+        // Giro Estructural Físico 3D (Tilt)
         if (window.innerWidth > 768) {
             cards.forEach(card => {
                 card.addEventListener('mousemove', (e) => {
