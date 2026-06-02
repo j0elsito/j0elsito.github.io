@@ -6,10 +6,11 @@
     <title>TecnoTrade | Dashboard</title>
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-main: #1d1d1f;
+            --text-muted: #86868b;
+            --card-shadow: rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -28,66 +29,81 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background-color: #050505;
-            /* Activamos la perspectiva 3D global */
+            background-color: #f5f5f7;
             perspective: 1200px;
         }
 
-        /* 1. COLORIMETRÍA FLUIDA ANIMADA (Sin imágenes de fondo) */
+        /* 1. COLORIMETRÍA FLUIDA (Motion Graphics claro y elegante) */
         .fluid-mesh {
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #000000 40%),
-                        radial-gradient(circle at 80% 20%, #312e81 0%, transparent 40%),
-                        radial-gradient(circle at 20% 80%, #0f172a 0%, transparent 40%);
+            background: radial-gradient(circle at 50% 50%, #e2e8f0 0%, #ffffff 40%),
+                        radial-gradient(circle at 80% 20%, #cbd5e1 0%, transparent 40%),
+                        radial-gradient(circle at 20% 80%, #f1f5f9 0%, transparent 40%);
             background-size: 150% 150%;
-            animation: fluidMotion 12s ease-in-out infinite alternate;
-            z-index: -2;
+            animation: fluidMotion 15s ease-in-out infinite alternate;
+            z-index: -3;
             filter: blur(60px);
         }
 
         @keyframes fluidMotion {
             0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-5%, 5%) scale(1.05); }
-            100% { transform: translate(5%, -5%) scale(1); }
+            50% { transform: translate(-3%, 3%) scale(1.02); }
+            100% { transform: translate(3%, -3%) scale(1); }
         }
 
-        /* 2. TEXTURA DE RUIDO CRISTALINO (Estilo Mica de Windows) */
+        /* 2. TEXTURA DE RUIDO CRISTALINO Y DESENFOQUE (Menos intenso, muy premium) */
         .noise-layer {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
-            opacity: 0.04;
-            z-index: -1;
+            opacity: 0.03;
+            z-index: -2;
             pointer-events: none;
+        }
+
+        .glass-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            z-index: -1;
         }
 
         /* 3. CONTENEDOR PRINCIPAL FLOTANTE */
         .dashboard-wrapper {
             width: 90%;
-            max-width: 460px;
+            max-width: 440px;
             z-index: 10;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
             animation: dropIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            will-change: transform, opacity, filter;
+        }
+
+        /* TRANSICIÓN DE SALIDA (Fade out al tocar botón) */
+        .dashboard-wrapper.page-exit {
+            opacity: 0;
+            transform: translateY(-30px) scale(0.95);
+            filter: blur(12px);
+            transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .header-section {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .header-section h1 {
-            font-size: 42px;
+            font-size: 44px;
             font-weight: 800;
             letter-spacing: -1.5px;
-            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #111;
             margin-bottom: 5px;
         }
 
@@ -97,74 +113,72 @@
             font-weight: 500;
         }
 
-        /* 4. TARJETAS 3D INTERACTIVAS */
+        /* 4. CARTAS DE BARAJA 3D INTERACTIVAS */
         .tilt-card {
             position: relative;
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
-            padding: 24px;
+            padding: 22px 24px;
             display: flex;
             align-items: center;
             gap: 20px;
             text-decoration: none;
             color: var(--text-main);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transform-style: preserve-3d;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 25px var(--card-shadow);
             overflow: hidden;
             cursor: pointer;
-            will-change: transform;
-            /* La transición física al soltar el botón */
+            transform-style: preserve-3d;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        background-color 0.3s ease,
                         border-color 0.3s ease;
         }
 
-        /* Efecto Glow de Windows al pasar el ratón */
+        /* Brillo interactivo que sigue el ratón/dedo */
         .tilt-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.8), transparent 40%);
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
+            z-index: 0;
         }
 
-        .tilt-card:hover::before {
-            opacity: 1;
+        .tilt-card:hover::before { opacity: 1; }
+        .tilt-card:hover { 
+            border-color: rgba(0, 0, 0, 0.1); 
+            background: rgba(255, 255, 255, 0.85);
         }
 
-        .tilt-card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* 5. ELEMENTOS INTERNOS DE LA TARJETA (Efecto Parallax) */
+        /* ELEMENTOS INTERNOS DE LA CARTA (Efecto Parallax) */
         .card-icon {
             font-size: 24px;
-            background: rgba(255, 255, 255, 0.05);
-            width: 50px;
-            height: 50px;
-            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.03);
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(255,255,255,0.05);
-            /* Levanta el icono en el eje Z para el efecto 3D */
+            border: 1px solid rgba(0,0,0,0.03);
             transform: translateZ(30px);
+            z-index: 1;
         }
 
         .card-text {
             display: flex;
             flex-direction: column;
             transform: translateZ(20px);
+            z-index: 1;
         }
 
         .card-title {
             font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            letter-spacing: -0.3px;
         }
 
         .card-subtitle {
@@ -172,10 +186,24 @@
             color: var(--text-muted);
         }
 
-        /* REDES SOCIALES MINIMALISTAS */
+        .arrow-indicator {
+            margin-left: auto;
+            color: var(--text-muted);
+            opacity: 0.4;
+            transform: translateZ(10px);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .tilt-card:hover .arrow-indicator {
+            transform: translateX(4px) translateZ(10px);
+            opacity: 1;
+        }
+
+        /* REDES SOCIALES */
         .social-bar {
             position: absolute;
-            bottom: 40px;
+            bottom: 35px;
             display: flex;
             gap: 30px;
             z-index: 10;
@@ -183,82 +211,93 @@
 
         .social-icon {
             width: 24px;
-            opacity: 0.5;
+            opacity: 0.4;
             transition: all 0.3s ease;
-            filter: invert(1); /* Pone los iconos blancos si son negros */
         }
 
         .social-icon:hover {
-            opacity: 1;
-            transform: translateY(-3px) scale(1.1);
+            opacity: 0.9;
+            transform: translateY(-3px);
         }
 
         @keyframes dropIn {
-            from { opacity: 0; transform: translateY(30px) scale(0.95); filter: blur(10px); }
+            from { opacity: 0; transform: translateY(20px) scale(0.95); filter: blur(8px); }
             to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Fondos de Colorimetría Fluida y Textura -->
     <div class="fluid-mesh"></div>
     <div class="noise-layer"></div>
+    <div class="glass-overlay"></div>
 
-    <div class="dashboard-wrapper">
+    <div class="dashboard-wrapper" id="app-dashboard">
         <div class="header-section">
             <h1>TecnoTrade</h1>
-            <p>Ecosistema de Servicios Tecnológicos</p>
+            <p>Selecciona un servicio para continuar</p>
         </div>
 
-        <!-- Botones con IDs específicos para el enrutamiento seguro -->
-        <a id="btn-catalogo" class="tilt-card">
+        <a href="catalogo.html" class="tilt-card nav-link">
             <div class="card-icon">📱</div>
             <div class="card-text">
                 <span class="card-title">Comprar Teléfono</span>
-                <span class="card-subtitle">Catálogo interactivo de equipos</span>
+                <span class="card-subtitle">Catálogo premium de equipos</span>
             </div>
+            <div class="arrow-indicator">➔</div>
         </a>
 
-        <a href="vender.html" class="tilt-card">
+        <a href="vender.html" class="tilt-card nav-link">
             <div class="card-icon">💵</div>
             <div class="card-text">
-                <span class="card-title">Trade-In</span>
-                <span class="card-subtitle">Cotiza tu dispositivo actual</span>
+                <span class="card-title">Vender mi dispositivo</span>
+                <span class="card-subtitle">Cotiza tu equipo como abono</span>
             </div>
+            <div class="arrow-indicator">➔</div>
         </a>
 
-        <a href="reparar.html" class="tilt-card">
-            <div class="card-icon">⚙️</div>
+        <a href="reparar.html" class="tilt-card nav-link">
+            <div class="card-icon">🔧</div>
             <div class="card-text">
                 <span class="card-title">Servicio Técnico</span>
                 <span class="card-subtitle">Pantallas, baterías y placa base</span>
             </div>
+            <div class="arrow-indicator">➔</div>
         </a>
 
-        <a href="laptops.html" class="tilt-card">
+        <a href="laptops.html" class="tilt-card nav-link">
             <div class="card-icon">💻</div>
             <div class="card-text">
-                <span class="card-title">Sistemas y Laptops</span>
-                <span class="card-desc">Reparación y formateo</span>
+                <span class="card-title">Laptops & Sistemas</span>
+                <span class="card-subtitle">Mantenimiento y optimización</span>
             </div>
+            <div class="arrow-indicator">➔</div>
         </a>
     </div>
 
     <div class="social-bar">
-        <a href="https://wa.me/50767966691" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" class="social-icon"></a>
-        <a href="https://www.instagram.com/tecnotradepty/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="social-icon"></a>
+        <a href="https://wa.me/50767966691" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" class="social-icon" alt="WhatsApp"></a>
+        <a href="https://www.instagram.com/tecnotradepty/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="social-icon" alt="Instagram"></a>
     </div>
 
-    <!-- MOTOR FÍSICO 3D Y REDIRECCIÓN SEGURA -->
     <script>
-        // 1. SOLUCIÓN DEFINITIVA DE ENRUTAMIENTO (Ruta Relativa Segura)
-        document.getElementById('btn-catalogo').addEventListener('click', () => {
-            // Esto le dice al navegador que busque exactamente "catalogo.html" en la misma carpeta donde está parado
-            window.location.assign('./catalogo.html'); 
+        // 1. TRANSICIÓN DE SALIDA Y REDIRECCIÓN SEGURA
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // Detiene el salto inmediato
+                const destination = this.getAttribute('href');
+                
+                // Aplica el efecto cinematográfico de difuminado hacia arriba
+                document.getElementById('app-dashboard').classList.add('page-exit');
+                
+                // Espera 400ms y te envía a la página (Ej: catalogo.html)
+                setTimeout(() => {
+                    window.location.assign(destination);
+                }, 400);
+            });
         });
 
-        // 2. FÍSICA DE INCLINACIÓN 3D Y GLOW DINÁMICO
+        // 2. FÍSICA DE INCLINACIÓN 3D Y GLOW INTERACTIVO
         const cards = document.querySelectorAll('.tilt-card');
 
         cards.forEach(card => {
@@ -267,23 +306,21 @@
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
 
-                // Centro de la tarjeta
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
 
-                // Cálculos de rotación (intensidad regulada)
-                const rotateX = ((y - centerY) / centerY) * -12;
-                const rotateY = ((x - centerX) / centerX) * 12;
+                const rotateX = ((y - centerY) / centerY) * -10;
+                const rotateY = ((x - centerX) / centerX) * 10;
 
-                // Aplica la rotación 3D
+                // Rotación 3D de la carta
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
 
-                // Actualiza las variables para el Glow que sigue el dedo/ratón
+                // Actualiza las coordenadas para el brillo de fondo
                 card.style.setProperty('--mouse-x', `${x}px`);
                 card.style.setProperty('--mouse-y', `${y}px`);
             });
 
-            // Restablecer posición al soltar/quitar el ratón
+            // Reseteo suave al quitar el dedo/mouse
             card.addEventListener('mouseleave', () => {
                 card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
             });
