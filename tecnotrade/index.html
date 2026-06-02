@@ -10,258 +10,253 @@
             --text-main: #ffffff;
             --text-muted: #86868b;
             --neon-blue: #00f0ff;
-            --neon-purple: #bd00ff;
             --neon-green: #39ff14;
             --neon-cyan: #00ffcc;
-            --card-glass: rgba(255, 255, 255, 0.03);
+            --card-glass: rgba(255, 255, 255, 0.04);
             --border-glass: rgba(255, 255, 255, 0.08);
+            --nav-bg: rgba(10, 10, 15, 0.85);
         }
 
-        html, body { width: 100%; height: 100%; overflow: hidden; }
-
-        body {
-            margin: 0; padding: 0;
+        html, body { 
+            width: 100%; height: 100%; margin: 0; padding: 0;
             background-color: var(--bg-dark); color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
-            display: flex; flex-direction: column; align-items: center;
-            overscroll-behavior: none;
         }
 
-        /* FONDO DINÁMICO (Estable) */
+        /* FONDO ESTÁTICO (Metal Líquido) */
         .motion-bg-container {
-            position: fixed; top: -20px; left: -20px; right: -20px; bottom: -20px; z-index: -3;
+            position: fixed; top: -10px; left: -10px; right: -10px; bottom: -10px; z-index: -3;
             background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
             background-size: cover; background-position: center;
-            filter: contrast(1.15) brightness(0.35) blur(3px);
-            pointer-events: none; animation: bgBreathe 12s infinite alternate ease-in-out;
+            filter: contrast(1.15) brightness(0.35) blur(4px);
+            pointer-events: none;
         }
 
-        .dynamic-aurora {
-            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; z-index: -2;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.05), transparent 60%),
-                        radial-gradient(circle at 80% 20%, rgba(189, 0, 255, 0.05), transparent 50%);
-            animation: auroraSpin 20s infinite linear; pointer-events: none;
+        /* CONTENEDOR PRINCIPAL SCROLLABLE */
+        .app-container {
+            width: 100%; max-width: 480px; margin: 0 auto;
+            height: 100vh; overflow-y: auto; overflow-x: hidden;
+            padding-bottom: 100px; /* Espacio para el bottom nav */
+            scrollbar-width: none; /* Oculta scroll en Firefox */
+        }
+        .app-container::-webkit-scrollbar { display: none; } /* Oculta scroll en Chrome/Safari */
+
+        /* 1. TOP NAVBAR */
+        .top-navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 16px 20px; position: sticky; top: 0; z-index: 100;
+            background: linear-gradient(to bottom, rgba(3,5,9,0.9) 0%, rgba(3,5,9,0) 100%);
+        }
+        .nav-icon { width: 24px; height: 24px; fill: #fff; opacity: 0.9; cursor: pointer; }
+        .logo-text { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; margin: 0; }
+        .logo-text span { color: var(--neon-cyan); }
+
+        /* 2. SEARCH BAR */
+        .search-container { padding: 0 20px; margin-bottom: 20px; }
+        .search-box {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--card-glass); border: 1px solid var(--border-glass);
+            border-radius: 20px; padding: 12px 16px; backdrop-filter: blur(10px);
+        }
+        .search-box svg { width: 18px; height: 18px; fill: var(--text-muted); }
+        .search-box input {
+            background: transparent; border: none; outline: none;
+            color: #fff; font-size: 14px; width: 100%;
+        }
+        .search-box input::placeholder { color: var(--text-muted); }
+
+        /* 3. HERO BANNER PRINCIPAL (E-commerce Style) */
+        .hero-section { padding: 0 20px; margin-bottom: 24px; }
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 24px; padding: 24px; position: relative; overflow: hidden;
+            display: flex; flex-direction: column; align-items: flex-start;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+        .hero-tag {
+            background: #fff; color: #000; font-size: 10px; font-weight: 800;
+            padding: 4px 10px; border-radius: 12px; margin-bottom: 12px; text-transform: uppercase;
+        }
+        .hero-title { font-size: 24px; font-weight: 800; margin: 0 0 8px 0; line-height: 1.1; }
+        .hero-subtitle { font-size: 13px; color: var(--text-muted); margin: 0 0 20px 0; max-width: 60%; }
+        .hero-btn {
+            background: var(--text-main); color: var(--bg-dark);
+            border: none; border-radius: 20px; padding: 10px 20px;
+            font-size: 13px; font-weight: 700; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255,255,255,0.2); transition: transform 0.2s;
+        }
+        .hero-btn:active { transform: scale(0.95); }
+        
+        /* Silueta abstracta del teléfono en el Hero */
+        .hero-device {
+            position: absolute; right: -20px; bottom: -30px;
+            width: 130px; height: 180px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+            border: 2px solid rgba(255,255,255,0.2); border-radius: 25px;
+            box-shadow: -10px -10px 30px rgba(0,0,0,0.5); transform: rotate(-5deg);
+        }
+        .hero-device::after {
+            content: ''; position: absolute; top: 15px; right: 15px;
+            width: 30px; height: 30px; border-radius: 8px; background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* 1. ANNOUNCEMENT BAR (Estilo Apple Store) */
-        .promo-bar {
-            width: 90%; max-width: 480px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid var(--neon-blue);
-            padding: 10px 16px; margin-top: 15px; border-radius: 12px;
-            font-size: 11px; font-weight: 700; color: #fff;
-            display: flex; align-items: center; justify-content: space-between;
-            animation: fadeInDown 0.8s ease forwards;
+        /* 4. CATEGORÍAS RÁPIDAS (Grid) */
+        .section-title { font-size: 16px; font-weight: 700; padding: 0 20px; margin-bottom: 12px; }
+        
+        .categories-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+            padding: 0 20px; margin-bottom: 30px;
         }
-        .promo-bar span:last-child { color: var(--neon-blue); letter-spacing: 0.5px; }
-
-        /* 2. HEADER Y LOGO */
-        .header-section {
-            text-align: center; margin-top: 20px; margin-bottom: 20px; z-index: 10;
-            animation: fadeIn 1s 0.2s forwards; opacity: 0;
+        .cat-item {
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            text-decoration: none; color: #fff;
         }
-        .header-section img {
-            width: 65px; height: 65px; border-radius: 20px;
-            border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
-            margin-bottom: 8px; animation: pulseGlow 3s infinite alternate;
-        }
-        .header-section h1 {
-            font-size: 34px; font-weight: 900; letter-spacing: -1px; margin: 0;
-            background: linear-gradient(90deg, #fff, var(--text-glow), var(--neon-blue));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .panama-slang {
-            font-size: 12px; color: #94a3b8; font-weight: 500;
-            margin-top: 6px; max-width: 280px; line-height: 1.4;
-        }
-        .panama-slang span { color: var(--neon-cyan); font-weight: 700; }
-
-        /* 3. GRID DE TIENDA (Layout Híbrido) */
-        .grid-wrapper {
-            width: 90%; max-width: 480px;
-            display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: 14px; z-index: 10;
-        }
-
-        /* TARJETAS COMERCIALES INTERACTIVAS */
-        .glass-card {
-            background: var(--card-glass);
-            border: 1px solid var(--border-glass); border-radius: 26px;
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            padding: 16px; display: flex; flex-direction: column;
-            text-decoration: none; color: var(--text-main); position: relative; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            opacity: 0; transition: all 0.2s ease;
-        }
-        .glass-card { animation: cardEntrance 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        .glass-card:nth-child(1) { animation-delay: 0.1s; }
-        .glass-card:nth-child(2) { animation-delay: 0.2s; }
-        .glass-card:nth-child(3) { animation-delay: 0.3s; }
-        .glass-card:nth-child(4) { animation-delay: 0.4s; }
-
-        .glass-card:active { transform: scale(0.94); background: rgba(255,255,255,0.06); }
-
-        /* Badges de Conversión */
-        .sale-badge {
-            position: absolute; top: 12px; right: 12px;
-            font-size: 9px; font-weight: 800; padding: 4px 8px;
-            border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; z-index: 2;
-        }
-        .badge-new { background: rgba(0, 240, 255, 0.15); color: var(--neon-blue); border: 1px solid rgba(0, 240, 255, 0.3); }
-        .badge-hot { background: rgba(57, 255, 20, 0.15); color: var(--neon-green); border: 1px solid rgba(57, 255, 20, 0.3); }
-
-        /* VECTORES GRAFICOS */
-        .image-visual-space {
-            width: 100%; height: 75px; background: rgba(255,255,255,0.01);
-            border-radius: 14px; margin-bottom: 12px;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .vector-icon {
-            position: relative; background: rgba(0, 0, 0, 0.4);
-            border: 2px solid rgba(255,255,255,0.15);
+        .cat-icon-box {
+            width: 60px; height: 60px; border-radius: 18px;
+            background: var(--card-glass); border: 1px solid var(--border-glass);
             display: flex; justify-content: center; align-items: center;
-            transform: scale(0.65); animation: floatAmbient 4s ease-in-out infinite alternate;
+            transition: all 0.2s;
         }
-        .card-buy .vector-icon { animation-delay: 0s; }
-        .card-sell .vector-icon { animation-delay: 1s; }
-        .card-repair .vector-icon { animation-delay: 2s; }
-        .card-laptop .vector-icon { animation-delay: 3s; }
+        .cat-item:active .cat-icon-box { transform: scale(0.9); background: rgba(255,255,255,0.1); }
+        .cat-icon-box svg { width: 24px; height: 24px; fill: var(--neon-cyan); }
+        .cat-name { font-size: 11px; font-weight: 600; text-align: center; }
 
-        /* Formas CSS */
-        .v-phone { width: 55px; height: 100px; border-radius: 14px; }
-        .v-phone::before { content:''; position:absolute; top:8px; left:8px; width:15px; height:25px; border:2px solid rgba(255,255,255,0.15); border-radius:6px; }
+        /* 5. BANNER PROMOCIONAL SECUNDARIO */
+        .promo-section { padding: 0 20px; margin-bottom: 30px; }
+        .promo-card {
+            background: rgba(57, 255, 20, 0.05); border: 1px dashed rgba(57, 255, 20, 0.3);
+            border-radius: 16px; padding: 16px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .promo-text h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--neon-green); font-weight: 800; }
+        .promo-text p { margin: 0; font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+        .promo-text p span { color: #fff; font-weight: 600; }
+
+        /* 6. BOTTOM NAVIGATION BAR */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 480px;
+            background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex; justify-content: space-around; padding: 12px 0 20px 0; z-index: 1000;
+        }
+        .nav-tab {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            text-decoration: none; color: var(--text-muted); position: relative;
+        }
+        .nav-tab.active { color: var(--neon-cyan); }
+        .nav-tab svg { width: 22px; height: 22px; fill: currentColor; transition: transform 0.2s; }
+        .nav-tab:active svg { transform: scale(0.85); }
+        .nav-label { font-size: 10px; font-weight: 600; }
         
-        .v-cash { width: 90px; height: 50px; border-radius: 10px; }
-        .v-cash::before { content:'$'; position:absolute; font-size: 20px; font-weight: bold; color: rgba(255,255,255,0.4); }
-        .v-cash::after { content:''; position:absolute; width: 30px; height: 30px; border: 2px dashed rgba(255,255,255,0.2); border-radius: 50%; }
-
-        .v-repair { width: 60px; height: 70px; border-radius: 10px; border-style: dashed; }
-        .v-repair::before { content:'⚙'; position:absolute; font-size: 28px; color: rgba(255,255,255,0.4); }
-
-        .v-laptop { width: 90px; height: 55px; border-radius: 6px 6px 0 0; border-bottom: 8px solid rgba(255,255,255,0.2); }
-        .v-laptop::before { content:''; position:absolute; top: 5px; width: 70px; height: 40px; border: 2px solid rgba(255,255,255,0.1); border-radius: 4px; }
-
-        /* Textos de Venta */
-        .card-title { font-size: 15px; font-weight: 800; margin: 0 0 4px 0; letter-spacing: -0.2px; }
-        .card-desc { font-size: 11px; color: var(--text-muted); line-height: 1.3; }
-
-        /* 4. BOTONES CTAs PREMIUM (Abajo) */
-        .cta-container {
-            width: 90%; max-width: 480px;
-            display: flex; gap: 14px; margin-top: 25px; z-index: 10;
-            animation: fadeIn 1s 0.8s forwards; opacity: 0;
+        /* Badge rojo del carrito */
+        .cart-badge {
+            position: absolute; top: -4px; right: -4px;
+            background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800;
+            width: 16px; height: 16px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid var(--bg-dark);
         }
-        .btn-action {
-            flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 14px 0; border-radius: 16px; text-decoration: none;
-            font-size: 12px; font-weight: 800; letter-spacing: 0.5px;
-            backdrop-filter: blur(10px); transition: transform 0.2s;
-        }
-        .btn-action:active { transform: scale(0.95); }
-        
-        .btn-whatsapp {
-            background: rgba(57, 255, 20, 0.1); border: 1px solid rgba(57, 255, 20, 0.4);
-            color: var(--neon-green); box-shadow: inset 0 0 15px rgba(57, 255, 20, 0.1);
-        }
-        .btn-location {
-            background: rgba(0, 240, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.4);
-            color: var(--neon-cyan); box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.1);
-        }
-        .btn-icon { width: 16px; height: 16px; filter: invert(1); }
-        .btn-whatsapp .btn-icon { filter: invert(70%) sepia(80%) saturate(400%) hue-rotate(70deg) brightness(120%); }
-        .btn-location .btn-icon { filter: invert(70%) sepia(80%) saturate(400%) hue-rotate(150deg) brightness(120%); }
-
-        /* Animaciones */
-        @keyframes bgBreathe { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
-        @keyframes auroraSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); } 100% { box-shadow: 0 0 35px rgba(0, 240, 255, 0.5); } }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes cardEntrance { 0% { opacity: 0; transform: translateY(40px) scale(0.9); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
-        @keyframes floatAmbient { 0% { transform: scale(0.65) translateY(0px); } 100% { transform: scale(0.65) translateY(-8px); } }
-
-        /* Destello Haptico */
-        .screen-flash {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease-out;
-        }
-        .flash-active { opacity: 1 !important; }
     </style>
 </head>
 <body>
 
-    <div class="screen-flash" id="flash-fx"></div>
     <div class="motion-bg-container"></div>
-    <div class="dynamic-aurora"></div>
 
-    <!-- Promo Bar -->
-    <div class="promo-bar">
-        <span>⚡ INVENTARIO ACTUALIZADO</span>
-        <span>VER CATÁLOGO</span>
-    </div>
+    <div class="app-container">
+        
+        <!-- TOP NAVBAR -->
+        <header class="top-navbar">
+            <!-- Icono Hamburger Menu -->
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            <h1 class="logo-text">Tecno<span>Trade</span></h1>
+            <!-- Icono Usuario -->
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </header>
 
-    <!-- Header -->
-    <div class="header-section">
-        <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" alt="TecnoTrade">
-        <h1>TecnoTrade</h1>
-        <p class="panama-slang">Bienvenido al Hub. Toca una categoría y <span>resolvemos tu vuelta de una.</span></p>
-    </div>
+        <!-- BUSCADOR -->
+        <div class="search-container">
+            <div class="search-box">
+                <!-- Icono Lupa -->
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input type="text" placeholder="Buscar productos, reparaciones...">
+            </div>
+        </div>
 
-    <!-- Grid de Navegación/Ventas -->
-    <div class="grid-wrapper">
-        <a href="catalogo.html" class="glass-card nav-trigger">
-            <span class="sale-badge badge-new">NUEVO</span>
-            <div class="image-visual-space"><div class="vector-icon v-phone"></div></div>
-            <div class="card-title">Comprar Equipo</div>
-            <div class="card-desc">Equipos con garantía al mejor precio.</div>
+        <!-- HERO BANNER -->
+        <section class="hero-section">
+            <div class="hero-banner">
+                <span class="hero-tag">Destacado</span>
+                <h2 class="hero-title">iPhone 16 Pro</h2>
+                <p class="hero-subtitle">Descubre el nuevo diseño y usa tu equipo como abono.</p>
+                <button class="hero-btn">Comprar ahora</button>
+                <div class="hero-device"></div>
+            </div>
+        </section>
+
+        <!-- CATEGORÍAS -->
+        <div class="section-title">Categorías</div>
+        <div class="categories-grid">
+            <a href="catalogo.html" class="cat-item">
+                <div class="cat-icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+                </div>
+                <span class="cat-name">Equipos</span>
+            </a>
+            <a href="vender.html" class="cat-item">
+                <div class="cat-icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                </div>
+                <span class="cat-name">Vender</span>
+            </a>
+            <a href="reparar.html" class="cat-item">
+                <div class="cat-icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.4-2.4c.4-.4.4-1 0-1.4z"/></svg>
+                </div>
+                <span class="cat-name">Reparar</span>
+            </a>
+            <a href="laptops.html" class="cat-item">
+                <div class="cat-icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+                </div>
+                <span class="cat-name">Laptops</span>
+            </a>
+        </div>
+
+        <!-- BANNER DE SERVICIO TÉCNICO -->
+        <section class="promo-section">
+            <div class="promo-card">
+                <div class="promo-text">
+                    <h3>PROMO EXCLUSIVA ⚡</h3>
+                    <p>Descuentos en <span>pantallas y tapas traseras</span>.<br>Válido hasta el 15 de junio para seguidores.</p>
+                </div>
+            </div>
+        </section>
+
+    </div> <!-- Fin app-container -->
+
+    <!-- BOTTOM NAVIGATION (Fijo abajo) -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-tab active">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span class="nav-label">Inicio</span>
         </a>
-
-        <a href="vender.html" class="glass-card nav-trigger">
-            <div class="image-visual-space"><div class="vector-icon v-cash"></div></div>
-            <div class="card-title">Vender Equipo</div>
-            <div class="card-desc">Trade-in rápido y seguro.</div>
+        <a href="catalogo.html" class="nav-tab">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+            <span class="nav-label">Catálogo</span>
         </a>
-
-        <a href="reparar.html" class="glass-card nav-trigger">
-            <span class="sale-badge badge-hot">ACTIVO</span>
-            <div class="image-visual-space"><div class="vector-icon v-repair"></div></div>
-            <div class="card-title">Servicio Técnico</div>
-            <div class="card-desc">Reparación profesional y confiable.</div>
+        <a href="#" class="nav-tab">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <span class="nav-label">Favoritos</span>
         </a>
-
-        <a href="laptops.html" class="glass-card nav-trigger">
-            <div class="image-visual-space"><div class="vector-icon v-laptop"></div></div>
-            <div class="card-title">Laptops & Sistemas</div>
-            <div class="card-desc">Optimización y mantenimiento.</div>
+        <a href="#" class="nav-tab">
+            <div class="cart-badge">2</div>
+            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            <span class="nav-label">Carrito</span>
         </a>
-    </div>
+    </nav>
 
-    <!-- Botones CTAs Premium Base -->
-    <div class="cta-container">
-        <a href="https://wa.me/50767966691" target="_blank" class="btn-action btn-whatsapp">
-            <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" class="btn-icon" alt="WA">
-            WHATSAPP
-        </a>
-        <a href="https://maps.app.goo.gl/search/Panama" target="_blank" class="btn-action btn-location">
-            <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" class="btn-icon" alt="Loc">
-            UBICACIÓN
-        </a>
-    </div>
-
-    <script>
-        // Navegación con feedback táctil (Flash Effect)
-        document.querySelectorAll('.nav-trigger').forEach(card => {
-            card.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetUrl = this.getAttribute('href');
-                
-                document.getElementById('flash-fx').classList.add('flash-active');
-                setTimeout(() => document.getElementById('flash-fx').classList.remove('flash-active'), 100);
-                setTimeout(() => window.location.assign(targetUrl), 350);
-            });
-        });
-    </script>
 </body>
 </html>
