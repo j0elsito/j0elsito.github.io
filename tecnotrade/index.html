@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TecnoTrade | Cyber-Fluid Experience</title>
+    <title>TecnoTrade | Motion-Fluid Experience</title>
     <style>
         :root {
             --bg-dark: #030509;
@@ -12,7 +12,7 @@
             --neon-blue: #00f0ff;
             --neon-purple: #bd00ff;
             --neon-green: #39ff14;
-            --card-glass: rgba(255, 255, 255, 0.02);
+            --card-glass: rgba(255, 255, 255, 0.03);
             --border-glass: rgba(255, 255, 255, 0.08);
         }
 
@@ -25,10 +25,10 @@
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
             overflow-x: hidden;
-            perspective: 1200px;
+            perspective: 1000px;
         }
 
-        /* CONTENEDOR DE MOTION GRAPHICS PARA EL FONDO COMPUESTO */
+        /* CONTENEDOR OPTIMIZADO: EVITA CORTES VISIBLES */
         .motion-bg-container {
             position: fixed;
             top: 0;
@@ -38,90 +38,63 @@
             z-index: -2;
             overflow: hidden;
             background: var(--bg-dark);
+            pointer-events: none;
         }
 
+        /* FONDO PRINCIPAL CON MÁSCARA LÍQUIDA DE DIFUMINADO EN LA BASE */
         .cyber-bg {
             position: absolute;
-            top: -10%;
-            left: -10%;
-            width: 120%;
-            height: 120%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/680c8da89e3ff6c3d44033e078884bb680694e01/tecnotrade/fondoliquidmetal1.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             filter: contrast(1.15) brightness(0.75) blur(0px);
             will-change: transform, filter;
-            transition: transform 0.4s cubic-bezier(0.1, 0.6, 0.2, 1), filter 0.4s ease-out;
+            /* Máscara webkit para fundir el borde inferior directamente a negro absoluto */
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%);
         }
 
-        /* SISTEMA DE ORBES DE LUZ FLUIDA (Continuidad Estética Inferior) */
+        /* SISTEMA DE ORBES MEZCLADOS EN EL VACÍO INFERIOR */
         .neon-orb {
-            position: fixed;
+            position: absolute;
             border-radius: 50%;
-            filter: blur(140px);
-            z-index: -1;
-            opacity: 0.25;
+            filter: blur(120px);
             mix-blend-mode: screen;
-            pointer-events: none;
             will-change: transform, opacity;
-            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
         }
-        /* Orbe superior izquierdo original */
         .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--neon-blue);
+            top: -10%; left: -10%;
+            opacity: 0.25;
+        }
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--neon-purple);
+            top: 20%; right: -10%;
+            opacity: 0.2;
+        }
+        /* Orbes inferiores creativos de transición continua */
+        .orb-3 {
+            width: 600px;
+            height: 500px;
+            background: var(--neon-purple);
+            bottom: -25%; left: -5%;
+            opacity: 0.12;
+        }
+        .orb-4 {
             width: 500px;
             height: 500px;
             background: var(--neon-blue);
-            top: -10%;
-            left: -10%;
-            animation: floatOrb1 15s infinite alternate ease-in-out;
-        }
-        /* Orbe inferior derecho original */
-        .orb-2 {
-            width: 550px;
-            height: 550px;
-            background: var(--neon-purple);
-            bottom: -5%;
-            right: -5%;
-            animation: floatOrb2 20s infinite alternate-reverse ease-in-out;
-        }
-        /* NUEVO Orbe Inferior de Apoyo Líquido (Centro Izquierda) */
-        .orb-3 {
-            width: 600px;
-            height: 450px;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            bottom: -20%;
-            left: -10%;
+            bottom: -20%; right: 15%;
             opacity: 0.15;
-            transform: translateY(100px);
-        }
-
-        @keyframes floatOrb1 {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(60px, 40px) scale(1.15); }
-        }
-        @keyframes floatOrb2 {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(-80px, -50px) scale(1.2); }
-        }
-
-        /* Líneas de trazo cinético */
-        .vector-line {
-            position: fixed;
-            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.12), transparent);
-            height: 1px;
-            width: 200%;
-            z-index: -1;
-            pointer-events: none;
-            transform: rotate(-15deg);
-            will-change: top;
-        }
-        .line-1 { top: 30%; animation: slideLine 14s infinite linear; }
-        .line-2 { top: 70%; animation: slideLine 20s infinite linear reverse; }
-
-        @keyframes slideLine {
-            0% { transform: translate(-50%, 0) rotate(-15deg); }
-            100% { transform: translate(25%, 0) rotate(-15deg); }
         }
 
         /* HEADER PREMIUM ASIMÉTRICO */
@@ -137,8 +110,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.15);
-            animation: dropHeader 1s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: dropHeader 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .logo-block { display: flex; align-items: center; gap: 20px; }
@@ -146,12 +119,11 @@
             width: 65px;
             height: 65px;
             border-radius: 22px;
-            border: 2px solid rgba(255,255,255,0.25);
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
-            transform: rotate(-5deg);
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        header:hover .brand-logo { transform: rotate(355deg) scale(1.1); }
+        header:hover .brand-logo { transform: rotate(360deg) scale(1.1); }
 
         .logo-title {
             font-size: 38px;
@@ -180,13 +152,11 @@
             font-weight: 700;
             text-decoration: none;
             color: #fff;
-            position: relative;
-            overflow: hidden;
             transition: transform 0.2s, box-shadow 0.2s;
-            background: rgba(255,255,255,0.02);
+            background: rgba(255,255,255,0.01);
             border: 1px solid var(--border-glass);
         }
-        
+        .nav-link:hover { transform: translateY(-3px); }
         .link-ws:hover { border-color: var(--neon-green); box-shadow: 0 0 25px rgba(57,255,20,0.3); }
         .link-ig:hover { border-color: var(--neon-purple); box-shadow: 0 0 25px rgba(189,0,255,0.3); }
         .link-ws { background-color: rgba(34, 197, 94, 0.1); }
@@ -212,17 +182,25 @@
             padding: 24px;
             display: flex;
             flex-direction: column;
-            position: relative;
             transform-style: preserve-3d;
             will-change: transform, box-shadow;
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
             transition: border-color 0.4s, box-shadow 0.2s, transform 0.1s ease;
             opacity: 0;
-            animation: cardEntrance 0.8s cubic-bezier(0.2, 1, 0.2, 1) forwards;
-            overflow: hidden;
+            animation: cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* ESPACIO VISUAL CON BARRA DE ESCANEO */
+        /* Retardos optimizados */
+        .glass-card:nth-child(1) { animation-delay: 0.05s; }
+        .glass-card:nth-child(2) { animation-delay: 0.1s; }
+        .glass-card:nth-child(3) { animation-delay: 0.15s; }
+        .glass-card:nth-child(4) { animation-delay: 0.2s; }
+        .glass-card:nth-child(5) { animation-delay: 0.25s; }
+        .glass-card:nth-child(6) { animation-delay: 0.3s; }
+        .glass-card:nth-child(7) { animation-delay: 0.35s; }
+        .glass-card:nth-child(8) { animation-delay: 0.4s; }
+
+        /* ESPACIO VISUAL HOLOGRÁFICO CON LÁSER */
         .image-visual-space {
             width: 100%;
             height: 160px;
@@ -237,21 +215,16 @@
             border: 1px solid rgba(255,255,255,0.03);
             transform: translateZ(40px);
         }
-
         .image-visual-space::after {
             content: '';
             position: absolute;
-            width: 100%;
-            height: 2px;
+            width: 100%; height: 2px;
             background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-            top: -10%;
-            left: 0;
+            top: -10%; left: 0;
             animation: scanLaser 3s infinite linear;
-            opacity: 0.7;
+            opacity: 0.6;
         }
-        .android-card .image-visual-space::after {
-            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
-        }
+        .android-card .image-visual-space::after { background: linear-gradient(90deg, transparent, var(--neon-green), transparent); }
 
         @keyframes scanLaser {
             0% { top: -10%; }
@@ -264,16 +237,14 @@
             border: 3px solid rgba(255,255,255,0.2);
             border-radius: 16px;
             position: relative;
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             background: rgba(0, 0, 0, 0.3);
-            display: flex;
-            justify-content: center;
         }
         .vector-phone::before {
             content: '';
             position: absolute;
             top: 10px; left: 10px; width: 22px; height: 35px;
-            border: 2px solid rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.12);
             border-radius: 8px;
         }
         .glass-card:hover .vector-phone {
@@ -305,7 +276,7 @@
             transform: translateZ(30px);
         }
 
-        /* LISTA DE MODELOS */
+        /* LISTA DE MODELOS LÍQUIDA */
         .list-container {
             display: flex;
             flex-direction: column;
@@ -323,7 +294,7 @@
             border: 1px solid rgba(255, 255, 255, 0.03);
             text-decoration: none;
             color: #fff;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .interactive-row:hover {
@@ -346,16 +317,16 @@
             padding: 6px 14px;
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.08);
-            transition: background 0.3s, color 0.3s;
+            transition: background 0.2s, color 0.2s;
         }
         .interactive-row:hover .model-price { background: #fff; color: #000; }
 
         @keyframes dropHeader {
-            from { opacity: 0; transform: translateY(-50px); filter: blur(10px); }
+            from { opacity: 0; transform: translateY(-30px); filter: blur(5px); }
             to { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
         @keyframes cardEntrance {
-            from { opacity: 0; transform: translateY(60px) rotateX(-20deg); filter: blur(5px); }
+            from { opacity: 0; transform: translateY(40px) rotateX(-15deg); filter: blur(5px); }
             to { opacity: 1; transform: translateY(0) rotateX(0); filter: blur(0); }
         }
 
@@ -368,17 +339,14 @@
 </head>
 <body>
 
+    <!-- CAJA DE CONTROL DE MOVIMIENTO (ACELERACIÓN POR HARDWARE) -->
     <div class="motion-bg-container">
         <div class="cyber-bg" id="parallax-bg"></div>
+        <div class="neon-orb orb-1" id="orb-1"></div>
+        <div class="neon-orb orb-2" id="orb-2"></div>
+        <div class="neon-orb orb-3" id="orb-3"></div>
+        <div class="neon-orb orb-4" id="orb-4"></div>
     </div>
-    
-    <!-- Ecosistema de Orbes de Iluminación Fluida -->
-    <div class="neon-orb orb-1"></div>
-    <div class="neon-orb orb-2"></div>
-    <div class="neon-orb orb-3" id="dynamic-orb-3"></div>
-
-    <div class="vector-line line-1"></div>
-    <div class="vector-line line-2"></div>
 
     <header>
         <div class="logo-block">
@@ -630,33 +598,36 @@
 
     </main>
 
-    <!-- MOTOR DE MOTION GRAPHICS AVANZADO (HYPER-BLUR & AMBIENT AURORA GLOW) -->
+    <!-- SCRIPT DE OPTIMIZACIÓN Y ANIMACIÓN EN TIEMPO REAL (GPU DRIVEN) -->
     <script>
         const parallaxBg = document.getElementById('parallax-bg');
-        const dynamicOrb3 = document.getElementById('dynamic-orb-3');
+        const orb1 = document.getElementById('orb-1');
+        const orb2 = document.getElementById('orb-2');
+        const orb3 = document.getElementById('orb-3');
+        const orb4 = document.getElementById('orb-4');
         const cards = document.querySelectorAll('.glass-card');
 
+        // Escucha pasiva para maximizar rendimiento en dispositivos móviles (evita Jank)
         window.addEventListener('scroll', () => {
             let offset = window.pageYOffset;
             
-            // 1. RENDEREADO DE HIPER-BLUR (Exagerado y ultra fluido)
-            let hyperBlur = Math.min(offset * 0.035, 24); // Desenfoque expandido hasta un límite de 24px
-            let darkFactor = Math.max(0.75 - (offset * 0.0008), 0.2); // El metal se desvanece de forma profunda
-            let distortionY = offset * 0.14; 
-
-            parallaxBg.style.filter = `contrast(1.2) brightness(${darkFactor}) blur(${hyperBlur}px)`;
-            parallaxBg.style.transform = `translate3d(0, ${distortionY}px, 0) scale3d(${1 + (offset * 0.00015)}, ${1 + (offset * 0.00015)}, 1)`;
-
-            // 2. CONTROL EN TIEMPO REAL DEL AMBIENT NEON GLOW INFERIOR
-            // A medida que el usuario baja, el orbe inferior asciende y se intensifica
-            let orbRise = offset * 0.45;
-            let orbOpacity = Math.min(0.15 + (offset * 0.0004), 0.5); // Incrementa la presencia del neón abajo
+            // 1. TRANSFORMACIÓN DE HIPER-BLUR OPTIMIZADA
+            let blurValue = Math.min(offset * 0.05, 30); // Desenfoque aumentado hasta 30px
+            let darkValue = Math.max(0.75 - (offset * 0.001), 0.15); // Disolución a negro profundo
             
-            dynamicOrb3.style.transform = `translate3d(0, ${-orbRise}px, 0) scale(${1 + (offset * 0.0002)})`;
-            dynamicOrb3.style.opacity = orbOpacity;
-        });
+            // translate3d activa la aceleración por hardware en la GPU
+            parallaxBg.style.filter = `contrast(1.2) brightness(${darkValue}) blur(${blurValue}px)`;
+            parallaxBg.style.transform = `translate3d(0, ${offset * 0.15}px, 0) scale(${1 + (offset * 0.0001)})`;
 
-        // Giro Estructural Físico 3D (Tilt)
+            // 2. SISTEMA DE DIALÉCTICA LUMÍNICA INFERIOR (Aurora Scroll Engine)
+            // Desplazamiento asíncrono controlado de los orbes para dar profundidad sin cortes
+            orb1.style.transform = `translate3d(0, ${offset * 0.2}px, 0)`;
+            orb2.style.transform = `translate3d(0, ${offset * -0.1}px, 0)`;
+            orb3.style.transform = `translate3d(0, ${offset * -0.4}px, 0) scale(${1 + (offset * 0.0003)})`;
+            orb4.style.transform = `translate3d(0, ${offset * -0.35}px, 0)`;
+        }, { passive: true });
+
+        // INCLINACIÓN FÍSICA 3D (Desactivado en móviles de forma nativa para ahorrar CPU)
         if (window.innerWidth > 768) {
             cards.forEach(card => {
                 card.addEventListener('mousemove', (e) => {
@@ -664,21 +635,21 @@
                     const x = (e.clientX - rect.left) / rect.width - 0.5;
                     const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-                    const degX = (y * -22).toFixed(2);
-                    const degY = (x * 22).toFixed(2);
+                    const degX = (y * -20).toFixed(1);
+                    const degY = (x * 20).toFixed(1);
 
-                    card.style.transform = `rotateX(${degX}deg) rotateY(${degY}deg) scale3d(1.04, 1.04, 1.04)`;
+                    card.style.transform = `translate3d(0, 0, 15px) rotateX(${degX}deg) rotateY(${degY}deg)`;
                     
                     if(card.classList.contains('android-card')) {
-                        card.style.boxShadow = `${-degY * 2}px ${degX * 2}px 40px rgba(57, 255, 20, 0.15), 0 15px 40px rgba(0,0,0,0.4)`;
+                        card.style.boxShadow = `${-degY * 2}px ${degX * 2}px 40px rgba(57, 255, 20, 0.18), 0 15px 40px rgba(0,0,0,0.5)`;
                     } else {
-                        card.style.boxShadow = `${-degY * 2}px ${degX * 2}px 40px rgba(0, 240, 255, 0.15), 0 15px 40px rgba(0,0,0,0.4)`;
+                        card.style.boxShadow = `${-degY * 2}px ${degX * 2}px 40px rgba(0, 240, 255, 0.18), 0 15px 40px rgba(0,0,0,0.5)`;
                     }
                 });
 
                 card.addEventListener('mouseleave', () => {
-                    card.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                    card.style.boxShadow = `0 15px 35px rgba(0,0,0,0.2)`;
+                    card.style.transform = `translate3d(0,0,0) rotateX(0deg) rotateY(0deg)`;
+                    card.style.boxShadow = `0 15px 35px rgba(0,0,0,0.3)`;
                 });
             });
         }
