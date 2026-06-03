@@ -130,7 +130,7 @@
             to { opacity: 0; visibility: hidden; }
         }
 
-        /* 1. AURORAS FLUIDAS BASE (OPTIMIZADAS CON GRADIENTES RADIALES NATIVOS) */
+        /* 1. AURORAS FLUIDAS BASE (GRADIENTES RADIALES ULTRA OPTIMIZADOS) */
         .ambient-canvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
             z-index: 1; 
@@ -151,29 +151,27 @@
             100% { transform: translate3d(-3vw, 4vh, 0) scale(0.92); }
         }
 
-        /* --- RENDERING SEGURO DEL ANILLO (OPTIMIZADO CON ASIGNACIÓN DE GPU + EXTENSIÓN) --- */
+        /* --- FONDO ANIMADO ESTÁTICO (SOLO BLUR POR SCROLL - CONSUMO CERO) --- */
         .ps5-wheel-canvas {
             position: fixed;
             top: 50%;
             left: 50%;
-            width: 150vmax; 
-            height: 230vmax; 
+            width: 100vw; /* Ajustado al ancho completo real */
+            height: 100vh; /* Ajustado al alto completo real */
             background: url('file_0000000098dc71f5b7616aa89d7b3b66.png') center center no-repeat;
-            background-size: 100% 100%; 
+            background-size: cover; /* Escala elegante y fija */
             z-index: 2; 
             pointer-events: none; 
-            transform: translate(-50%, -50%) rotateX(72deg) rotateZ(0deg);
-            will-change: transform; 
-            backface-visibility: hidden;
-            transform-style: preserve-3d;
-            opacity: 0.85; 
-            transition: opacity 0.4s ease;
+            /* Renderizado nativo plano 2D centrado, sin transformaciones de rotación continuas */
+            transform: translate3d(-50%, -50%, 0);
+            will-change: filter; /* Avisa al navegador que solo alteraremos el blur */
+            opacity: 0.65; 
             mix-blend-mode: multiply; 
             filter: blur(var(--scroll-blur, 0px));
         }
 
         [data-theme="dark"] .ps5-wheel-canvas {
-            opacity: 0.4;
+            opacity: 0.25;
             filter: invert(1) brightness(0.8) contrast(1.2) saturate(1.1) blur(var(--scroll-blur, 0px));
             mix-blend-mode: screen; 
         }
@@ -291,7 +289,7 @@
             letter-spacing: -0.5px; color: var(--text-primary);
         }
 
-        /* GRID CATEGORÍAS MACSTORE CANVAS 2x2 (REMOCIÓN DE TRAS-DESENFOQUE EXCESIVO PARA DESEMPEÑO) */
+        /* GRID CATEGORÍAS MACSTORE CANVAS 2x2 */
         .categories-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 24px; margin-bottom: 36px; }
         .matrix-glass-card {
             background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 28px;
@@ -313,11 +311,6 @@
         .matrix-glass-card:hover .vector-illustration-box { background: var(--apple-blue-glow); }
         .hifi-svg-icon { width: 36px; height: 36px; stroke: var(--text-primary); stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: var(--transition-fast); }
         .matrix-glass-card:hover .hifi-svg-icon { stroke: var(--apple-blue); transform: scale(1.05); }
-        
-        @media (min-width: 768px) {
-            @keyframes spinEngine { 100% { transform: scale(1.05) rotate(360deg); } }
-            .matrix-glass-card:hover .hifi-svg-icon.gear-animated { animation: spinEngine 8s linear infinite; }
-        }
 
         .matrix-card-title { font-size: 15px; font-weight: 700; margin: 0; text-align: center; letter-spacing: -0.2px; }
 
@@ -783,25 +776,18 @@
             }
             initializingPromoTimer();
 
-            // --- MOTOR DE ROTACIÓN SEGURO CON CONTROL DE DESENFOQUE AL HACER SCROLL ---
-            const ps5Wheel = document.getElementById('ps5Wheel');
+            // --- NÚCLEO DE SCROLL OPTIMIZADO (SOLO ENFOQUE DIGITAL DE DETALLE) ---
             let latestScrollY = 0;
             let ticking = false;
 
-            function updateWheelRotation(scrollPos) {
-                const rotationDegrees = scrollPos * 0.07; 
-                
-                // AJUSTES DE CALIBRACIÓN DEL EFECTO BLUR
-                const maxBlur = 12; // Máximo desenfoque en píxeles
-                const sensitivity = 0.04; // Sensibilidad del incremento del desenfoque
+            function updateBackgroundBlur(scrollPos) {
+                // AJUSTES DE CALIBRACIÓN DEL DESENFOQUE
+                const maxBlur = 15; // Un desenfoque ligeramente más profundo para mejorar la lectura
+                const sensitivity = 0.05; 
                 const calculatedBlur = Math.min(scrollPos * sensitivity, maxBlur);
                 
-                // Sincronizamos la variable CSS en tiempo real con el scroll del usuario
+                // Actualiza únicamente la propiedad de desenfoque, eliminando la rotación matemática continua
                 document.documentElement.style.setProperty('--scroll-blur', `${calculatedBlur}px`);
-
-                if(ps5Wheel) {
-                    ps5Wheel.style.transform = `translate(-50%, -50%) rotateX(72deg) rotateZ(${rotationDegrees}deg)`;
-                }
             }
 
             window.addEventListener('scroll', () => {
@@ -809,7 +795,7 @@
 
                 if (!ticking) {
                     window.requestAnimationFrame(() => {
-                        updateWheelRotation(latestScrollY);
+                        updateBackgroundBlur(latestScrollY);
                         ticking = false;
                     });
                     ticking = true;
