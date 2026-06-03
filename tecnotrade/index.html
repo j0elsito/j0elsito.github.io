@@ -70,7 +70,7 @@
             transition: background-color 0.4s ease, color 0.4s ease; /* Transición suave de tema */
         }
 
-        /* --- NUEVO: CSS DEL MENÚ LATERAL (SIDEBAR) --- */
+        /* --- CSS DEL MENÚ LATERAL (SIDEBAR) --- */
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
@@ -118,7 +118,7 @@
         input:checked + .slider { background-color: var(--apple-blue); }
         input:checked + .slider:before { transform: translateX(20px); }
 
-        /* CAPA DE TRANSICIÓN DE PÁGINA (Comienza blanca y se funde a negro al salir) */
+        /* CAPA DE TRANSICIÓN DE PÁGINA */
         .page-loader-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-base); z-index: 99999;
@@ -126,7 +126,7 @@
             pointer-events: none; opacity: 1;
         }
 
-        /* ENTORNO CINEMATOGRÁFICO CLARO (El mismo de catalogo.html) */
+        /* ENTORNO CINEMATOGRÁFICO CLARO */
         .ambient-canvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3;
             background-color: var(--bg-base); overflow: hidden; pointer-events: none;
@@ -144,6 +144,29 @@
             0% { transform: translate(0, 0) scale(1); }
             50% { transform: translate(6vw, 8vh) scale(1.08); }
             100% { transform: translate(-3vw, 4vh) scale(0.92); }
+        }
+
+        /* --- NUEVO: NÚCLEO DE LA RUEDA INTERACTIVA PS5 WAVES --- */
+        .ps5-wheel-canvas {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 170vmax; /* Tamaño ultra-expandido para evitar cortes al rotar */
+            height: 170vmax;
+            background: url('https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/c681bdd8c3cc13e4ddaa902ceddc1360a8d3dd04/tecnotrade/file_0000000098dc71f5b7616aa89d7b3b66.png') center center no-repeat;
+            background-size: contain;
+            z-index: -2; /* Se posiciona sobre el fondo base pero detrás de tus tarjetas */
+            pointer-events: none; /* No interfiere con los clics del usuario */
+            transform: translate(-50%, -50%) rotate(0deg);
+            will-change: transform; /* Optimización de hardware para celulares a 120Hz */
+            opacity: 0.85; /* Integración limpia con el diseño claro */
+            transition: filter 0.4s ease, opacity 0.4s ease;
+        }
+
+        /* Atenuación y contraste automático para el Modo Oscuro */
+        [data-theme="dark"] .ps5-wheel-canvas {
+            opacity: 0.35;
+            filter: brightness(0.7) contrast(1.3) saturate(1.1);
         }
 
         /* CONTENEDOR MAESTRO DINÁMICO */
@@ -215,7 +238,7 @@
         .search-row-item:hover .search-row-item-arrow { color: var(--apple-blue); transform: translateX(4px); }
 
         /* HERO DISPLAY CORE PANEL */
-        .hero-billboard-canvas { padding: 0 24px; margin-bottom: 32px; }
+        .hero-display-canvas { padding: 0 24px; margin-bottom: 32px; }
         .hero-billboard-card {
             background: linear-gradient(135deg, var(--card-glass-pure) 0%, var(--bg-base) 100%);
             border: 1px solid var(--border-subtle); border-radius: 32px; padding: 32px 24px;
@@ -356,7 +379,7 @@
             .mac-navbar { border-radius: 24px; margin: 0 24px 36px 24px; top: 24px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
             .search-engine-wrapper { max-width: 650px; margin: 0 auto 36px auto; width: 100%; }
             .search-results-dropdown { left: 50%; transform: translateX(-50%); width: 100%; max-width: 650px; }
-            .hero-billboard-canvas { margin-bottom: 48px; }
+            .hero-display-canvas { margin-bottom: 48px; }
             .hero-billboard-card { display: flex; align-items: center; justify-content: space-between; padding: 48px 64px; }
             .hero-context-panel { max-width: 55%; }
             .hero-main-title { font-size: 36px; }
@@ -386,6 +409,9 @@
         <div class="liquid-orb orb-amethyst"></div>
     </div>
 
+    <!-- --- INYECCIÓN DE LA RUEDA INTERACTIVA PS5 WAVES --- -->
+    <div class="ps5-wheel-canvas" id="ps5Wheel"></div>
+
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <aside class="sidebar-menu" id="sidebarMenu">
         <div class="sidebar-header">
@@ -406,7 +432,7 @@
                 <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg> Vender
             </a>
             <a href="reparar.html" class="sidebar-link">
-                <svg viewBox="0 0 24 24"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Reparar
+                <svg viewBox="0 0 24 24"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Reparar
             </a>
         </nav>
         
@@ -487,7 +513,8 @@
 
         <div class="lower-modules-pc-flex">
             <div class="promo-ticking-wrapper">
-                <a href="https://github.com/j0elsito/j0elsito.github.io/blob/041f17c882204d64d7c410bd9c02747d89bcf2e8/index.html" class="promo-ticking-card" target="_blank" style="text-decoration: none; display: flex; color: inherit; flex-direction: column;">
+                <!-- ENLACE CORREGIDO A OFERTA.HTML COMO ACORDAMOS -->
+                <a href="oferta.html" class="promo-ticking-card" target="_blank" style="text-decoration: none; display: flex; color: inherit; flex-direction: column;">
                     <div class="promo-header-info">
                         <span class="promo-badge">Oferta de Laboratorio</span>
                         <div class="countdown-clock" id="promoTimer">Cargando...</div>
@@ -536,7 +563,9 @@
             </div>
         </div>
 
-    </div> <nav class="interfacial-dock-nav">
+    </div> 
+    
+    <nav class="interfacial-dock-nav">
         <a href="index.html" class="dock-action-tab tab-active">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
             <span class="dock-label-text">Inicio</span>
@@ -559,7 +588,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // --- NUEVO: LÓGICA DEL TEMA (DARK/LIGHT MODE) ---
+            // LÓGICA DEL TEMA (DARK/LIGHT MODE)
             const themeCheckbox = document.getElementById('themeToggleCheckbox');
             const currentTheme = localStorage.getItem('tecnotrade-theme') || 'light';
             
@@ -577,7 +606,7 @@
                 }
             });
 
-            // --- NUEVO: LÓGICA DEL MENÚ LATERAL (SIDEBAR) ---
+            // LÓGICA DEL MENÚ LATERAL (SIDEBAR)
             const openMenuBtn = document.getElementById('openMenuBtn');
             const closeMenuBtn = document.getElementById('closeMenuBtn');
             const sidebarMenu = document.getElementById('sidebarMenu');
@@ -609,7 +638,6 @@
                     clickEvent.preventDefault();
                     const targetPageDestination = this.getAttribute('href');
                     
-                    // Ajuste de Transición: Pinta de negro o blanco según el tema activo
                     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
                     systemLoader.style.backgroundColor = isDark ? '#030509' : '#ffffff';
                     systemLoader.style.opacity = '1'; 
@@ -620,7 +648,7 @@
                 });
             });
 
-            // --- NUEVO: BASE DE DATOS DEL INVENTARIO 1:1 CON EL CATÁLOGO (36 MODELOS) ---
+            // BASE DE DATOS DEL INVENTARIO 1:1 CON EL CATÁLOGO (36 MODELOS)
             const tecnotradeInventoryDatabase = [
                 { name: "Samsung Galaxy Series", id: "android-samsung" },
                 { name: "Honor Multi-Brand", id: "android-honor" },
@@ -683,7 +711,6 @@
                             suggestionRowNode.innerHTML = `<span>${matchedItem.name}</span> <span class="search-row-item-arrow">▶</span>`;
                             
                             suggestionRowNode.onclick = function() {
-                                // Transición dinámica según el tema
                                 const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
                                 transitionOverlayFrame.style.backgroundColor = isDark ? '#030509' : '#ffffff';
                                 transitionOverlayFrame.style.opacity = '1';
@@ -702,7 +729,6 @@
                 }
             });
 
-            // Evento de cierre por pérdida de foco táctil o click general
             document.addEventListener('click', function(clickEventInterceptor) {
                 if (!coreSearchInput.contains(clickEventInterceptor.target) && !searchDropdownEngine.contains(clickEventInterceptor.target)) {
                     searchDropdownEngine.style.display = 'none';
@@ -714,7 +740,6 @@
                 const currentServerDate = new Date();
                 const targetDeadlineLimit = new Date();
                 
-                // Forzar una fecha de vencimiento dinámica de 2 días a partir de la sesión actual del cliente
                 targetDeadlineLimit.setDate(currentServerDate.getDate() + 2);
                 targetDeadlineLimit.setHours(23, 59, 59, 0);
 
@@ -731,7 +756,6 @@
                     const calculatedMinutes = Math.floor((totalDistanceDifference % (1000 * 60 * 60)) / (1000 * 60));
                     const calculatedSeconds = Math.floor((totalDistanceDifference % (1000 * 60)) / 1000);
 
-                    // Formatear visualmente el reloj digital
                     const renderStringFormatted = `${calculatedHours.toString().padStart(2, '0')}h : ${calculatedMinutes.toString().padStart(2, '0')}m : <span>${calculatedSeconds.toString().padStart(2, '0')}s</span>`;
                     document.getElementById("promoTimer").innerHTML = renderStringFormatted;
                 }
@@ -740,6 +764,32 @@
                 setInterval(executionUpdateClock, 1000);
             }
             initializingPromoTimer();
+
+            // --- NUEVO: MOTOR DE ROTACIÓN DE ALTO RENDIMIENTO (PS5 WAVE) ---
+            const ps5Wheel = document.getElementById('ps5Wheel');
+            let latestScrollY = 0;
+            let ticking = false;
+
+            function updateWheelRotation(scrollPos) {
+                // Multiplicador de velocidad (0.12). Si quieres que gire más rápido, súbelo a 0.20
+                const rotationDegrees = scrollPos * 0.12; 
+                if(ps5Wheel) {
+                    ps5Wheel.style.transform = `translate(-50%, -50%) rotate(${rotationDegrees}deg)`;
+                }
+            }
+
+            window.addEventListener('scroll', () => {
+                latestScrollY = window.scrollY;
+
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        updateWheelRotation(latestScrollY);
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true }); // Optimiza la respuesta táctil en móviles
+
         });
     </script>
 </body>
