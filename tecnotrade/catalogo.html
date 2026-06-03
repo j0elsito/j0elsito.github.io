@@ -7,38 +7,39 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    
     <meta name="color-scheme" content="light only">
     <meta name="theme-color" content="#f5f5f7">
     
-    <title>TecnoTrade | Catálogo Completo y Cotizaciones</title>
-    
+    <title>TecnoTrade | Tu Apple Specialist & Multimarcas en Panamá</title>
+
     <script>
         const savedTheme = localStorage.getItem('tecnotrade-theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
     
     <style>
-        /* ==========================================================================
-           1. CORE VARIABLES & THEME (MACSTORE LIGHT)
-           ========================================================================== */
         :root {
+            /* PALETA MACSTORE CLARA - 100% LIGHT THEME */
             --bg-base: #f5f5f7;
             --text-primary: #1d1d1f;
             --text-secondary: #86868b;
             --apple-blue: #0071e3;
             --apple-blue-hover: #0077ed;
             --apple-blue-glow: rgba(0, 113, 227, 0.15);
-            --card-glass: rgba(255, 255, 255, 0.75);
+            --card-glass: rgba(255, 255, 255, 0.85);
             --card-glass-pure: #ffffff;
-            --border-subtle: rgba(0, 0, 0, 0.06);
+            --border-subtle: rgba(0, 0, 0, 0.08);
+            
+            /* SOMBRAS Y TRANSICIONES */
             --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
             --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             --transition-fast: all 0.2s ease;
         }
 
-        /* --- PALETA MODO OSCURO DINÁMICA (COPIA DE INDEX) --- */
+        /* --- PALETA MODO OSCURO DINÁMICA --- */
         [data-theme="dark"] {
             --bg-base: #000000;
             --text-primary: #f5f5f7;
@@ -51,53 +52,88 @@
             --border-subtle: rgba(255, 255, 255, 0.15);
         }
 
-        /* ==========================================================================
-           2. RESET & GLOBAL ARCHITECTURE
-           ========================================================================== */
+        /* RESET GENERAL FORZADO A MODO CLARO */
         *, *::before, *::after {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
-            margin: 0; 
-            padding: 0; 
-            width: 100%; 
-            min-height: 100%;
-            background-color: var(--bg-base) !important; 
+            margin: 0; padding: 0;
+            width: 100%; min-height: 100%;
+            background-color: var(--bg-base) !important;
             color: var(--text-primary) !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased; 
-            overflow-x: hidden; 
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
             overflow-y: auto;
             transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        .app-layout-container { 
-            width: 100%; 
-            max-width: 480px; 
-            margin: 0 auto; 
-            padding-bottom: 150px; 
-            position: relative; 
-            z-index: 10; 
+        /* --- CSS DEL MENÚ LATERAL (SIDEBAR) --- */
+        .sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
+        .sidebar-overlay.active { opacity: 1; pointer-events: all; }
 
-        /* ==========================================================================
-           3. CINEMATIC EFFECTS & AMBIENT CANVAS (OPTIMIZADO CERO CPU)
-           ========================================================================== */
+        .sidebar-menu {
+            position: fixed; top: 0; left: 0; width: 80%; max-width: 300px; height: 100vh;
+            background: var(--card-glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            z-index: 1001; padding: 30px 24px; display: flex; flex-direction: column;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1); 
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-right: 1px solid var(--border-subtle);
+        }
+        .sidebar-menu.active { transform: translateX(0); }
+
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .sidebar-header h2 { font-size: 24px; font-weight: 900; margin: 0; color: var(--text-primary); }
+        .close-menu-btn { background: transparent; border: none; font-size: 24px; color: var(--text-secondary); cursor: pointer; padding: 0; display: flex; align-items: center; }
+
+        .sidebar-nav { display: flex; flex-direction: column; gap: 22px; flex-grow: 1; }
+        .sidebar-link {
+            text-decoration: none; color: var(--text-primary); font-size: 17px; font-weight: 700;
+            display: flex; align-items: center; gap: 14px; transition: color 0.2s;
+        }
+        .sidebar-link:hover, .sidebar-link:active { color: var(--apple-blue); }
+        .sidebar-link svg { width: 22px; height: 22px; fill: var(--text-secondary); }
+        .sidebar-link:hover svg { fill: var(--apple-blue); }
+
+        /* Interruptor de Tema (Toggle) */
+        .theme-toggle-box {
+            background: var(--card-glass-pure); border: 1px solid var(--border-subtle);
+            border-radius: 20px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; box-shadow: var(--shadow-sm); transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+        .theme-toggle-label { font-size: 15px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 10px; }
+        .theme-toggle-label svg { width: 18px; height: 18px; fill: var(--apple-blue); }
+        
+        .switch { position: relative; display: inline-block; width: 46px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #d2d2d7; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+        input:checked + .slider { background-color: var(--apple-blue); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        /* CAPA DE TRANSICIÓN DE PÁGINA (Con seguro de desvanecimiento) */
         .page-loader-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--bg-base); 
-            z-index: 99999; 
-            transition: background-color 0.5s ease;
+            background-color: var(--bg-base); z-index: 99999;
             pointer-events: none; opacity: 1;
             animation: forceFadeOut 0.6s 0.1s forwards cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background-color 0.5s ease;
         }
-        @keyframes forceFadeOut { to { opacity: 0; visibility: hidden; } }
+        @keyframes forceFadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
 
-        /* Auroras con Gradientes Nativos (Sin blur destructivo) */
+        /* 1. AURORAS FLUIDAS BASE (GRADIENTES RADIALES ULTRA OPTIMIZADOS) */
         .ambient-canvas {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
+            z-index: 1; 
             background-color: var(--bg-base); overflow: hidden; pointer-events: none;
             transition: background-color 0.4s ease;
         }
@@ -105,17 +141,50 @@
             position: absolute; border-radius: 50%; opacity: 0.8;
             will-change: transform; animation: moveOrb 25s infinite alternate ease-in-out;
         }
-        .orb-sapphire { width: 55vw; height: 55vw; background: radial-gradient(circle, rgba(0, 113, 227, 0.12) 0%, rgba(0, 113, 227, 0) 70%); top: -10%; left: -10%; }
-        .orb-cyan     { width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(0, 198, 214, 0.08) 0%, rgba(0, 198, 214, 0) 70%); bottom: -20%; right: -10%; animation-delay: -5s; }
-        
+        .orb-sapphire { width: 55vw; height: 55vw; background: radial-gradient(circle, rgba(0, 113, 227, 0.12) 0%, rgba(0, 113, 227, 0) 70%); top: -15%; left: -10%; }
+        .orb-cyan     { width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(0, 198, 214, 0.10) 0%, rgba(0, 198, 214, 0) 70%); bottom: -25%; right: -15%; animation-delay: -6s; animation-duration: 28s; }
+        .orb-amethyst { width: 48vw; height: 48vw; background: radial-gradient(circle, rgba(189, 0, 255, 0.05) 0%, rgba(189, 0, 255, 0) 70%); top: 35%; left: 25%; animation-delay: -12s; animation-duration: 32s; }
+
         @keyframes moveOrb {
             0% { transform: translate3d(0, 0, 0) scale(1); }
-            100% { transform: translate3d(5vw, 5vh, 0) scale(1.1); }
+            50% { transform: translate3d(6vw, 8vh, 0) scale(1.08); }
+            100% { transform: translate3d(-3vw, 4vh, 0) scale(0.92); }
         }
 
-        /* ==========================================================================
-           4. TOP NAVIGATION (MACSTORE STYLE)
-           ========================================================================== */
+        /* --- FONDO ANIMADO ESTÁTICO (SOLO BLUR POR SCROLL - CONSUMO CERO) --- */
+        .ps5-wheel-canvas {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 100vw; /* Ajustado al ancho completo real */
+            height: 100vh; /* Ajustado al alto completo real */
+            background: url('file_0000000098dc71f5b7616aa89d7b3b66.png') center center no-repeat;
+            background-size: cover; /* Escala elegante y fija */
+            z-index: 2; 
+            pointer-events: none; 
+            /* Renderizado nativo plano 2D centrado, sin transformaciones de rotación continuas */
+            transform: translate3d(-50%, -50%, 0);
+            will-change: filter; /* Avisa al navegador que solo alteraremos el blur */
+            opacity: 0.65; 
+            mix-blend-mode: multiply; 
+            filter: blur(var(--scroll-blur, 0px));
+        }
+
+        [data-theme="dark"] .ps5-wheel-canvas {
+            opacity: 0.25;
+            filter: invert(1) brightness(0.8) contrast(1.2) saturate(1.1) blur(var(--scroll-blur, 0px));
+            mix-blend-mode: screen; 
+        }
+
+        /* CONTENEDOR MAESTRO DEL CONTENIDO */
+        .app-layout-container {
+            width: 100%; max-width: 480px; 
+            margin: 0 auto; padding-bottom: 140px; 
+            position: relative; 
+            z-index: 10; 
+        }
+
+        /* TOP NAVIGATION BAR */
         .mac-navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 18px 24px; position: sticky; top: 0; z-index: 100;
@@ -123,208 +192,223 @@
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             transition: background 0.4s ease;
         }
-        .navbar-action-btn { 
-            background: transparent; border: none; cursor: pointer; color: var(--text-primary); 
-            transition: transform 0.2s, color 0.4s ease; display: flex; align-items: center; justify-content: center;
+        .navbar-action-btn {
+            background: transparent; border: none; padding: 4px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: var(--transition-fast);
         }
-        .navbar-action-btn:active { transform: scale(0.85); }
-        .navbar-action-btn svg { width: 24px; height: 24px; fill: currentColor; }
+        .navbar-action-btn:active { transform: scale(0.85); opacity: 0.7; }
+        .navbar-action-btn svg { width: 24px; height: 24px; fill: var(--text-primary); transition: fill 0.4s ease; }
         
         .navbar-brand-block { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .brand-avatar { width: 34px; height: 34px; border-radius: 9px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-subtle); }
-        .brand-title { font-size: 20px; font-weight: 800; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; transition: color 0.4s ease; }
+        .brand-avatar { width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
+        .brand-title { font-size: 22px; font-weight: 800; letter-spacing: -0.6px; margin: 0; color: var(--text-primary); transition: color 0.4s ease; }
         .brand-title span { color: var(--apple-blue); font-weight: 900; }
 
-        /* ==========================================================================
-           5. CATALOG HEADER & VIRAL SORT FILTER
-           ========================================================================== */
-        .catalog-header { padding: 15px 24px 25px; text-align: center; }
-        .catalog-main-title { font-size: 34px; font-weight: 900; margin: 0 0 16px 0; letter-spacing: -1px; }
-        
-        .sort-control-pill {
+        /* ADVANCED INTERACTIVE SEARCH ARQUITECTURA */
+        .search-engine-wrapper { position: relative; padding: 10px 24px 20px; z-index: 95; }
+        .search-inner-box {
+            display: flex; align-items: center; gap: 12px;
             background: var(--card-glass); border: 1px solid var(--border-subtle);
-            border-radius: 30px; padding: 10px 22px; display: inline-flex; align-items: center; gap: 8px;
-            font-size: 13px; font-weight: 700; color: var(--apple-blue); cursor: pointer;
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.03); transition: var(--transition-smooth);
+            border-radius: 20px; padding: 14px 18px; backdrop-filter: blur(20px);
+            transition: var(--transition-smooth); box-shadow: var(--shadow-sm);
         }
-        .sort-control-pill:hover { background: var(--card-glass-pure); box-shadow: 0 10px 25px var(--apple-blue-glow); }
-        .sort-control-pill:active { transform: scale(0.95); }
-        .sort-control-pill svg { width: 16px; height: 16px; fill: currentColor; transition: transform 0.4s; }
-        .sort-control-pill.asc svg { transform: rotate(180deg); }
-
-        /* ==========================================================================
-           6. CATALOG MATRIX GRID & SPOTLIGHT EFFECT
-           ========================================================================== */
-        .catalog-matrix-grid { 
-            display: flex; flex-direction: column; gap: 24px; padding: 0 24px 40px 24px; 
-            content-visibility: auto; contain-intrinsic-size: 800px;
+        .search-inner-box:focus-within {
+            border-color: var(--apple-blue); background: var(--card-glass-pure);
+            box-shadow: 0 0 0 4px var(--apple-blue-glow); transform: translateY(-2px);
         }
+        .search-inner-box svg { width: 20px; height: 20px; fill: var(--text-secondary); transition: var(--transition-fast); }
+        .search-inner-box:focus-within svg { fill: var(--apple-blue); }
+        .search-inner-box input {
+            background: transparent; border: none; color: var(--text-primary);
+            width: 100%; font-size: 15px; font-weight: 500; outline: none;
+        }
+        .search-inner-box input::placeholder { color: var(--text-secondary); font-weight: 400; }
         
-        .matrix-glass-card {
-            background: var(--card-glass); 
-            border: 1px solid var(--border-subtle); 
-            border-radius: 32px;
-            padding: 24px; 
-            display: flex; 
-            flex-direction: column;
-            box-shadow: var(--shadow-md); 
-            position: relative; overflow: hidden; 
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, box-shadow 0.4s ease, background 0.4s ease;
-        }
-
-        .matrix-glass-card::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(0, 113, 227, 0.08), transparent 40%);
-            opacity: 0; transition: opacity 0.4s; z-index: 0; pointer-events: none;
-        }
-        .matrix-glass-card:hover::before { opacity: 1; }
-        .matrix-glass-card > * { position: relative; z-index: 1; } 
-        
-        .matrix-glass-card:hover { 
-            box-shadow: var(--shadow-lg); 
-            transform: translateY(-4px); 
-            border-color: var(--apple-blue); 
-            background: var(--card-glass-pure);
-        }
-
-        .reveal-hidden { opacity: 0; transform: translateY(40px); }
-        .reveal-visible { opacity: 1; transform: translateY(0); }
-
-        /* ==========================================================================
-           7. PRODUCT VISUALS (VECTOR PHONES)
-           ========================================================================== */
-        .image-visual-space {
-            width: 100%; height: 140px; background: rgba(0,0,0,0.02);
-            border-radius: 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center;
-        }
-        [data-theme="dark"] .image-visual-space { background: rgba(255,255,255,0.02); }
-
-        .vector-phone {
-            width: 70px; height: 130px; border: 3px solid #d2d2d7; border-radius: 16px; 
-            position: relative; background: var(--bg-base); box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, border-color 0.4s ease;
-        }
-        [data-theme="dark"] .vector-phone { border-color: #333336; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-
-        .vector-phone::before { 
-            content: ''; position: absolute; top: 10px; left: 10px; width: 22px; height: 40px; 
-            border: 2px solid #e5e5ea; border-radius: 6px; background: var(--bg-base);
+        /* DATA SEARCH DROPDOWN GRID */
+        .search-results-dropdown {
+            position: absolute; top: calc(100% - 12px); left: 24px; right: 24px;
+            background: var(--card-glass-pure); border: 1px solid var(--border-subtle);
+            border-radius: 20px; padding: 8px 0; backdrop-filter: blur(30px);
+            max-height: 310px; overflow-y: auto; display: none;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1); scrollbar-width: none;
             transition: background 0.4s ease, border-color 0.4s ease;
         }
-        [data-theme="dark"] .vector-phone::before { border-color: #48484a; }
-
-        .matrix-glass-card:hover .vector-phone { transform: scale(1.05) rotate(2deg); } 
-
-        .card-tag { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--apple-blue); margin-bottom: 8px; display: block; }
-        .android-card .card-tag { color: #00b050; } 
-        .card-main-title { font-size: 26px; font-weight: 900; margin: 0 0 20px 0; letter-spacing: -0.5px; color: var(--text-primary); }
-
-        /* ==========================================================================
-           8. INTERACTIVE PRODUCT ROWS
-           ========================================================================== */
-        .list-container { display: flex; flex-direction: column; gap: 12px; }
-        .interactive-row {
-            display: flex; justify-content: space-between; align-items: center;
-            background: var(--card-glass-pure); padding: 18px 20px;
-            border-radius: 20px; border: 1px solid var(--border-subtle);
-            text-decoration: none; color: var(--text-primary); transition: var(--transition-fast);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        .search-results-dropdown::-webkit-scrollbar { display: none; }
+        .search-row-item {
+            padding: 15px 22px; font-size: 14px; font-weight: 600; color: var(--text-primary);
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border-subtle); transition: var(--transition-fast);
         }
-        .interactive-row:hover { 
-            transform: translateX(5px); 
-            border-color: rgba(0, 113, 227, 0.3); 
-            background: var(--apple-blue-glow); 
-            box-shadow: 0 6px 15px rgba(0, 113, 227, 0.08);
+        .search-row-item:last-child { border-bottom: none; }
+        .search-row-item:hover, .search-row-item:active {
+            background: var(--apple-blue-glow); color: var(--apple-blue); padding-left: 28px;
         }
-        .interactive-row:active { transform: scale(0.97); }
-        .model-name { font-size: 15px; font-weight: 700; }
-        .model-price { 
-            font-size: 13px; font-weight: 800; background: var(--apple-blue-glow); 
-            color: var(--apple-blue); padding: 6px 14px; border-radius: 12px; 
-        }
-        .android-card .model-price { background: rgba(0, 176, 80, 0.1); color: #00b050; }
+        .search-row-item-arrow { font-size: 11px; color: var(--text-secondary); transition: var(--transition-fast); }
+        .search-row-item:hover .search-row-item-arrow { color: var(--apple-blue); transform: translateX(4px); }
 
-        .highlight-target {
-            border-color: var(--apple-blue) !important; box-shadow: 0 0 0 4px var(--apple-blue-glow) !important;
-            animation: highlightPulse 2s ease-in-out infinite; background: var(--apple-blue-glow) !important;
+        /* HERO DISPLAY PANEL */
+        .hero-display-canvas { padding: 0 24px; margin-bottom: 32px; }
+        .hero-billboard-card {
+            background: linear-gradient(135deg, var(--card-glass-pure) 0%, var(--bg-base) 100%);
+            border: 1px solid var(--border-subtle); border-radius: 32px; padding: 32px 24px;
+            position: relative; overflow: hidden; box-shadow: var(--shadow-md);
+            transition: background 0.4s ease, border 0.4s ease;
         }
-        @keyframes highlightPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+        .hero-context-panel { position: relative; z-index: 5; max-width: 60%; }
+        .hero-badge-tag {
+            background: var(--text-primary); color: var(--bg-base); font-size: 10px; font-weight: 800;
+            padding: 5px 12px; border-radius: 12px; margin-bottom: 16px;
+            text-transform: uppercase; display: inline-block; letter-spacing: 0.5px;
+        }
+        .hero-main-title { font-size: 28px; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.7px; line-height: 1.15; color: var(--text-primary); }
+        .hero-p-desc { font-size: 13px; color: var(--text-secondary); margin: 0 0 24px 0; line-height: 1.45; }
+        .hero-action-trigger {
+            background: var(--apple-blue); color: #ffffff; border: none; border-radius: 22px;
+            padding: 12px 26px; font-size: 13px; font-weight: 700; display: inline-block;
+            text-decoration: none; transition: var(--transition-fast); box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25);
+        }
+        .hero-action-trigger:hover { background: var(--apple-blue-hover); transform: translateY(-1px); }
+        .hero-action-trigger:active { transform: translateY(1px); box-shadow: 0 3px 8px rgba(0, 113, 227, 0.15); }
+        
+        /* Mockup iPhone Blanco/Plata */
+        .hero-mockup-render {
+            position: absolute; right: -30px; bottom: -45px; width: 150px; height: 210px;
+            background: linear-gradient(180deg, var(--card-glass-pure) 0%, var(--bg-base) 100%);
+            border: 4px solid var(--card-glass-pure); border-radius: 30px; transform: rotate(-7deg);
+            box-shadow: -12px -12px 35px rgba(0,0,0,0.08); z-index: 1;
+            transition: background 0.4s ease, border 0.4s ease;
+        }
+        .hero-mockup-render::after {
+            content: ''; position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;
+            border-radius: 12px; background: rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05);
+        }
 
-        /* ==========================================================================
-           9. COMMERCIAL PRODUCTION MODULES
-           ========================================================================== */
+        /* CORPORATE SECTION HEADINGS */
         .module-section-header {
             font-size: 20px; font-weight: 800; padding: 0 24px; margin: 0 0 18px 0;
             letter-spacing: -0.5px; color: var(--text-primary);
         }
 
+        /* GRID CATEGORÍAS MACSTORE CANVAS 2x2 */
+        .categories-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 24px; margin-bottom: 36px; }
+        .matrix-glass-card {
+            background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 28px;
+            padding: 24px 16px; text-decoration: none; color: var(--text-primary);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: var(--transition-smooth); box-shadow: var(--shadow-sm);
+        }
+        .matrix-glass-card:hover {
+            transform: translateY(-4px); border-color: var(--apple-blue);
+            background: var(--card-glass-pure); box-shadow: var(--shadow-lg);
+        }
+        .matrix-glass-card:active { transform: scale(0.95); }
+
+        /* ICONOS VECTORIALES HD (TONOS OSCUROS/BLANCOS) */
+        .vector-illustration-box {
+            width: 100%; height: 75px; background: rgba(0,0,0,0.03); border-radius: 18px;
+            margin-bottom: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition-fast);
+        }
+        .matrix-glass-card:hover .vector-illustration-box { background: var(--apple-blue-glow); }
+        .hifi-svg-icon { width: 36px; height: 36px; stroke: var(--text-primary); stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: var(--transition-fast); }
+        .matrix-glass-card:hover .hifi-svg-icon { stroke: var(--apple-blue); transform: scale(1.05); }
+
+        .matrix-card-title { font-size: 15px; font-weight: 700; margin: 0; text-align: center; letter-spacing: -0.2px; }
+
+        /* LIVE MARKETING TICKING EXPERIMENTAL PANEL */
         .promo-ticking-wrapper { padding: 0 24px; margin-bottom: 36px; }
         .promo-ticking-card {
             background: var(--card-glass); border: 1px solid rgba(0, 176, 80, 0.3); border-radius: 26px;
-            padding: 20px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px; position: relative;
-            transition: background 0.4s ease, border-color 0.4s ease;
+            padding: 20px; box-shadow: var(--shadow-sm);
+            display: flex; flex-direction: column; gap: 12px; position: relative; transition: background 0.4s ease, border-color 0.4s ease;
         }
-        .promo-header-info { display: flex; align-items: center; justify-content: space-between; }
+        .promo-header-info { display: flex; align-items: center; justify-content: space-between; width: 100%; }
         .promo-badge { background: rgba(0, 176, 80, 0.1); color: #00b050; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 8px; }
-        .countdown-clock { display: flex; gap: 4px; font-size: 12px; font-weight: 700; color: var(--text-primary); background: var(--card-glass-pure); padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border-subtle); transition: background 0.4s ease; }
+        .countdown-clock { display: flex; gap: 4px; font-size: 12px; font-weight: 700; color: var(--text-primary); background: var(--card-glass-pure); padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border-subtle); transition: background-color 0.4s ease; }
         .countdown-clock span { color: #ff3b30; }
-        .promo-main-msg { font-size: 16px; font-weight: 800; margin: 0; line-height: 1.3; }
-        .promo-sub-msg { font-size: 12px; color: var(--text-secondary); margin: 0; }
+        .promo-main-msg { font-size: 16px; font-weight: 800; margin: 0; line-height: 1.3; color: var(--text-primary); text-align: left; }
+        .promo-sub-msg { font-size: 12px; color: var(--text-secondary); margin: 0; text-align: left; }
 
-        .feedback-slider-wrapper { padding: 0 24px; margin-bottom: 36px; }
-        .feedback-card {
-            background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 22px;
-            padding: 20px; box-shadow: var(--shadow-sm); transition: background 0.4s ease, border-color 0.4s ease;
-        }
-        .feedback-user-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-        .user-stars { color: #ffcc00; font-size: 14px; letter-spacing: 1px; }
-        .user-name-title { font-size: 14px; font-weight: 700; margin: 0; }
-        .user-location-tag { font-size: 11px; color: var(--text-secondary); }
-        .feedback-quote-text { font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.5; font-style: italic; transition: color 0.4s ease;}
-
-        .trust-architecture-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px; margin-bottom: 40px; content-visibility: auto; contain-intrinsic-size: 150px;}
+        /* TRUST CONTEXT ROWS */
+        .trust-architecture-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px; margin-bottom: 36px; }
         .trust-capsule {
             background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 18px;
-            padding: 16px 10px; text-align: center; box-shadow: var(--shadow-sm); transition: background 0.4s ease, border-color 0.4s ease;
+            padding: 16px 10px; text-align: center; transition: background 0.4s ease;
         }
         .trust-icon-wrap { width: 28px; height: 28px; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; color: var(--apple-blue); }
         .trust-icon-wrap svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
         .trust-title { font-size: 11px; font-weight: 800; margin: 0 0 4px 0; text-transform: uppercase; letter-spacing: 0.3px; }
         .trust-desc { font-size: 10px; color: var(--text-secondary); margin: 0; line-height: 1.3; }
 
-        /* ==========================================================================
-           10. DOCK NAVBAR FLOTANTE
-           ========================================================================== */
+        /* CLIENTS SATISFIED FEEDBACK MODULE */
+        .feedback-slider-wrapper { padding: 0 24px; margin-bottom: 20px; }
+        .feedback-card {
+            background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 22px;
+            padding: 18px; box-shadow: var(--shadow-sm); transition: background 0.4s ease;
+        }
+        .feedback-user-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+        .user-stars { color: #ffcc00; font-size: 14px; letter-spacing: 1px; }
+        .user-name-title { font-size: 13px; font-weight: 700; margin: 0; }
+        .user-location-tag { font-size: 10px; color: var(--text-secondary); }
+        .feedback-quote-text { font-size: 12px; color: var(--text-secondary); margin: 0; line-height: 1.45; font-style: italic; transition: color 0.4s ease; }
+
+        /* PREMIUM DOCK INTERFACIAL SYSTEM (NAVBAR FLOTANTE) */
         .interfacial-dock-nav {
-            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 420px;
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 420px;
             background: var(--card-glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--border-subtle); border-radius: 36px;
             display: flex; justify-content: space-around; padding: 12px 10px; z-index: 10000;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
-            transform: translate3d(-50%, 120%, 0); animation: slideDockUp 0.7s 0.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
-            transition: background 0.4s ease, border-color 0.4s ease;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+            animation: slideDockUp 0.7s 0.6s forwards cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background 0.4s ease, border 0.4s ease;
         }
-        @keyframes slideDockUp { to { transform: translate3d(-50%, 0, 0); } }
+        @keyframes slideDockUp { from { transform: translate3d(-50%, 120%, 0); } to { transform: translate3d(-50%, 0, 0); } }
 
-        .dock-action-tab { display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; color: var(--text-secondary); transition: var(--transition-smooth); position: relative; }
+        .dock-action-tab { display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; color: var(--text-secondary); position: relative; transition: var(--transition-smooth); }
         .dock-action-tab.tab-active { color: var(--apple-blue); transform: translateY(-4px); }
-        .dock-action-tab svg { width: 23px; height: 23px; fill: currentColor; }
-        .dock-label-text { font-size: 10px; font-weight: 700; }
-        .dock-cart-indicator { position: absolute; top: -6px; right: -8px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 12px; border: 2px solid var(--bg-base); transition: border-color 0.4s ease; }
+        .dock-action-tab svg { width: 23px; height: 23px; fill: currentColor; transition: var(--transition-fast); }
+        .dock-action-tab:active svg { transform: scale(0.85); }
+        .dock-label-text { font-size: 10px; font-weight: 700; letter-spacing: -0.1px; }
+        
+        .dock-cart-indicator {
+            position: absolute; top: -6px; right: -8px; background: #ff3b30; color: #ffffff;
+            font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(255,59,48,0.3); border: 2px solid var(--bg-base);
+            transition: border 0.4s ease;
+        }
 
-        /* ==========================================================================
-           11. ADAPTACIÓN A PC (ESCRITORIO)
-           ========================================================================== */
+        /* OPTIMIZACIÓN DE RENDERIZADO INTELIGENTE FUERA DE PANTALLA */
+        .categories-matrix-grid, 
+        .lower-modules-pc-flex, 
+        .trust-architecture-row {
+            content-visibility: auto;
+            contain-intrinsic-size: 400px;
+        }
+
+        /* ADAPTACIÓN TOTAL ESCRITORIO DE GAMA ALTA (PC) */
         @media (min-width: 768px) {
-            .app-layout-container { max-width: 1120px; padding-top: 40px; }
+            .app-layout-container { max-width: 1120px; padding-top: 40px; padding-bottom: 16px; }
             .mac-navbar { border-radius: 24px; margin: 0 24px 36px 24px; top: 24px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
-            .catalog-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; padding: 0 24px 40px 24px;}
-            .lower-modules-pc-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 0 24px 40px 24px; content-visibility: auto; contain-intrinsic-size: 200px;}
+            .search-engine-wrapper { max-width: 650px; margin: 0 auto 36px auto; width: 100%; }
+            .search-results-dropdown { left: 50%; transform: translateX(-50%); width: 100%; max-width: 650px; }
+            .hero-display-canvas { margin-bottom: 48px; }
+            .hero-billboard-card { display: flex; align-items: center; justify-content: space-between; padding: 48px 64px; }
+            .hero-context-panel { max-width: 55%; }
+            .hero-main-title { font-size: 36px; }
+            .hero-p-desc { font-size: 15px; }
+            .hero-mockup-render { position: relative; right: 0; bottom: 0; transform: rotate(-4deg); width: 180px; height: 250px; }
+            .categories-matrix-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px; }
+            .matrix-glass-card { padding: 32px 20px; border-radius: 32px; }
+            .vector-illustration-box { height: 90px; }
+            .module-section-header { font-size: 24px; margin-bottom: 24px; }
+            .lower-modules-pc-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 0 24px; margin-bottom: 48px; }
             .promo-ticking-wrapper, .feedback-slider-wrapper { padding: 0; margin-bottom: 0; }
             .promo-ticking-card, .feedback-card { height: 100%; justify-content: center; }
-            .trust-architecture-row { gap: 24px; margin-bottom: 60px; }
+            .trust-architecture-row { gap: 20px; margin-bottom: 48px; }
             .interfacial-dock-nav { max-width: 480px; padding: 14px 24px; border-radius: 40px; bottom: 32px; }
+            .dock-action-tab svg { width: 25px; height: 25px; }
+            .dock-label-text { font-size: 11px; }
         }
     </style>
 </head>
@@ -335,243 +419,120 @@
     <div class="ambient-canvas">
         <div class="liquid-orb orb-sapphire"></div>
         <div class="liquid-orb orb-cyan"></div>
+        <div class="liquid-orb orb-amethyst"></div>
     </div>
+
+    <div class="ps5-wheel-canvas" id="ps5Wheel"></div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <h2>Menú</h2>
+            <button class="close-menu-btn" id="closeMenuBtn" aria-label="Cerrar menú">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="index.html" class="sidebar-link">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Inicio
+            </a>
+            <a href="catalogo.html" class="sidebar-link core-spa-link">
+                <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg> Catálogo
+            </a>
+            <a href="vender.html" class="sidebar-link">
+                <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg> Vender
+            </a>
+            <a href="reparar.html" class="sidebar-link">
+                <svg viewBox="0 0 24 24"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Reparar
+            </a>
+        </nav>
+        
+        <div class="theme-toggle-box">
+            <div class="theme-toggle-label">
+                <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+                Modo Oscuro
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="themeToggleCheckbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </aside>
 
     <div class="app-layout-container">
         
         <header class="mac-navbar">
-            <a href="index.html" class="navbar-action-btn core-spa-link" aria-label="Volver">
-                <svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
-            </a>
-            <a href="index.html" class="navbar-brand-block core-spa-link">
-                <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" class="brand-avatar" alt="Logo">
+            <button class="navbar-action-btn" id="openMenuBtn" aria-label="Menú principal">
+                <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            </button>
+            <a href="index.html" class="navbar-brand-block">
+                <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/579a1a6e8e73522cf6233557c309824623807b9e/tecnotrade/perfiltecnotrade.png" class="brand-avatar" alt="TecnoTrade Logo">
                 <h1 class="brand-title">Tecno<span>Trade</span></h1>
             </a>
-            <button class="navbar-action-btn" aria-label="Menú">
-                <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            <button class="navbar-action-btn" aria-label="Perfil de usuario">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
             </button>
         </header>
 
-        <div class="catalog-header">
-            <h2 class="catalog-main-title">Catálogo</h2>
-            <button id="sortGridBtn" class="sort-control-pill">
-                <svg viewBox="0 0 24 24"><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg>
-                <span>Ordenar: Mayor a Menor</span>
-            </button>
+        <div class="search-engine-wrapper">
+            <div class="search-inner-box">
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input type="text" id="mainCoreSearch" placeholder="Buscar iPhone 16 Pro, Samsung..." autocomplete="off">
+            </div>
+            <div id="searchDropdownEngine" class="search-results-dropdown"></div>
         </div>
 
-        <main class="catalog-matrix-grid" id="catalogGrid">
-
-            <div class="matrix-glass-card android-card reveal-hidden" data-tier="99">
-                <div class="image-visual-space"><div class="vector-phone" style="border-radius: 10px;"></div></div>
-                <div>
-                    <span class="card-tag">Multi-Brand</span>
-                    <h2 class="card-main-title">Android</h2>
+        <section class="hero-display-canvas">
+            <div class="hero-billboard-card">
+                <div class="hero-context-panel">
+                    <span class="hero-badge-tag">Trade-In</span>
+                    <h2 class="hero-main-title">iPhone Serie 16 Pro</h2>
+                    <p class="hero-p-desc">Diseñado con titanio de grado aeroespacial. Trae tu equipo actual y úsalo como abono directo.</p>
+                    <a href="catalogo.html#iphone-16-pro" class="hero-action-trigger core-spa-link">Comprar ahora</a>
                 </div>
-                <div class="list-container">
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Samsung." id="android-samsung" class="interactive-row" target="_blank">
-                        <span class="model-name">Samsung Galaxy</span><span class="model-price">Cotizar</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Honor." id="android-honor" class="interactive-row" target="_blank">
-                        <span class="model-name">Honor</span><span class="model-price">Cotizar</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Xiaomi." id="android-xiaomi" class="interactive-row" target="_blank">
-                        <span class="model-name">Xiaomi</span><span class="model-price">Cotizar</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Google%20Pixel." id="android-pixel" class="interactive-row" target="_blank">
-                        <span class="model-name">Google Pixel</span><span class="model-price">Cotizar</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20cotizar%20un%20dispositivo%20Redmi." id="android-redmi" class="interactive-row" target="_blank">
-                        <span class="model-name">Redmi Note</span><span class="model-price">Cotizar</span>
-                    </a>
-                </div>
+                <div class="hero-mockup-render"></div>
             </div>
+        </section>
 
-            <div class="matrix-glass-card reveal-hidden" data-tier="17">
-                <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div>
-                    <span class="card-tag">Próximo Lanzamiento</span>
-                    <h2 class="card-main-title">iPhone 17</h2>
+        <h3 class="module-section-header">Explorar Servicios</h3>
+        <nav class="categories-matrix-grid">
+            <a href="catalogo.html" class="matrix-glass-card core-spa-link">
+                <div class="vector-illustration-box">
+                    <svg class="hifi-svg-icon" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
                 </div>
-                <div class="list-container">
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017." id="iphone-17" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 17</span><span class="model-price">Desde 850$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017%20Plus." id="iphone-17-plus" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 17 Plus</span><span class="model-price">Desde 1000$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017%20Pro." id="iphone-17-pro" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 17 Pro</span><span class="model-price">Desde 1100$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2017%20Pro%20Max." id="iphone-17-pro-max" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 17 Pro Max</span><span class="model-price">Desde 1200$</span>
-                    </a>
+                <h4 class="matrix-card-title">Equipos</h4>
+            </a>
+            <a href="vender.html" class="matrix-glass-card">
+                <div class="vector-illustration-box">
+                    <svg class="hifi-svg-icon" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line></svg>
                 </div>
-            </div>
-
-            <div class="matrix-glass-card reveal-hidden" data-tier="16">
-                <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div>
-                    <span class="card-tag">Flagship Core</span>
-                    <h2 class="card-main-title">iPhone 16</h2>
+                <h4 class="matrix-card-title">Vender</h4>
+            </a>
+            <a href="reparar.html" class="matrix-glass-card">
+                <div class="vector-illustration-box">
+                    <svg class="hifi-svg-icon gear-animated" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                 </div>
-                <div class="list-container">
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016." id="iphone-16" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 16</span><span class="model-price">Desde 525$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016%20Plus." id="iphone-16-plus" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 16 Plus</span><span class="model-price">Desde 560$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016%20Pro." id="iphone-16-pro" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 16 Pro</span><span class="model-price">Desde 650$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2016%20Pro%20Max." id="iphone-16-pro-max" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 16 Pro Max</span><span class="model-price">Desde 740$</span>
-                    </a>
+                <h4 class="matrix-card-title">Reparar</h4>
+            </a>
+            <a href="laptops.html" class="matrix-glass-card">
+                <div class="vector-illustration-box">
+                    <svg class="hifi-svg-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="20" x2="22" y2="20"></line><line x1="12" y1="17" x2="12" y2="20"></line></svg>
                 </div>
-            </div>
-
-            <div class="matrix-glass-card reveal-hidden" data-tier="15">
-                <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div>
-                    <span class="card-tag">Hot Choice</span>
-                    <h2 class="card-main-title">iPhone 15</h2>
-                </div>
-                <div class="list-container">
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015." id="iphone-15" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 15</span><span class="model-price">Desde 350$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015%20Plus." id="iphone-15-plus" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 15 Plus</span><span class="model-price">Desde 400$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015%20Pro." id="iphone-15-pro" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 15 Pro</span><span class="model-price">Desde 450$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2015%20Pro%20Max." id="iphone-15-pro-max" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 15 Pro Max</span><span class="model-price">Desde 540$</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="matrix-glass-card reveal-hidden" data-tier="14">
-                <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div>
-                    <span class="card-tag">Performance</span>
-                    <h2 class="card-main-title">iPhone 14</h2>
-                </div>
-                <div class="list-container">
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014." id="iphone-14" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 14</span><span class="model-price">Desde 250$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014%20Plus." id="iphone-14-plus" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 14 Plus</span><span class="model-price">Desde 270$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014%20Pro." id="iphone-14-pro" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 14 Pro</span><span class="model-price">Desde 330$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2014%20Pro%20Max." id="iphone-14-pro-max" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 14 Pro Max</span><span class="model-price">Desde 400$</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="matrix-glass-card reveal-hidden" data-tier="13">
-                <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div>
-                    <span class="card-tag">Value Choice</span>
-                    <h2 class="card-main-title">iPhone 13</h2>
-                </div>
-                <div class="list-container">
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013%20Mini." id="iphone-13-mini" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 13 Mini</span><span class="model-price">Desde 200$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013." id="iphone-13" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 13</span><span class="model-price">Desde 225$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013%20Pro." id="iphone-13-pro" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 13 Pro</span><span class="model-price">Desde 300$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2013%20Pro%20Max." id="iphone-13-pro-max" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 13 Pro Max</span><span class="model-price">Desde 340$</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="matrix-glass-card reveal-hidden" data-tier="12">
-                <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div>
-                    <span class="card-tag">Balanced Core</span>
-                    <h2 class="card-main-title">iPhone 12</h2>
-                </div>
-                <div class="list-container">
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012%20Mini." id="iphone-12-mini" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 12 Mini</span><span class="model-price">Desde 110$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012." id="iphone-12" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 12</span><span class="model-price">Desde 130$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012%20Pro." id="iphone-12-pro" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 12 Pro</span><span class="model-price">Desde 180$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2012%20Pro%20Max." id="iphone-12-pro-max" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 12 Pro Max</span><span class="model-price">Desde 230$</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="matrix-glass-card reveal-hidden" data-tier="11">
-                <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div>
-                    <span class="card-tag">Entry Level</span>
-                    <h2 class="card-main-title">iPhone 11</h2>
-                </div>
-                <div class="list-container">
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2011." id="iphone-11" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 11</span><span class="model-price">Desde 110$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2011%20Pro." id="iphone-11-pro" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 11 Pro</span><span class="model-price">Desde 130$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%2011%20Pro%20Max." id="iphone-11-pro-max" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone 11 Pro Max</span><span class="model-price">Desde 170$</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="matrix-glass-card reveal-hidden" data-tier="10">
-                <div class="image-visual-space"><div class="vector-phone"></div></div>
-                <div>
-                    <span class="card-tag">Classic Heritage</span>
-                    <h2 class="card-main-title">iPhone Serie X (10)</h2>
-                </div>
-                <div class="list-container">
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%20X." id="iphone-x" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone X</span><span class="model-price">Desde 70$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%20XR." id="iphone-xr" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone XR</span><span class="model-price">Desde 80$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%20XS." id="iphone-xs" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone XS</span><span class="model-price">Desde 90$</span>
-                    </a>
-                    <a href="https://wa.me/50767966691?text=Hola!%20Me%20interesa%20el%20iPhone%20XS%20Max." id="iphone-xs-max" class="interactive-row" target="_blank">
-                        <span class="model-name">iPhone XS Max</span><span class="model-price">Desde 110$</span>
-                    </a>
-                </div>
-            </div>
-
-        </main>
+                <h4 class="matrix-card-title">Laptops</h4>
+            </a>
+        </nav>
 
         <div class="lower-modules-pc-flex">
             <div class="promo-ticking-wrapper">
-                <div class="promo-ticking-card">
+                <a href="oferta.html" class="promo-ticking-card" target="_blank" style="text-decoration: none; display: flex; color: inherit; flex-direction: column;">
                     <div class="promo-header-info">
                         <span class="promo-badge">Oferta de Laboratorio</span>
                         <div class="countdown-clock" id="promoTimer">Cargando...</div>
                     </div>
                     <p class="promo-main-msg">20% de Descuento en Cambio de Pantallas e Instalación de Sistemas</p>
                     <p class="promo-sub-msg">Válido en nuestro taller. Menciona este cupón al ingresar tu equipo.</p>
-                </div>
+                </a>
             </div>
 
             <div class="feedback-slider-wrapper">
@@ -613,12 +574,14 @@
             </div>
         </div>
 
-    </div> <nav class="interfacial-dock-nav">
-        <a href="index.html" class="dock-action-tab core-spa-link">
+    </div> 
+    
+    <nav class="interfacial-dock-nav">
+        <a href="index.html" class="dock-action-tab tab-active">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
             <span class="dock-label-text">Inicio</span>
         </a>
-        <a href="catalogo.html" class="dock-action-tab tab-active">
+        <a href="catalogo.html" class="dock-action-tab core-spa-link">
             <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
             <span class="dock-label-text">Catálogo</span>
         </a>
@@ -629,114 +592,165 @@
         <a href="#" class="dock-action-tab">
             <div class="dock-cart-indicator">2</div>
             <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-            <span class="dock-label-text">Carrito</span>
+            <span class="nav-label-text dock-label-text">Carrito</span>
         </a>
     </nav>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // 1. FUNDIDO DE ENTRADA CON TEMA DINÁMICO
-            const systemLoader = document.getElementById('globalPageLoader');
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            systemLoader.style.backgroundColor = isDark ? '#030509' : '#f5f5f7';
-            setTimeout(() => { systemLoader.style.opacity = '0'; }, 50);
-
-            // 2. Transición de salida al volver al inicio
-            document.querySelectorAll('.core-spa-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = this.getAttribute('href');
-                    systemLoader.style.backgroundColor = document.documentElement.getAttribute('data-theme') === 'dark' ? '#030509' : '#f5f5f7'; 
-                    systemLoader.style.opacity = '1'; 
-                    setTimeout(() => { window.location.assign(target); }, 420); 
-                });
-            });
-
-            // 3. EFECTO MAGNÉTICO (SPOTLIGHT)
-            document.querySelectorAll('.matrix-glass-card').forEach(card => {
-                card.addEventListener('mousemove', e => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    card.style.setProperty('--mouse-x', `${x}px`);
-                    card.style.setProperty('--mouse-y', `${y}px`);
-                });
-            });
-
-            // 4. SCROLL REVEAL FADE-UP
-            const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-            const scrollObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('reveal-visible');
-                        scrollObserver.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.reveal-hidden').forEach(el => scrollObserver.observe(el));
-
-            // 5. ORGANIZADOR DE SERIES VIRAL
-            const sortBtn = document.getElementById('sortGridBtn');
-            const gridContainer = document.getElementById('catalogGrid');
-            let isDescending = true; 
-
-            sortBtn.addEventListener('click', () => {
-                isDescending = !isDescending;
-                const spanText = sortBtn.querySelector('span');
-                
-                if(isDescending) {
-                    sortBtn.classList.remove('asc');
-                    spanText.textContent = 'Ordenar: Mayor a Menor';
-                } else {
-                    sortBtn.classList.add('asc');
-                    spanText.textContent = 'Ordenar: Menor a Mayor';
-                }
-
-                let cardsArray = Array.from(gridContainer.querySelectorAll('.matrix-glass-card'));
-                
-                cardsArray.sort((a, b) => {
-                    const tierA = parseInt(a.getAttribute('data-tier'));
-                    const tierB = parseInt(b.getAttribute('data-tier'));
-                    return isDescending ? tierB - tierA : tierA - tierB;
-                });
-
-                cardsArray.forEach((card, index) => {
-                    card.style.transition = 'none';
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    
-                    gridContainer.appendChild(card);
-                    
-                    setTimeout(() => {
-                        card.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, box-shadow 0.4s ease, background 0.4s ease';
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, 50 * index);
-                });
-            });
-
-            // 6. RESALTADO DESDE BUSCADOR DE INDEX
-            const urlHash = window.location.hash.substring(1);
-            if(urlHash) {
-                const targetElement = document.getElementById(urlHash);
-                if(targetElement) {
-                    setTimeout(() => {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        targetElement.classList.add('highlight-target');
-                        setTimeout(() => {
-                            targetElement.classList.remove('highlight-target');
-                            history.replaceState(null, null, ' ');
-                        }, 4000);
-                    }, 600); 
-                }
+            // LÓGICA DEL TEMA (DARK/LIGHT MODE)
+            const themeCheckbox = document.getElementById('themeToggleCheckbox');
+            const currentTheme = localStorage.getItem('tecnotrade-theme') || 'light';
+            
+            if (currentTheme === 'dark') {
+                themeCheckbox.checked = true;
             }
 
-            // 7. RELOJ PROMOCIONAL DINÁMICO
+            themeCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('tecnotrade-theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('tecnotrade-theme', 'light');
+                }
+            });
+
+            // LÓGICA DEL MENÚ LATERAL (SIDEBAR)
+            const openMenuBtn = document.getElementById('openMenuBtn');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const sidebarMenu = document.getElementById('sidebarMenu');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+            function openSidebar() {
+                sidebarMenu.classList.add('active');
+                sidebarOverlay.classList.add('active');
+            }
+
+            function closeSidebar() {
+                sidebarMenu.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            }
+
+            openMenuBtn.addEventListener('click', openSidebar);
+            closeMenuBtn.addEventListener('click', closeSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+
+            // CONTROLADOR SPA DE APERTURA INTEGRAL (FADE TRANSITION)
+            const systemLoader = document.getElementById('globalPageLoader');
+            setTimeout(() => { 
+                systemLoader.style.opacity = '0'; 
+            }, 60);
+
+            const spaInteractionTriggers = document.querySelectorAll('.core-spa-link');
+            spaInteractionTriggers.forEach(elementLink => {
+                elementLink.addEventListener('click', function(clickEvent) {
+                    clickEvent.preventDefault();
+                    const targetPageDestination = this.getAttribute('href');
+                    
+                    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                    systemLoader.style.backgroundColor = isDark ? '#030509' : '#ffffff';
+                    systemLoader.style.opacity = '1'; 
+                    
+                    setTimeout(() => {
+                        window.location.assign(targetPageDestination);
+                    }, 420); 
+                });
+            });
+
+            // BASE DE DATOS DEL INVENTARIO 1:1 CON EL CATÁLOGO (36 MODELOS)
+            const tecnotradeInventoryDatabase = [
+                { name: "Samsung Galaxy Series", id: "android-samsung" },
+                { name: "Honor Multi-Brand", id: "android-honor" },
+                { name: "Xiaomi", id: "android-xiaomi" },
+                { name: "Google Pixel", id: "android-pixel" },
+                { name: "Redmi Note", id: "android-redmi" },
+                { name: "iPhone 17", id: "iphone-17" },
+                { name: "iPhone 17 Plus", id: "iphone-17-plus" },
+                { name: "iPhone 17 Pro", id: "iphone-17-pro" },
+                { name: "iPhone 17 Pro Max", id: "iphone-17-pro-max" },
+                { name: "iPhone 16", id: "iphone-16" },
+                { name: "iPhone 16 Plus", id: "iphone-16-plus" },
+                { name: "iPhone 16 Pro", id: "iphone-16-pro" },
+                { name: "iPhone 16 Pro Max", id: "iphone-16-pro-max" },
+                { name: "iPhone 15", id: "iphone-15" },
+                { name: "iPhone 15 Plus", id: "iphone-15-plus" },
+                { name: "iPhone 15 Pro", id: "iphone-15-pro" },
+                { name: "iPhone 15 Pro Max", id: "iphone-15-pro-max" },
+                { name: "iPhone 14", id: "iphone-14" },
+                { name: "iPhone 14 Plus", id: "iphone-14-plus" },
+                { name: "iPhone 14 Pro", id: "iphone-14-pro" },
+                { name: "iPhone 14 Pro Max", id: "iphone-14-pro-max" },
+                { name: "iPhone 13 Mini", id: "iphone-13-mini" },
+                { name: "iPhone 13", id: "iphone-13" },
+                { name: "iPhone 13 Pro", id: "iphone-13-pro" },
+                { name: "iPhone 13 Pro Max", id: "iphone-13-pro-max" },
+                { name: "iPhone 12 Mini", id: "iphone-12-mini" },
+                { name: "iPhone 12", id: "iphone-12" },
+                { name: "iPhone 12 Pro", id: "iphone-12-pro" },
+                { name: "iPhone 12 Pro Max", id: "iphone-12-pro-max" },
+                { name: "iPhone 11", id: "iphone-11" },
+                { name: "iPhone 11 Pro", id: "iphone-11-pro" },
+                { name: "iPhone 11 Pro Max", id: "iphone-11-pro-max" },
+                { name: "iPhone X", id: "iphone-x" },
+                { name: "iPhone XR", id: "iphone-xr" },
+                { name: "iPhone XS", id: "iphone-xs" },
+                { name: "iPhone XS Max", id: "iphone-xs-max" }
+            ];
+
+            const coreSearchInput = document.getElementById('mainCoreSearch');
+            const searchDropdownEngine = document.getElementById('searchDropdownEngine');
+            const transitionOverlayFrame = document.getElementById('globalPageLoader'); 
+
+            // MOTOR LOGÍSTICO DE FILTRADO CON CONTEXTO
+            coreSearchInput.addEventListener('input', function() {
+                const dataStringQuery = this.value.toLowerCase().trim();
+                searchDropdownEngine.innerHTML = ''; 
+
+                if (dataStringQuery.length > 0) {
+                    const searchMatchesFiltered = tecnotradeInventoryDatabase.filter(inventoryItem => 
+                        inventoryItem.name.toLowerCase().includes(dataStringQuery)
+                    );
+
+                    if (searchMatchesFiltered.length > 0) {
+                        searchDropdownEngine.style.display = 'block'; 
+                        
+                        searchMatchesFiltered.forEach(matchedItem => {
+                            const suggestionRowNode = document.createElement('div');
+                            suggestionRowNode.className = 'search-row-item';
+                            suggestionRowNode.innerHTML = `<span>${matchedItem.name}</span> <span class="search-row-item-arrow">▶</span>`;
+                            
+                            suggestionRowNode.onclick = function() {
+                                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                                transitionOverlayFrame.style.backgroundColor = isDark ? '#030509' : '#ffffff';
+                                transitionOverlayFrame.style.opacity = '1';
+                                setTimeout(() => { 
+                                    window.location.assign(`catalogo.html#${matchedItem.id}`); 
+                                }, 420);
+                            };
+                            searchDropdownEngine.appendChild(suggestionRowNode);
+                        });
+                    } else {
+                        searchDropdownEngine.style.display = 'block';
+                        searchDropdownEngine.innerHTML = `<div class="search-row-item" style="color: var(--text-secondary); justify-content: center; font-weight: 500;">No se encontraron coincidencias</div>`;
+                    }
+                } else {
+                    searchDropdownEngine.style.display = 'none';
+                }
+            });
+
+            document.addEventListener('click', function(clickEventInterceptor) {
+                if (!coreSearchInput.contains(clickEventInterceptor.target) && !searchDropdownEngine.contains(clickEventInterceptor.target)) {
+                    searchDropdownEngine.style.display = 'none';
+                }
+            });
+
+            // SISTEMA DINÁMICO DE CUENTA REGRESIVA DE CUPONES
             function initializingPromoTimer() {
                 const currentServerDate = new Date();
                 const targetDeadlineLimit = new Date();
+                
                 targetDeadlineLimit.setDate(currentServerDate.getDate() + 2);
                 targetDeadlineLimit.setHours(23, 59, 59, 0);
 
@@ -756,12 +770,38 @@
                     const renderStringFormatted = `${calculatedHours.toString().padStart(2, '0')}h : ${calculatedMinutes.toString().padStart(2, '0')}m : <span>${calculatedSeconds.toString().padStart(2, '0')}s</span>`;
                     document.getElementById("promoTimer").innerHTML = renderStringFormatted;
                 }
+
                 executionUpdateClock();
                 setInterval(executionUpdateClock, 1000);
             }
-            if(document.getElementById("promoTimer")) {
-                initializingPromoTimer();
+            initializingPromoTimer();
+
+            // --- NÚCLEO DE SCROLL OPTIMIZADO (SOLO ENFOQUE DIGITAL DE DETALLE) ---
+            let latestScrollY = 0;
+            let ticking = false;
+
+            function updateBackgroundBlur(scrollPos) {
+                // AJUSTES DE CALIBRACIÓN DEL DESENFOQUE
+                const maxBlur = 15; // Un desenfoque ligeramente más profundo para mejorar la lectura
+                const sensitivity = 0.05; 
+                const calculatedBlur = Math.min(scrollPos * sensitivity, maxBlur);
+                
+                // Actualiza únicamente la propiedad de desenfoque, eliminando la rotación matemática continua
+                document.documentElement.style.setProperty('--scroll-blur', `${calculatedBlur}px`);
             }
+
+            window.addEventListener('scroll', () => {
+                latestScrollY = window.scrollY;
+
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        updateBackgroundBlur(latestScrollY);
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+
         });
     </script>
 </body>
