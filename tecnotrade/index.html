@@ -123,7 +123,6 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-base); z-index: 99999;
             pointer-events: none; opacity: 1;
-            /* Seguro: Obliga a desaparecer la pantalla blanca después de 0.6s aunque falle algo */
             animation: forceFadeOut 0.6s 0.1s forwards cubic-bezier(0.16, 1, 0.3, 1);
             transition: background-color 0.5s ease;
         }
@@ -131,7 +130,7 @@
             to { opacity: 0; visibility: hidden; }
         }
 
-        /* 1. AURORAS FLUIDAS BASE */
+        /* 1. AURORAS FLUIDAS BASE (OPTIMIZADAS CON GRADIENTES RADIALES NATIVOS) */
         .ambient-canvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
             z-index: 1; 
@@ -139,40 +138,43 @@
             transition: background-color 0.4s ease;
         }
         .liquid-orb {
-            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.8;
+            position: absolute; border-radius: 50%; opacity: 0.8;
             will-change: transform; animation: moveOrb 25s infinite alternate ease-in-out;
         }
-        .orb-sapphire { width: 55vw; height: 55vw; background: rgba(0, 113, 227, 0.12); top: -15%; left: -10%; }
-        .orb-cyan     { width: 60vw; height: 60vw; background: rgba(0, 198, 214, 0.10); bottom: -25%; right: -15%; animation-delay: -6s; animation-duration: 28s; }
-        .orb-amethyst { width: 48vw; height: 48vw; background: rgba(189, 0, 255, 0.05); top: 35%; left: 25%; animation-delay: -12s; animation-duration: 32s; }
+        .orb-sapphire { width: 55vw; height: 55vw; background: radial-gradient(circle, rgba(0, 113, 227, 0.12) 0%, rgba(0, 113, 227, 0) 70%); top: -15%; left: -10%; }
+        .orb-cyan     { width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(0, 198, 214, 0.10) 0%, rgba(0, 198, 214, 0) 70%); bottom: -25%; right: -15%; animation-delay: -6s; animation-duration: 28s; }
+        .orb-amethyst { width: 48vw; height: 48vw; background: radial-gradient(circle, rgba(189, 0, 255, 0.05) 0%, rgba(189, 0, 255, 0) 70%); top: 35%; left: 25%; animation-delay: -12s; animation-duration: 32s; }
 
         @keyframes moveOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(6vw, 8vh) scale(1.08); }
-            100% { transform: translate(-3vw, 4vh) scale(0.92); }
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            50% { transform: translate3d(6vw, 8vh, 0) scale(1.08); }
+            100% { transform: translate3d(-3vw, 4vh, 0) scale(0.92); }
         }
 
-       /* --- RENDERING SEGURO DEL ANILLO (SIN CRASH EN CELULARES) --- */
+        /* --- RENDERING SEGURO DEL ANILLO (OPTIMIZADO CON ASIGNACIÓN DE GPU + EXTENSIÓN) --- */
         .ps5-wheel-canvas {
             position: fixed;
             top: 50%;
             left: 50%;
             width: 150vmax; 
-            height: 230vmax; /* <-- 1. AUMENTAMOS LA ALTURA PARA ESTIRARLA Y SACAR LOS BORDES DE LA PANTALLA */
+            height: 230vmax; 
             background: url('file_0000000098dc71f5b7616aa89d7b3b66.png') center center no-repeat;
-            background-size: 100% 100%; /* <-- 2. FORZAMOS EL ESTIRAMIENTO DE LA IMAGEN DE ALTURA */
+            background-size: 100% 100%; 
             z-index: 2; 
             pointer-events: none; 
             transform: translate(-50%, -50%) rotateX(72deg) rotateZ(0deg);
             will-change: transform; 
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
             opacity: 0.85; 
-            transition: filter 0.4s ease, opacity 0.4s ease;
+            transition: opacity 0.4s ease;
             mix-blend-mode: multiply; 
+            filter: blur(var(--scroll-blur, 0px));
         }
 
         [data-theme="dark"] .ps5-wheel-canvas {
             opacity: 0.4;
-            filter: invert(1) brightness(0.8) contrast(1.2) saturate(1.1);
+            filter: invert(1) brightness(0.8) contrast(1.2) saturate(1.1) blur(var(--scroll-blur, 0px));
             mix-blend-mode: screen; 
         }
 
@@ -289,13 +291,12 @@
             letter-spacing: -0.5px; color: var(--text-primary);
         }
 
-        /* GRID CATEGORÍAS MACSTORE CANVAS 2x2 */
+        /* GRID CATEGORÍAS MACSTORE CANVAS 2x2 (REMOCIÓN DE TRAS-DESENFOQUE EXCESIVO PARA DESEMPEÑO) */
         .categories-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 24px; margin-bottom: 36px; }
         .matrix-glass-card {
             background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 28px;
             padding: 24px 16px; text-decoration: none; color: var(--text-primary);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             transition: var(--transition-smooth); box-shadow: var(--shadow-sm);
         }
         .matrix-glass-card:hover {
@@ -324,7 +325,7 @@
         .promo-ticking-wrapper { padding: 0 24px; margin-bottom: 36px; }
         .promo-ticking-card {
             background: var(--card-glass); border: 1px solid rgba(0, 176, 80, 0.3); border-radius: 26px;
-            padding: 20px; backdrop-filter: blur(20px); box-shadow: var(--shadow-sm);
+            padding: 20px; box-shadow: var(--shadow-sm);
             display: flex; flex-direction: column; gap: 12px; position: relative; transition: background 0.4s ease, border-color 0.4s ease;
         }
         .promo-header-info { display: flex; align-items: center; justify-content: space-between; width: 100%; }
@@ -338,7 +339,7 @@
         .trust-architecture-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px; margin-bottom: 36px; }
         .trust-capsule {
             background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 18px;
-            padding: 16px 10px; text-align: center; backdrop-filter: blur(10px); transition: background 0.4s ease;
+            padding: 16px 10px; text-align: center; transition: background 0.4s ease;
         }
         .trust-icon-wrap { width: 28px; height: 28px; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; color: var(--apple-blue); }
         .trust-icon-wrap svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
@@ -349,7 +350,7 @@
         .feedback-slider-wrapper { padding: 0 24px; margin-bottom: 20px; }
         .feedback-card {
             background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 22px;
-            padding: 18px; backdrop-filter: blur(20px); box-shadow: var(--shadow-sm); transition: background 0.4s ease;
+            padding: 18px; box-shadow: var(--shadow-sm); transition: background 0.4s ease;
         }
         .feedback-user-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
         .user-stars { color: #ffcc00; font-size: 14px; letter-spacing: 1px; }
@@ -382,6 +383,14 @@
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 10px rgba(255,59,48,0.3); border: 2px solid var(--bg-base);
             transition: border 0.4s ease;
+        }
+
+        /* OPTIMIZACIÓN DE RENDERIZADO INTELIGENTE FUERA DE PANTALLA */
+        .categories-matrix-grid, 
+        .lower-modules-pc-flex, 
+        .trust-architecture-row {
+            content-visibility: auto;
+            contain-intrinsic-size: 400px;
         }
 
         /* ADAPTACIÓN TOTAL ESCRITORIO DE GAMA ALTA (PC) */
@@ -774,15 +783,23 @@
             }
             initializingPromoTimer();
 
-            // --- MOTOR DE ROTACIÓN SEGURO (PS5 WAVE ORBITAL) ---
+            // --- MOTOR DE ROTACIÓN SEGURO CON CONTROL DE DESENFOQUE AL HACER SCROLL ---
             const ps5Wheel = document.getElementById('ps5Wheel');
             let latestScrollY = 0;
             let ticking = false;
 
             function updateWheelRotation(scrollPos) {
                 const rotationDegrees = scrollPos * 0.07; 
+                
+                // AJUSTES DE CALIBRACIÓN DEL EFECTO BLUR
+                const maxBlur = 12; // Máximo desenfoque en píxeles
+                const sensitivity = 0.04; // Sensibilidad del incremento del desenfoque
+                const calculatedBlur = Math.min(scrollPos * sensitivity, maxBlur);
+                
+                // Sincronizamos la variable CSS en tiempo real con el scroll del usuario
+                document.documentElement.style.setProperty('--scroll-blur', `${calculatedBlur}px`);
+
                 if(ps5Wheel) {
-                    // Ahora usa una rotación fija segura que tu teléfono puede renderizar sin bloquearse
                     ps5Wheel.style.transform = `translate(-50%, -50%) rotateX(72deg) rotateZ(${rotationDegrees}deg)`;
                 }
             }
