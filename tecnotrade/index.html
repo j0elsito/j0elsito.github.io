@@ -152,28 +152,26 @@
             100% { transform: translate(-3vw, 4vh) scale(0.92); }
         }
 
-        /* --- RENDERING SEGURO DEL ANILLO (SIN CRASH EN CELULARES) --- */
+       /* --- RENDERING SEGURO DEL ANILLO (SIN CRASH EN CELULARES) --- */
         .ps5-wheel-canvas {
             position: fixed;
             top: 50%;
             left: 50%;
-            width: 150vmax; /* Tamaño ajustado para no colapsar la memoria de Android */
-            height: 150vmax;
+            width: 150vmax; 
+            height: 230vmax; /* <-- 1. AUMENTAMOS LA ALTURA PARA ESTIRARLA Y SACAR LOS BORDES DE LA PANTALLA */
             background: url('file_0000000098dc71f5b7616aa89d7b3b66.png') center center no-repeat;
-            background-size: contain;
+            background-size: 100% 100%; /* <-- 2. FORZAMOS EL ESTIRAMIENTO DE LA IMAGEN DE ALTURA */
             z-index: 2; 
             pointer-events: none; 
-            /* Se eliminó perspective() para usar renderizado 2D seguro. Mismo efecto visual, cero crash. */
             transform: translate(-50%, -50%) rotateX(72deg) rotateZ(0deg);
             will-change: transform; 
             opacity: 0.85; 
             transition: filter 0.4s ease, opacity 0.4s ease;
-            mix-blend-mode: multiply; /* FUSIONA EL FONDO BLANCO DE LA IMAGEN EN MODO CLARO */
+            mix-blend-mode: multiply; 
         }
 
         [data-theme="dark"] .ps5-wheel-canvas {
             opacity: 0.4;
-            /* INVERTIMOS LA IMAGEN EN NEGATIVO PARA VOLVER TRANSPARENTE EL FONDO OSCURO */
             filter: invert(1) brightness(0.8) contrast(1.2) saturate(1.1);
             mix-blend-mode: screen; 
         }
