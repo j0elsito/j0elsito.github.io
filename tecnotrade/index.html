@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- ETIQUETAS ANTI-CACHÉ -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -169,11 +168,14 @@
             will-change: transform; 
             opacity: 0.85; 
             transition: filter 0.4s ease, opacity 0.4s ease;
+            mix-blend-mode: multiply; /* FUSIONA EL FONDO BLANCO DE LA IMAGEN EN MODO CLARO */
         }
 
         [data-theme="dark"] .ps5-wheel-canvas {
             opacity: 0.4;
-            filter: brightness(0.8) contrast(1.2) saturate(1.1);
+            /* INVERTIMOS LA IMAGEN EN NEGATIVO PARA VOLVER TRANSPARENTE EL FONDO OSCURO */
+            filter: invert(1) brightness(0.8) contrast(1.2) saturate(1.1);
+            mix-blend-mode: screen; 
         }
 
         /* CONTENEDOR MAESTRO DEL CONTENIDO */
@@ -313,8 +315,10 @@
         .hifi-svg-icon { width: 36px; height: 36px; stroke: var(--text-primary); stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: var(--transition-fast); }
         .matrix-glass-card:hover .hifi-svg-icon { stroke: var(--apple-blue); transform: scale(1.05); }
         
-        @keyframes spinEngine { 100% { transform: scale(1.05) rotate(360deg); } }
-        .matrix-glass-card:hover .hifi-svg-icon.gear-animated { animation: spinEngine 8s linear infinite; }
+        @media (min-width: 768px) {
+            @keyframes spinEngine { 100% { transform: scale(1.05) rotate(360deg); } }
+            .matrix-glass-card:hover .hifi-svg-icon.gear-animated { animation: spinEngine 8s linear infinite; }
+        }
 
         .matrix-card-title { font-size: 15px; font-weight: 700; margin: 0; text-align: center; letter-spacing: -0.2px; }
 
@@ -412,17 +416,14 @@
 
     <div class="page-loader-overlay" id="globalPageLoader"></div>
 
-    <!-- 1. AURORAS FLUIDAS -->
     <div class="ambient-canvas">
         <div class="liquid-orb orb-sapphire"></div>
         <div class="liquid-orb orb-cyan"></div>
         <div class="liquid-orb orb-amethyst"></div>
     </div>
 
-    <!-- 2. LA RUEDA INTERACTIVA 3D PS5 WAVES (RENDERING SEGURO PARA MÓVILES) -->
     <div class="ps5-wheel-canvas" id="ps5Wheel"></div>
 
-    <!-- 3. MENÚ LATERAL -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <aside class="sidebar-menu" id="sidebarMenu">
         <div class="sidebar-header">
@@ -459,7 +460,6 @@
         </div>
     </aside>
 
-    <!-- 4. CONTENEDOR MAESTRO DEL CONTENIDO -->
     <div class="app-layout-container">
         
         <header class="mac-navbar">
@@ -576,7 +576,6 @@
 
     </div> 
     
-    <!-- BARRA DOCK FLOTANTE -->
     <nav class="interfacial-dock-nav">
         <a href="index.html" class="dock-action-tab tab-active">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
