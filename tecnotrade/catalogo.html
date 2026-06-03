@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="color-scheme" content="light only">
     <meta name="theme-color" content="#f5f5f7">
     
     <title>TecnoTrade | Catálogo Completo y Cotizaciones</title>
+    
+    <script>
+        const savedTheme = localStorage.getItem('tecnotrade-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
     
     <style>
         /* ==========================================================================
@@ -29,6 +38,19 @@
             --transition-fast: all 0.2s ease;
         }
 
+        /* --- PALETA MODO OSCURO DINÁMICA (COPIA DE INDEX) --- */
+        [data-theme="dark"] {
+            --bg-base: #000000;
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --apple-blue: #2997ff;
+            --apple-blue-hover: #147ce5;
+            --apple-blue-glow: rgba(41, 151, 255, 0.2);
+            --card-glass: rgba(28, 28, 30, 0.75);
+            --card-glass-pure: #1c1c1e;
+            --border-subtle: rgba(255, 255, 255, 0.15);
+        }
+
         /* ==========================================================================
            2. RESET & GLOBAL ARCHITECTURE
            ========================================================================== */
@@ -48,6 +70,7 @@
             -webkit-font-smoothing: antialiased; 
             overflow-x: hidden; 
             overflow-y: auto;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
         .app-layout-container { 
@@ -60,33 +83,34 @@
         }
 
         /* ==========================================================================
-           3. CINEMATIC EFFECTS & AMBIENT CANVAS
+           3. CINEMATIC EFFECTS & AMBIENT CANVAS (OPTIMIZADO CERO CPU)
            ========================================================================== */
-        /* Fundido Negro de Entrada (Conecta con Index) */
         .page-loader-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #030509; 
+            background-color: var(--bg-base); 
             z-index: 99999; 
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
-            pointer-events: none; 
-            opacity: 1;
+            transition: background-color 0.5s ease;
+            pointer-events: none; opacity: 1;
+            animation: forceFadeOut 0.6s 0.1s forwards cubic-bezier(0.16, 1, 0.3, 1);
         }
+        @keyframes forceFadeOut { to { opacity: 0; visibility: hidden; } }
 
-        /* Auroras CSS Inquebrantables */
+        /* Auroras con Gradientes Nativos (Sin blur destructivo) */
         .ambient-canvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3;
-            background-color: #f5f5f7; overflow: hidden; pointer-events: none;
+            background-color: var(--bg-base); overflow: hidden; pointer-events: none;
+            transition: background-color 0.4s ease;
         }
         .liquid-orb {
-            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.8;
+            position: absolute; border-radius: 50%; opacity: 0.8;
             will-change: transform; animation: moveOrb 25s infinite alternate ease-in-out;
         }
-        .orb-sapphire { width: 55vw; height: 55vw; background: rgba(0, 113, 227, 0.12); top: -10%; left: -10%; }
-        .orb-cyan     { width: 60vw; height: 60vw; background: rgba(0, 198, 214, 0.08); bottom: -20%; right: -10%; animation-delay: -5s; }
+        .orb-sapphire { width: 55vw; height: 55vw; background: radial-gradient(circle, rgba(0, 113, 227, 0.12) 0%, rgba(0, 113, 227, 0) 70%); top: -10%; left: -10%; }
+        .orb-cyan     { width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(0, 198, 214, 0.08) 0%, rgba(0, 198, 214, 0) 70%); bottom: -20%; right: -10%; animation-delay: -5s; }
         
         @keyframes moveOrb {
-            0% { transform: translate(0,0) scale(1); }
-            100% { transform: translate(5vw, 5vh) scale(1.1); }
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            100% { transform: translate3d(5vw, 5vh, 0) scale(1.1); }
         }
 
         /* ==========================================================================
@@ -95,19 +119,20 @@
         .mac-navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 18px 24px; position: sticky; top: 0; z-index: 100;
-            background: linear-gradient(to bottom, rgba(245,245,247,0.96) 0%, rgba(245,245,247,0.7) 80%, transparent 100%);
+            background: linear-gradient(to bottom, var(--bg-base) 0%, rgba(245,245,247,0) 100%);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            transition: background 0.4s ease;
         }
         .navbar-action-btn { 
             background: transparent; border: none; cursor: pointer; color: var(--text-primary); 
-            transition: transform 0.2s; display: flex; align-items: center; justify-content: center;
+            transition: transform 0.2s, color 0.4s ease; display: flex; align-items: center; justify-content: center;
         }
         .navbar-action-btn:active { transform: scale(0.85); }
         .navbar-action-btn svg { width: 24px; height: 24px; fill: currentColor; }
         
         .navbar-brand-block { display: flex; align-items: center; gap: 10px; text-decoration: none; }
         .brand-avatar { width: 34px; height: 34px; border-radius: 9px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-subtle); }
-        .brand-title { font-size: 20px; font-weight: 800; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; }
+        .brand-title { font-size: 20px; font-weight: 800; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; transition: color 0.4s ease; }
         .brand-title span { color: var(--apple-blue); font-weight: 900; }
 
         /* ==========================================================================
@@ -117,73 +142,78 @@
         .catalog-main-title { font-size: 34px; font-weight: 900; margin: 0 0 16px 0; letter-spacing: -1px; }
         
         .sort-control-pill {
-            background: rgba(255, 255, 255, 0.7); border: 1px solid var(--border-subtle);
+            background: var(--card-glass); border: 1px solid var(--border-subtle);
             border-radius: 30px; padding: 10px 22px; display: inline-flex; align-items: center; gap: 8px;
             font-size: 13px; font-weight: 700; color: var(--apple-blue); cursor: pointer;
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.03); transition: var(--transition-smooth);
         }
-        .sort-control-pill:hover { background: #ffffff; box-shadow: 0 10px 25px rgba(0, 113, 227, 0.1); }
+        .sort-control-pill:hover { background: var(--card-glass-pure); box-shadow: 0 10px 25px var(--apple-blue-glow); }
         .sort-control-pill:active { transform: scale(0.95); }
         .sort-control-pill svg { width: 16px; height: 16px; fill: currentColor; transition: transform 0.4s; }
         .sort-control-pill.asc svg { transform: rotate(180deg); }
 
         /* ==========================================================================
-           6. CATALOG MATRIX GRID & SPOTLIGHT EFFECT (AWWWARDS STYLE)
+           6. CATALOG MATRIX GRID & SPOTLIGHT EFFECT
            ========================================================================== */
         .catalog-matrix-grid { 
             display: flex; flex-direction: column; gap: 24px; padding: 0 24px 40px 24px; 
+            content-visibility: auto; contain-intrinsic-size: 800px;
         }
         
         .matrix-glass-card {
             background: var(--card-glass); 
-            border: 1px solid #ffffff; 
+            border: 1px solid var(--border-subtle); 
             border-radius: 32px;
             padding: 24px; 
             display: flex; 
             flex-direction: column;
-            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             box-shadow: var(--shadow-md); 
-            position: relative; overflow: hidden; /* Vital para el Spotlight */
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, box-shadow 0.4s ease;
+            position: relative; overflow: hidden; 
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, box-shadow 0.4s ease, background 0.4s ease;
         }
 
-        /* Efecto Magnético (Spotlight) */
         .matrix-glass-card::before {
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(0, 113, 227, 0.08), transparent 40%);
             opacity: 0; transition: opacity 0.4s; z-index: 0; pointer-events: none;
         }
         .matrix-glass-card:hover::before { opacity: 1; }
-        .matrix-glass-card > * { position: relative; z-index: 1; } /* Mantiene contenido sobre la luz */
+        .matrix-glass-card > * { position: relative; z-index: 1; } 
         
         .matrix-glass-card:hover { 
             box-shadow: var(--shadow-lg); 
             transform: translateY(-4px); 
-            border-color: rgba(0, 113, 227, 0.2); 
-            background: rgba(255, 255, 255, 0.9);
+            border-color: var(--apple-blue); 
+            background: var(--card-glass-pure);
         }
 
-        /* Scroll Reveal Animations */
         .reveal-hidden { opacity: 0; transform: translateY(40px); }
         .reveal-visible { opacity: 1; transform: translateY(0); }
 
         /* ==========================================================================
-           7. PRODUCT VISUALS (VECTOR PHONES) & HIGHLIGHTS
+           7. PRODUCT VISUALS (VECTOR PHONES)
            ========================================================================== */
         .image-visual-space {
             width: 100%; height: 140px; background: rgba(0,0,0,0.02);
             border-radius: 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center;
         }
+        [data-theme="dark"] .image-visual-space { background: rgba(255,255,255,0.02); }
+
         .vector-phone {
             width: 70px; height: 130px; border: 3px solid #d2d2d7; border-radius: 16px; 
-            position: relative; background: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative; background: var(--bg-base); box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, border-color 0.4s ease;
         }
+        [data-theme="dark"] .vector-phone { border-color: #333336; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
         .vector-phone::before { 
             content: ''; position: absolute; top: 10px; left: 10px; width: 22px; height: 40px; 
             border: 2px solid #e5e5ea; border-radius: 6px; background: var(--bg-base);
+            transition: background 0.4s ease, border-color 0.4s ease;
         }
+        [data-theme="dark"] .vector-phone::before { border-color: #48484a; }
+
         .matrix-glass-card:hover .vector-phone { transform: scale(1.05) rotate(2deg); } 
 
         .card-tag { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--apple-blue); margin-bottom: 8px; display: block; }
@@ -196,7 +226,7 @@
         .list-container { display: flex; flex-direction: column; gap: 12px; }
         .interactive-row {
             display: flex; justify-content: space-between; align-items: center;
-            background: #ffffff; padding: 18px 20px;
+            background: var(--card-glass-pure); padding: 18px 20px;
             border-radius: 20px; border: 1px solid var(--border-subtle);
             text-decoration: none; color: var(--text-primary); transition: var(--transition-fast);
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
@@ -204,7 +234,7 @@
         .interactive-row:hover { 
             transform: translateX(5px); 
             border-color: rgba(0, 113, 227, 0.3); 
-            background: rgba(0, 113, 227, 0.02); 
+            background: var(--apple-blue-glow); 
             box-shadow: 0 6px 15px rgba(0, 113, 227, 0.08);
         }
         .interactive-row:active { transform: scale(0.97); }
@@ -215,52 +245,48 @@
         }
         .android-card .model-price { background: rgba(0, 176, 80, 0.1); color: #00b050; }
 
-        /* EFECTO DE RESALTADO DEL BUSCADOR DE INDEX */
         .highlight-target {
             border-color: var(--apple-blue) !important; box-shadow: 0 0 0 4px var(--apple-blue-glow) !important;
-            animation: highlightPulse 2s ease-in-out infinite; background: rgba(0, 113, 227, 0.03) !important;
+            animation: highlightPulse 2s ease-in-out infinite; background: var(--apple-blue-glow) !important;
         }
         @keyframes highlightPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
 
         /* ==========================================================================
-           9. COMMERCIAL PRODUCTION MODULES (OFERTAS, TESTIMONIOS, GARANTÍAS)
+           9. COMMERCIAL PRODUCTION MODULES
            ========================================================================== */
         .module-section-header {
             font-size: 20px; font-weight: 800; padding: 0 24px; margin: 0 0 18px 0;
             letter-spacing: -0.5px; color: var(--text-primary);
         }
 
-        /* Promoción con Reloj */
         .promo-ticking-wrapper { padding: 0 24px; margin-bottom: 36px; }
         .promo-ticking-card {
-            background: var(--card-glass); border: 1px solid rgba(0, 176, 80, 0.2); border-radius: 26px;
-            padding: 20px; backdrop-filter: blur(20px); box-shadow: var(--shadow-sm);
-            display: flex; flex-direction: column; gap: 12px; position: relative;
+            background: var(--card-glass); border: 1px solid rgba(0, 176, 80, 0.3); border-radius: 26px;
+            padding: 20px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px; position: relative;
+            transition: background 0.4s ease, border-color 0.4s ease;
         }
         .promo-header-info { display: flex; align-items: center; justify-content: space-between; }
         .promo-badge { background: rgba(0, 176, 80, 0.1); color: #00b050; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 8px; }
-        .countdown-clock { display: flex; gap: 4px; font-size: 12px; font-weight: 700; color: var(--text-primary); background: #ffffff; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border-subtle); }
+        .countdown-clock { display: flex; gap: 4px; font-size: 12px; font-weight: 700; color: var(--text-primary); background: var(--card-glass-pure); padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border-subtle); transition: background 0.4s ease; }
         .countdown-clock span { color: #ff3b30; }
         .promo-main-msg { font-size: 16px; font-weight: 800; margin: 0; line-height: 1.3; }
         .promo-sub-msg { font-size: 12px; color: var(--text-secondary); margin: 0; }
 
-        /* Testimonios */
         .feedback-slider-wrapper { padding: 0 24px; margin-bottom: 36px; }
         .feedback-card {
             background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 22px;
-            padding: 20px; backdrop-filter: blur(20px); box-shadow: var(--shadow-sm);
+            padding: 20px; box-shadow: var(--shadow-sm); transition: background 0.4s ease, border-color 0.4s ease;
         }
         .feedback-user-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
         .user-stars { color: #ffcc00; font-size: 14px; letter-spacing: 1px; }
         .user-name-title { font-size: 14px; font-weight: 700; margin: 0; }
         .user-location-tag { font-size: 11px; color: var(--text-secondary); }
-        .feedback-quote-text { font-size: 13px; color: #3a3a3c; margin: 0; line-height: 1.5; font-style: italic; }
+        .feedback-quote-text { font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.5; font-style: italic; transition: color 0.4s ease;}
 
-        /* Garantías (Trust Row) */
-        .trust-architecture-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px; margin-bottom: 40px; }
+        .trust-architecture-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px; margin-bottom: 40px; content-visibility: auto; contain-intrinsic-size: 150px;}
         .trust-capsule {
             background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 18px;
-            padding: 16px 10px; text-align: center; backdrop-filter: blur(10px); box-shadow: var(--shadow-sm);
+            padding: 16px 10px; text-align: center; box-shadow: var(--shadow-sm); transition: background 0.4s ease, border-color 0.4s ease;
         }
         .trust-icon-wrap { width: 28px; height: 28px; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; color: var(--apple-blue); }
         .trust-icon-wrap svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
@@ -272,33 +298,31 @@
            ========================================================================== */
         .interfacial-dock-nav {
             position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 420px;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 36px;
+            background: var(--card-glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border-subtle); border-radius: 36px;
             display: flex; justify-content: space-around; padding: 12px 10px; z-index: 10000;
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
             transform: translate3d(-50%, 120%, 0); animation: slideDockUp 0.7s 0.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background 0.4s ease, border-color 0.4s ease;
         }
         @keyframes slideDockUp { to { transform: translate3d(-50%, 0, 0); } }
 
-        .dock-action-tab { display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; color: var(--text-secondary); transition: var(--transition-smooth); }
+        .dock-action-tab { display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; color: var(--text-secondary); transition: var(--transition-smooth); position: relative; }
         .dock-action-tab.tab-active { color: var(--apple-blue); transform: translateY(-4px); }
         .dock-action-tab svg { width: 23px; height: 23px; fill: currentColor; }
         .dock-label-text { font-size: 10px; font-weight: 700; }
-        .dock-cart-indicator { position: absolute; top: -6px; right: -8px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 12px; border: 2px solid #fff; }
+        .dock-cart-indicator { position: absolute; top: -6px; right: -8px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 12px; border: 2px solid var(--bg-base); transition: border-color 0.4s ease; }
 
         /* ==========================================================================
            11. ADAPTACIÓN A PC (ESCRITORIO)
            ========================================================================== */
         @media (min-width: 768px) {
             .app-layout-container { max-width: 1120px; padding-top: 40px; }
-            .mac-navbar { border-radius: 24px; margin: 0 24px 36px 24px; top: 24px; border: 1px solid #fff; box-shadow: var(--shadow-sm); }
+            .mac-navbar { border-radius: 24px; margin: 0 24px 36px 24px; top: 24px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
             .catalog-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; padding: 0 24px 40px 24px;}
-            
-            /* Los módulos inferiores se dividen en 2 columnas en PC */
-            .lower-modules-pc-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 0 24px 40px 24px; }
+            .lower-modules-pc-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 0 24px 40px 24px; content-visibility: auto; contain-intrinsic-size: 200px;}
             .promo-ticking-wrapper, .feedback-slider-wrapper { padding: 0; margin-bottom: 0; }
             .promo-ticking-card, .feedback-card { height: 100%; justify-content: center; }
-            
             .trust-architecture-row { gap: 24px; margin-bottom: 60px; }
             .interfacial-dock-nav { max-width: 480px; padding: 14px 24px; border-radius: 40px; bottom: 32px; }
         }
@@ -306,19 +330,15 @@
 </head>
 <body>
 
-    <!-- OVERLAY OSCURO INICIAL PARA LA TRANSICIÓN -->
     <div class="page-loader-overlay" id="globalPageLoader"></div>
 
-    <!-- ENTORNO CINEMATOGRÁFICO DE AURORAS -->
     <div class="ambient-canvas">
         <div class="liquid-orb orb-sapphire"></div>
         <div class="liquid-orb orb-cyan"></div>
     </div>
 
-    <!-- CONTENEDOR PRINCIPAL DE LA APLICACIÓN -->
     <div class="app-layout-container">
         
-        <!-- HEADER NAVBAR (Estilo MacStore) -->
         <header class="mac-navbar">
             <a href="index.html" class="navbar-action-btn core-spa-link" aria-label="Volver">
                 <svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
@@ -334,19 +354,14 @@
 
         <div class="catalog-header">
             <h2 class="catalog-main-title">Catálogo</h2>
-            <!-- BOTÓN ORGANIZADOR VIRAL -->
             <button id="sortGridBtn" class="sort-control-pill">
                 <svg viewBox="0 0 24 24"><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg>
                 <span>Ordenar: Mayor a Menor</span>
             </button>
         </div>
 
-        <!-- ========================================================
-             MATRIZ DE PRODUCTOS (ORDENABLE POR DATA-TIER)
-             ======================================================== -->
         <main class="catalog-matrix-grid" id="catalogGrid">
 
-            <!-- TIER 99: ANDROID & MULTIMARCAS -->
             <div class="matrix-glass-card android-card reveal-hidden" data-tier="99">
                 <div class="image-visual-space"><div class="vector-phone" style="border-radius: 10px;"></div></div>
                 <div>
@@ -372,7 +387,6 @@
                 </div>
             </div>
 
-            <!-- TIER 17: IPHONE 17 SERIES -->
             <div class="matrix-glass-card reveal-hidden" data-tier="17">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
                 <div>
@@ -395,7 +409,6 @@
                 </div>
             </div>
 
-            <!-- TIER 16: IPHONE 16 SERIES -->
             <div class="matrix-glass-card reveal-hidden" data-tier="16">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
                 <div>
@@ -418,7 +431,6 @@
                 </div>
             </div>
 
-            <!-- TIER 15: IPHONE 15 SERIES -->
             <div class="matrix-glass-card reveal-hidden" data-tier="15">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
                 <div>
@@ -441,7 +453,6 @@
                 </div>
             </div>
 
-            <!-- TIER 14: IPHONE 14 SERIES -->
             <div class="matrix-glass-card reveal-hidden" data-tier="14">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
                 <div>
@@ -464,7 +475,6 @@
                 </div>
             </div>
 
-            <!-- TIER 13: IPHONE 13 SERIES -->
             <div class="matrix-glass-card reveal-hidden" data-tier="13">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
                 <div>
@@ -487,7 +497,6 @@
                 </div>
             </div>
 
-            <!-- TIER 12: IPHONE 12 SERIES -->
             <div class="matrix-glass-card reveal-hidden" data-tier="12">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
                 <div>
@@ -510,7 +519,6 @@
                 </div>
             </div>
 
-            <!-- TIER 11: IPHONE 11 SERIES -->
             <div class="matrix-glass-card reveal-hidden" data-tier="11">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
                 <div>
@@ -530,7 +538,6 @@
                 </div>
             </div>
 
-            <!-- TIER 10: IPHONE X / 10 SERIES -->
             <div class="matrix-glass-card reveal-hidden" data-tier="10">
                 <div class="image-visual-space"><div class="vector-phone"></div></div>
                 <div>
@@ -555,11 +562,7 @@
 
         </main>
 
-        <!-- ========================================================
-             SECCIONES DE VALOR AGREGADO (PRODUCCIÓN COMERCIAL)
-             ======================================================== -->
         <div class="lower-modules-pc-flex">
-            <!-- Reloj de Oferta -->
             <div class="promo-ticking-wrapper">
                 <div class="promo-ticking-card">
                     <div class="promo-header-info">
@@ -571,7 +574,6 @@
                 </div>
             </div>
 
-            <!-- Testimonio Cliente -->
             <div class="feedback-slider-wrapper">
                 <div class="feedback-card">
                     <div class="feedback-user-meta">
@@ -586,7 +588,6 @@
             </div>
         </div>
 
-        <!-- Garantías de Confianza -->
         <h3 class="module-section-header">Garantía TecnoTrade</h3>
         <div class="trust-architecture-row">
             <div class="trust-capsule">
@@ -612,10 +613,7 @@
             </div>
         </div>
 
-    </div> <!-- FIN DEL CONTENEDOR APP -->
-
-    <!-- DOCK NAVBAR FLOTANTE -->
-    <nav class="interfacial-dock-nav">
+    </div> <nav class="interfacial-dock-nav">
         <a href="index.html" class="dock-action-tab core-spa-link">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
             <span class="dock-label-text">Inicio</span>
@@ -635,12 +633,13 @@
         </a>
     </nav>
 
-    <!-- NÚCLEO JS AVANZADO -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // 1. FUNDIDO DE ENTRADA DESDE NEGRO
+            // 1. FUNDIDO DE ENTRADA CON TEMA DINÁMICO
             const systemLoader = document.getElementById('globalPageLoader');
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            systemLoader.style.backgroundColor = isDark ? '#030509' : '#f5f5f7';
             setTimeout(() => { systemLoader.style.opacity = '0'; }, 50);
 
             // 2. Transición de salida al volver al inicio
@@ -648,7 +647,7 @@
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const target = this.getAttribute('href');
-                    systemLoader.style.backgroundColor = '#030509'; 
+                    systemLoader.style.backgroundColor = document.documentElement.getAttribute('data-theme') === 'dark' ? '#030509' : '#f5f5f7'; 
                     systemLoader.style.opacity = '1'; 
                     setTimeout(() => { window.location.assign(target); }, 420); 
                 });
@@ -711,7 +710,7 @@
                     gridContainer.appendChild(card);
                     
                     setTimeout(() => {
-                        card.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease';
+                        card.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, box-shadow 0.4s ease, background 0.4s ease';
                         card.style.opacity = '1';
                         card.style.transform = 'translateY(0)';
                     }, 50 * index);
