@@ -4,26 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- ETIQUETAS ANTI-CACHÉ Y TEMA -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    
     <meta name="color-scheme" content="light only">
     <meta name="theme-color" content="#f5f5f7">
     
     <title>TecnoTrade | Tu Apple Specialist & Multimarcas en Panamá</title>
 
     <script>
-        // Sincronización del tema guardado en el navegador del usuario
         const savedTheme = localStorage.getItem('tecnotrade-theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
     
     <style>
-        /* ==========================================================================
-           1. CORE VARIABLES & THEME (MACSTORE LIGHT)
-           ========================================================================== */
         :root {
+            /* PALETA MACSTORE CLARA - 100% LIGHT THEME */
             --bg-base: #f5f5f7;
             --text-primary: #1d1d1f;
             --text-secondary: #86868b;
@@ -34,6 +31,7 @@
             --card-glass-pure: #ffffff;
             --border-subtle: rgba(0, 0, 0, 0.08);
             
+            /* SOMBRAS Y TRANSICIONES */
             --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
             --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
@@ -54,9 +52,7 @@
             --border-subtle: rgba(255, 255, 255, 0.15);
         }
 
-        /* ==========================================================================
-           2. RESET GENERAL Y CONTENEDORES
-           ========================================================================== */
+        /* RESET GENERAL FORZADO A MODO CLARO */
         *, *::before, *::after {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -69,32 +65,28 @@
             color: var(--text-primary) !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden; overflow-y: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
             transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        .app-layout-container {
-            width: 100%; max-width: 480px; 
-            margin: 0 auto; padding-bottom: 140px; 
-            position: relative; z-index: 10; 
-        }
-
-        /* ==========================================================================
-           3. MENÚ LATERAL (SIDEBAR) & TOGGLE
-           ========================================================================== */
+        /* --- CSS DEL MENÚ LATERAL (SIDEBAR) CORREGIDO DE Z-INDEX --- */
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-            z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            z-index: 10005; /* Aumentado para sobrepasar el dock inferior */
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         .sidebar-overlay.active { opacity: 1; pointer-events: all; }
 
         .sidebar-menu {
             position: fixed; top: 0; left: 0; width: 80%; max-width: 300px; height: 100vh;
             background: var(--card-glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            z-index: 1001; padding: 30px 24px; display: flex; flex-direction: column;
+            z-index: 10006; /* Aumentado para sobrepasar el dock inferior */
+            padding: 30px 24px; display: flex; flex-direction: column;
             box-shadow: 10px 0 30px rgba(0,0,0,0.1); 
-            transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             border-right: 1px solid var(--border-subtle);
         }
         .sidebar-menu.active { transform: translateX(0); }
@@ -112,6 +104,7 @@
         .sidebar-link svg { width: 22px; height: 22px; fill: var(--text-secondary); }
         .sidebar-link:hover svg { fill: var(--apple-blue); }
 
+        /* Interruptor de Tema (Toggle) */
         .theme-toggle-box {
             background: var(--card-glass-pure); border: 1px solid var(--border-subtle);
             border-radius: 20px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
@@ -127,52 +120,81 @@
         input:checked + .slider { background-color: var(--apple-blue); }
         input:checked + .slider:before { transform: translateX(20px); }
 
-        /* ==========================================================================
-           4. FONDOS Y EFECTOS (RENDIMIENTO OPTIMIZADO)
-           ========================================================================== */
+        /* CAPA DE TRANSICIÓN DE PÁGINA */
         .page-loader-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-base); z-index: 99999;
-            pointer-events: none; opacity: 1; transition: background-color 0.5s ease;
+            pointer-events: none; opacity: 1;
             animation: forceFadeOut 0.6s 0.1s forwards cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background-color 0.5s ease;
         }
-        @keyframes forceFadeOut { to { opacity: 0; visibility: hidden; } }
+        @keyframes forceFadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
 
+        /* 1. AURORAS FLUIDAS BASE */
         .ambient-canvas {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; 
-            background-color: var(--bg-base); overflow: hidden; pointer-events: none; transition: background-color 0.4s ease;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
+            z-index: 1; 
+            background-color: var(--bg-base); overflow: hidden; pointer-events: none;
+            transition: background-color 0.4s ease;
         }
-        .liquid-orb { position: absolute; border-radius: 50%; opacity: 0.8; will-change: transform; animation: moveOrb 25s infinite alternate ease-in-out; }
-        .orb-sapphire { width: 55vw; height: 55vw; background: radial-gradient(circle, rgba(0, 113, 227, 0.12) 0%, rgba(0, 113, 227, 0) 70%); top: -15%; left: -10%; }
-        .orb-cyan     { width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(0, 198, 214, 0.10) 0%, rgba(0, 198, 214, 0) 70%); bottom: -25%; right: -15%; animation-delay: -6s; animation-duration: 28s; }
-        .orb-amethyst { width: 48vw; height: 48vw; background: radial-gradient(circle, rgba(189, 0, 255, 0.05) 0%, rgba(189, 0, 255, 0) 70%); top: 35%; left: 25%; animation-delay: -12s; animation-duration: 32s; }
+        .liquid-orb {
+            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.8;
+            will-change: transform; animation: moveOrb 25s infinite alternate ease-in-out;
+        }
+        .orb-sapphire { width: 55vw; height: 55vw; background: rgba(0, 113, 227, 0.12); top: -15%; left: -10%; }
+        .orb-cyan     { width: 60vw; height: 60vw; background: rgba(0, 198, 214, 0.10); bottom: -25%; right: -15%; animation-delay: -6s; animation-duration: 28s; }
+        .orb-amethyst { width: 48vw; height: 48vw; background: rgba(189, 0, 255, 0.05); top: 35%; left: 25%; animation-delay: -12s; animation-duration: 32s; }
 
-        @keyframes moveOrb { 0% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(6vw, 8vh, 0) scale(1.08); } 100% { transform: translate3d(-3vw, 4vh, 0) scale(0.92); } }
+        @keyframes moveOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(6vw, 8vh) scale(1.08); }
+            100% { transform: translate(-3vw, 4vh) scale(0.92); }
+        }
 
-        /* Fondo Animado Estático con Blur Dinámico */
+        /* 2. RUEDA INTERACTIVA PS5 WAVES */
         .ps5-wheel-canvas {
-            position: fixed; top: 50%; left: 50%; width: 100vw; height: 100vh; 
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 150vmax; 
+            height: 150vmax;
             background: url('file_0000000098dc71f5b7616aa89d7b3b66.png') center center no-repeat;
-            background-size: cover; z-index: 2; pointer-events: none; 
-            transform: translate3d(-50%, -50%, 0); will-change: filter; opacity: 0.65; 
-            mix-blend-mode: multiply; filter: blur(var(--scroll-blur, 0px));
+            background-size: contain;
+            z-index: 2; 
+            pointer-events: none; 
+            transform: translate(-50%, -50%) rotateX(72deg) rotateZ(0deg);
+            will-change: transform; 
+            opacity: 0.85; 
+            transition: filter 0.4s ease, opacity 0.4s ease;
         }
 
         [data-theme="dark"] .ps5-wheel-canvas {
-            opacity: 0.25; filter: invert(1) brightness(0.8) contrast(1.2) saturate(1.1) blur(var(--scroll-blur, 0px));
-            mix-blend-mode: screen; 
+            opacity: 0.4;
+            filter: brightness(0.8) contrast(1.2) saturate(1.1);
         }
 
-        /* ==========================================================================
-           5. NAVEGACIÓN SUPERIOR
-           ========================================================================== */
+        /* 3. CONTENEDOR MAESTRO DEL CONTENIDO */
+        .app-layout-container {
+            width: 100%; max-width: 480px; 
+            margin: 0 auto; padding-bottom: 140px; 
+            position: relative; 
+            z-index: 10; 
+        }
+
+        /* TOP NAVIGATION BAR */
         .mac-navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 18px 24px; position: sticky; top: 0; z-index: 100;
             background: linear-gradient(to bottom, var(--bg-base) 0%, rgba(245,245,247,0) 100%);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: background 0.4s ease;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            transition: background 0.4s ease;
         }
-        .navbar-action-btn { background: transparent; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition-fast); }
+        .navbar-action-btn {
+            background: transparent; border: none; padding: 4px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: var(--transition-fast);
+        }
         .navbar-action-btn:active { transform: scale(0.85); opacity: 0.7; }
         .navbar-action-btn svg { width: 24px; height: 24px; fill: var(--text-primary); transition: fill 0.4s ease; }
         
@@ -181,105 +203,165 @@
         .brand-title { font-size: 22px; font-weight: 800; letter-spacing: -0.6px; margin: 0; color: var(--text-primary); transition: color 0.4s ease; }
         .brand-title span { color: var(--apple-blue); font-weight: 900; }
 
-        /* ==========================================================================
-           6. BUSCADOR INTERACTIVO
-           ========================================================================== */
+        /* ADVANCED INTERACTIVE SEARCH ARQUITECTURA */
         .search-engine-wrapper { position: relative; padding: 10px 24px 20px; z-index: 95; }
         .search-inner-box {
-            display: flex; align-items: center; gap: 12px; background: var(--card-glass); border: 1px solid var(--border-subtle);
-            border-radius: 20px; padding: 14px 18px; backdrop-filter: blur(20px); transition: var(--transition-smooth); box-shadow: var(--shadow-sm);
+            display: flex; align-items: center; gap: 12px;
+            background: var(--card-glass); border: 1px solid var(--border-subtle);
+            border-radius: 20px; padding: 14px 18px; backdrop-filter: blur(20px);
+            transition: var(--transition-smooth); box-shadow: var(--shadow-sm);
         }
-        .search-inner-box:focus-within { border-color: var(--apple-blue); background: var(--card-glass-pure); box-shadow: 0 0 0 4px var(--apple-blue-glow); transform: translateY(-2px); }
+        .search-inner-box:focus-within {
+            border-color: var(--apple-blue); background: var(--card-glass-pure);
+            box-shadow: 0 0 0 4px var(--apple-blue-glow); transform: translateY(-2px);
+        }
         .search-inner-box svg { width: 20px; height: 20px; fill: var(--text-secondary); transition: var(--transition-fast); }
         .search-inner-box:focus-within svg { fill: var(--apple-blue); }
-        .search-inner-box input { background: transparent; border: none; color: var(--text-primary); width: 100%; font-size: 15px; font-weight: 500; outline: none; }
+        .search-inner-box input {
+            background: transparent; border: none; color: var(--text-primary);
+            width: 100%; font-size: 15px; font-weight: 500; outline: none;
+        }
         .search-inner-box input::placeholder { color: var(--text-secondary); font-weight: 400; }
         
+        /* DATA SEARCH DROPDOWN GRID */
         .search-results-dropdown {
-            position: absolute; top: calc(100% - 12px); left: 24px; right: 24px; background: var(--card-glass-pure); border: 1px solid var(--border-subtle);
-            border-radius: 20px; padding: 8px 0; backdrop-filter: blur(30px); max-height: 310px; overflow-y: auto; display: none;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.1); scrollbar-width: none; transition: background 0.4s ease, border-color 0.4s ease;
+            position: absolute; top: calc(100% - 12px); left: 24px; right: 24px;
+            background: var(--card-glass-pure); border: 1px solid var(--border-subtle);
+            border-radius: 20px; padding: 8px 0; backdrop-filter: blur(30px);
+            max-height: 310px; overflow-y: auto; display: none;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1); scrollbar-width: none;
+            transition: background 0.4s ease, border-color 0.4s ease;
         }
         .search-results-dropdown::-webkit-scrollbar { display: none; }
-        .search-row-item { padding: 15px 22px; font-size: 14px; font-weight: 600; color: var(--text-primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); transition: var(--transition-fast); }
+        .search-row-item {
+            padding: 15px 22px; font-size: 14px; font-weight: 600; color: var(--text-primary);
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border-subtle); transition: var(--transition-fast);
+        }
         .search-row-item:last-child { border-bottom: none; }
-        .search-row-item:hover, .search-row-item:active { background: var(--apple-blue-glow); color: var(--apple-blue); padding-left: 28px; }
+        .search-row-item:hover, .search-row-item:active {
+            background: var(--apple-blue-glow); color: var(--apple-blue); padding-left: 28px;
+        }
         .search-row-item-arrow { font-size: 11px; color: var(--text-secondary); transition: var(--transition-fast); }
         .search-row-item:hover .search-row-item-arrow { color: var(--apple-blue); transform: translateX(4px); }
 
-        /* ==========================================================================
-           7. ELEMENTOS DE CONTENIDO Y TARJETAS
-           ========================================================================== */
+        /* HERO DISPLAY PANEL */
         .hero-display-canvas { padding: 0 24px; margin-bottom: 32px; }
-        .hero-billboard-card { background: linear-gradient(135deg, var(--card-glass-pure) 0%, var(--bg-base) 100%); border: 1px solid var(--border-subtle); border-radius: 32px; padding: 32px 24px; position: relative; overflow: hidden; box-shadow: var(--shadow-md); transition: background 0.4s ease, border 0.4s ease; }
+        .hero-billboard-card {
+            background: linear-gradient(135deg, var(--card-glass-pure) 0%, var(--bg-base) 100%);
+            border: 1px solid var(--border-subtle); border-radius: 32px; padding: 32px 24px;
+            position: relative; overflow: hidden; box-shadow: var(--shadow-md);
+            transition: background 0.4s ease, border 0.4s ease;
+        }
         .hero-context-panel { position: relative; z-index: 5; max-width: 60%; }
-        .hero-badge-tag { background: var(--text-primary); color: var(--bg-base); font-size: 10px; font-weight: 800; padding: 5px 12px; border-radius: 12px; margin-bottom: 16px; text-transform: uppercase; display: inline-block; letter-spacing: 0.5px; }
+        .hero-badge-tag {
+            background: var(--text-primary); color: var(--bg-base); font-size: 10px; font-weight: 800;
+            padding: 5px 12px; border-radius: 12px; margin-bottom: 16px;
+            text-transform: uppercase; display: inline-block; letter-spacing: 0.5px;
+        }
         .hero-main-title { font-size: 28px; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.7px; line-height: 1.15; color: var(--text-primary); }
         .hero-p-desc { font-size: 13px; color: var(--text-secondary); margin: 0 0 24px 0; line-height: 1.45; }
-        .hero-action-trigger { background: var(--apple-blue); color: #ffffff; border: none; border-radius: 22px; padding: 12px 26px; font-size: 13px; font-weight: 700; display: inline-block; text-decoration: none; transition: var(--transition-fast); box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25); }
+        .hero-action-trigger {
+            background: var(--apple-blue); color: #ffffff; border: none; border-radius: 22px;
+            padding: 12px 26px; font-size: 13px; font-weight: 700; display: inline-block;
+            text-decoration: none; transition: var(--transition-fast); box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25);
+        }
         .hero-action-trigger:hover { background: var(--apple-blue-hover); transform: translateY(-1px); }
         .hero-action-trigger:active { transform: translateY(1px); box-shadow: 0 3px 8px rgba(0, 113, 227, 0.15); }
-        .hero-mockup-render { position: absolute; right: -30px; bottom: -45px; width: 150px; height: 210px; background: linear-gradient(180deg, var(--card-glass-pure) 0%, var(--bg-base) 100%); border: 4px solid var(--card-glass-pure); border-radius: 30px; transform: rotate(-7deg); box-shadow: -12px -12px 35px rgba(0,0,0,0.08); z-index: 1; transition: background 0.4s ease, border 0.4s ease; }
-        .hero-mockup-render::after { content: ''; position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 12px; background: rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); }
+        
+        /* Mockup iPhone Blanco/Plata */
+        .hero-mockup-render {
+            position: absolute; right: -30px; bottom: -45px; width: 150px; height: 210px;
+            background: linear-gradient(180deg, var(--card-glass-pure) 0%, var(--bg-base) 100%);
+            border: 4px solid var(--card-glass-pure); border-radius: 30px; transform: rotate(-7deg);
+            box-shadow: -12px -12px 35px rgba(0,0,0,0.08); z-index: 1;
+            transition: background 0.4s ease, border 0.4s ease;
+        }
+        .hero-mockup-render::after {
+            content: ''; position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;
+            border-radius: 12px; background: rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05);
+        }
 
-        .module-section-header { font-size: 20px; font-weight: 800; padding: 0 24px; margin: 0 0 18px 0; letter-spacing: -0.5px; color: var(--text-primary); position: relative; z-index: 10; }
+        /* CORPORATE SECTION HEADINGS */
+        .module-section-header {
+            font-size: 20px; font-weight: 800; padding: 0 24px; margin: 0 0 18px 0;
+            letter-spacing: -0.5px; color: var(--text-primary);
+        }
 
-        .categories-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 24px; margin-bottom: 36px; position: relative; z-index: 10; }
-        .matrix-glass-card { background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 28px; padding: 24px 16px; text-decoration: none; color: var(--text-primary); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: var(--transition-smooth); box-shadow: var(--shadow-sm); }
-        .matrix-glass-card:hover { transform: translateY(-4px); border-color: var(--apple-blue); background: var(--card-glass-pure); box-shadow: var(--shadow-lg); }
+        /* GRID CATEGORÍAS MACSTORE CANVAS 2x2 */
+        .categories-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 24px; margin-bottom: 36px; }
+        .matrix-glass-card {
+            background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 28px;
+            padding: 24px 16px; text-decoration: none; color: var(--text-primary);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            transition: var(--transition-smooth); box-shadow: var(--shadow-sm);
+        }
+        .matrix-glass-card:hover {
+            transform: translateY(-4px); border-color: var(--apple-blue);
+            background: var(--card-glass-pure); box-shadow: var(--shadow-lg);
+        }
         .matrix-glass-card:active { transform: scale(0.95); }
-        .vector-illustration-box { width: 100%; height: 75px; background: rgba(0,0,0,0.03); border-radius: 18px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition-fast); }
+
+        /* ICONOS VECTORIALES HD */
+        .vector-illustration-box {
+            width: 100%; height: 75px; background: rgba(0,0,0,0.03); border-radius: 18px;
+            margin-bottom: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition-fast);
+        }
         .matrix-glass-card:hover .vector-illustration-box { background: var(--apple-blue-glow); }
         .hifi-svg-icon { width: 36px; height: 36px; stroke: var(--text-primary); stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: var(--transition-fast); }
         .matrix-glass-card:hover .hifi-svg-icon { stroke: var(--apple-blue); transform: scale(1.05); }
+        
+        @keyframes spinEngine { 100% { transform: scale(1.05) rotate(360deg); } }
+        .matrix-glass-card:hover .hifi-svg-icon.gear-animated { animation: spinEngine 8s linear infinite; }
+
         .matrix-card-title { font-size: 15px; font-weight: 700; margin: 0; text-align: center; letter-spacing: -0.2px; }
 
-        /* Módulos de Información y Promociones */
-        .promo-ticking-wrapper { padding: 0 24px; margin-bottom: 36px; position: relative; z-index: 10; }
-        .promo-ticking-card { background: var(--card-glass); border: 1px solid rgba(189, 0, 255, 0.3); border-radius: 26px; padding: 20px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px; position: relative; transition: background 0.4s ease, border-color 0.4s ease; text-decoration: none; color: inherit; }
-        .promo-ticking-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: rgba(189, 0, 255, 0.6); }
+        /* LIVE MARKETING TICKING EXPERIMENTAL PANEL */
+        .promo-ticking-wrapper { padding: 0 24px; margin-bottom: 36px; }
+        .promo-ticking-card {
+            background: var(--card-glass); border: 1px solid rgba(0, 176, 80, 0.3); border-radius: 26px;
+            padding: 20px; backdrop-filter: blur(20px); box-shadow: var(--shadow-sm);
+            display: flex; flex-direction: column; gap: 12px; position: relative; transition: background 0.4s ease, border-color 0.4s ease;
+        }
         .promo-header-info { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-        /* Badge para promoción de redes actualizado a color magenta/púrpura */
-        .promo-badge { background: rgba(189, 0, 255, 0.1); color: #bd00ff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 8px; }
+        .promo-badge { background: rgba(0, 176, 80, 0.1); color: #00b050; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 8px; }
         .countdown-clock { display: flex; gap: 4px; font-size: 12px; font-weight: 700; color: var(--text-primary); background: var(--card-glass-pure); padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border-subtle); transition: background-color 0.4s ease; }
         .countdown-clock span { color: #ff3b30; }
         .promo-main-msg { font-size: 16px; font-weight: 800; margin: 0; line-height: 1.3; color: var(--text-primary); text-align: left; }
         .promo-sub-msg { font-size: 12px; color: var(--text-secondary); margin: 0; text-align: left; }
 
-        .feedback-slider-wrapper { padding: 0 24px; margin-bottom: 20px; position: relative; z-index: 10; }
-        .feedback-card { background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 22px; padding: 18px; box-shadow: var(--shadow-sm); transition: background 0.4s ease; }
+        /* TRUST CONTEXT ROWS */
+        .trust-architecture-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px; margin-bottom: 36px; }
+        .trust-capsule {
+            background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 18px;
+            padding: 16px 10px; text-align: center; backdrop-filter: blur(10px); transition: background 0.4s ease;
+        }
+        .trust-icon-wrap { width: 28px; height: 28px; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; color: var(--apple-blue); }
+        .trust-icon-wrap svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .trust-title { font-size: 11px; font-weight: 800; margin: 0 0 4px 0; text-transform: uppercase; letter-spacing: 0.3px; }
+        .trust-desc { font-size: 10px; color: var(--text-secondary); margin: 0; line-height: 1.3; }
+
+        /* CLIENTS SATISFIED FEEDBACK MODULE */
+        .feedback-slider-wrapper { padding: 0 24px; margin-bottom: 20px; }
+        .feedback-card {
+            background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 22px;
+            padding: 18px; backdrop-filter: blur(20px); box-shadow: var(--shadow-sm); transition: background 0.4s ease;
+        }
         .feedback-user-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
         .user-stars { color: #ffcc00; font-size: 14px; letter-spacing: 1px; }
         .user-name-title { font-size: 13px; font-weight: 700; margin: 0; }
         .user-location-tag { font-size: 10px; color: var(--text-secondary); }
         .feedback-quote-text { font-size: 12px; color: var(--text-secondary); margin: 0; line-height: 1.45; font-style: italic; transition: color 0.4s ease; }
 
-        .trust-architecture-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px; margin-bottom: 40px; position: relative; z-index: 10; content-visibility: auto; contain-intrinsic-size: 150px;}
-        .trust-capsule { background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 18px; padding: 16px 10px; text-align: center; box-shadow: var(--shadow-sm); transition: background 0.4s ease, border-color 0.4s ease; }
-        .trust-icon-wrap { width: 28px; height: 28px; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; color: var(--apple-blue); }
-        .trust-icon-wrap svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
-        .trust-title { font-size: 11px; font-weight: 800; margin: 0 0 4px 0; text-transform: uppercase; letter-spacing: 0.3px; }
-        .trust-desc { font-size: 10px; color: var(--text-secondary); margin: 0; line-height: 1.3; }
-
-        /* Estilo Exclusivo: Tarjeta de Redes Sociales */
-        .social-network-container { padding: 0 24px; margin-bottom: 36px; position: relative; z-index: 10; }
-        .social-card { display: flex; align-items: center; gap: 16px; background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 26px; padding: 20px; text-decoration: none; color: inherit; box-shadow: var(--shadow-sm); transition: var(--transition-smooth); }
-        .social-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); background: var(--card-glass-pure); border-color: rgba(189, 0, 255, 0.3); }
-        .social-icon-box { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); width: 60px; height: 60px; border-radius: 18px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
-        .social-icon-box svg { stroke: #ffffff; width: 30px; height: 30px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-        .social-text h4 { margin: 0 0 4px 0; font-size: 16px; font-weight: 800; color: var(--text-primary); }
-        .social-text p { margin: 0; font-size: 12px; color: var(--text-secondary); line-height: 1.3; }
-
-        /* ==========================================================================
-           8. DOCK NAVBAR FLOTANTE
-           ========================================================================== */
+        /* PREMIUM DOCK INTERFACIAL SYSTEM (NAVBAR FLOTANTE) */
         .interfacial-dock-nav {
             position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 420px;
             background: var(--card-glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--border-subtle); border-radius: 36px;
             display: flex; justify-content: space-around; padding: 12px 10px; z-index: 10000;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
             animation: slideDockUp 0.7s 0.6s forwards cubic-bezier(0.16, 1, 0.3, 1);
             transition: background 0.4s ease, border 0.4s ease;
         }
@@ -295,12 +377,11 @@
             position: absolute; top: -6px; right: -8px; background: #ff3b30; color: #ffffff;
             font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 10px rgba(255,59,48,0.3); border: 2px solid var(--bg-base); transition: border 0.4s ease;
+            box-shadow: 0 4px 10px rgba(255,59,48,0.3); border: 2px solid var(--bg-base);
+            transition: border 0.4s ease;
         }
 
-        /* OPTIMIZACIÓN Y MEDIA QUERIES */
-        .categories-matrix-grid, .lower-modules-pc-flex, .trust-architecture-row { content-visibility: auto; contain-intrinsic-size: 400px; }
-
+        /* ADAPTACIÓN TOTAL ESCRITORIO DE GAMA ALTA (PC) */
         @media (min-width: 768px) {
             .app-layout-container { max-width: 1120px; padding-top: 40px; padding-bottom: 16px; }
             .mac-navbar { border-radius: 24px; margin: 0 24px 36px 24px; top: 24px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
@@ -336,10 +417,8 @@
         <div class="liquid-orb orb-amethyst"></div>
     </div>
 
-    <!-- FONDO ABSTRACTO ESTÁTICO (EFECTO PROGRESIVO DE SCROLL BLUR) -->
     <div class="ps5-wheel-canvas" id="ps5Wheel"></div>
 
-    <!-- MENÚ LATERAL (SIDEBAR) -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <aside class="sidebar-menu" id="sidebarMenu">
         <div class="sidebar-header">
@@ -356,10 +435,10 @@
             <a href="catalogo.html" class="sidebar-link core-spa-link">
                 <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg> Catálogo
             </a>
-            <a href="vender.html" class="sidebar-link core-spa-link">
+            <a href="vender.html" class="sidebar-link">
                 <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg> Vender
             </a>
-            <a href="reparar.html" class="sidebar-link core-spa-link">
+            <a href="reparar.html" class="sidebar-link">
                 <svg viewBox="0 0 24 24"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Reparar
             </a>
         </nav>
@@ -376,7 +455,6 @@
         </div>
     </aside>
 
-    <!-- CONTENEDOR PRINCIPAL -->
     <div class="app-layout-container">
         
         <header class="mac-navbar">
@@ -420,42 +498,35 @@
                 </div>
                 <h4 class="matrix-card-title">Equipos</h4>
             </a>
-            
-            <!-- ENLACE ACTUALIZADO A VENDER -->
-            <a href="vender.html" class="matrix-glass-card core-spa-link">
+            <a href="vender.html" class="matrix-glass-card">
                 <div class="vector-illustration-box">
                     <svg class="hifi-svg-icon" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line></svg>
                 </div>
                 <h4 class="matrix-card-title">Vender</h4>
             </a>
-            
-            <!-- ENLACE ACTUALIZADO A REPARAR -->
-            <a href="reparar.html" class="matrix-glass-card core-spa-link">
+            <a href="reparar.html" class="matrix-glass-card">
                 <div class="vector-illustration-box">
                     <svg class="hifi-svg-icon gear-animated" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                 </div>
                 <h4 class="matrix-card-title">Reparar</h4>
             </a>
-            
-            <!-- ENLACE ACTUALIZADO A COMPUTADORAS -->
-            <a href="laptops.html" class="matrix-glass-card core-spa-link">
+            <a href="laptops.html" class="matrix-glass-card">
                 <div class="vector-illustration-box">
                     <svg class="hifi-svg-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="20" x2="22" y2="20"></line><line x1="12" y1="17" x2="12" y2="20"></line></svg>
                 </div>
-                <h4 class="matrix-card-title">Computadoras</h4>
+                <h4 class="matrix-card-title">Laptops</h4>
             </a>
         </nav>
 
         <div class="lower-modules-pc-flex">
-            <!-- SECCIÓN PROMOCIONAL ACTUALIZADA: INSTAGRAM -->
             <div class="promo-ticking-wrapper">
-                <a href="https://www.instagram.com/" class="promo-ticking-card" target="_blank">
+                <a href="oferta.html" class="promo-ticking-card" target="_blank" style="text-decoration: none; display: flex; color: inherit; flex-direction: column;">
                     <div class="promo-header-info">
-                        <span class="promo-badge">Promo Instagram</span>
+                        <span class="promo-badge">Oferta de Laboratorio</span>
                         <div class="countdown-clock" id="promoTimer">Cargando...</div>
                     </div>
-                    <p class="promo-main-msg">15% de Descuento en Pantallas y Tapas Traseras</p>
-                    <p class="promo-sub-msg">Válido al seguirnos en Instagram. ¡Toca aquí para ir a nuestro perfil!</p>
+                    <p class="promo-main-msg">20% de Descuento en Cambio de Pantallas e Instalación de Sistemas</p>
+                    <p class="promo-sub-msg">Válido en nuestro taller. Menciona este cupón al ingresar tu equipo.</p>
                 </a>
             </div>
 
@@ -471,24 +542,6 @@
                     <p class="feedback-quote-text">"Excelente el servicio técnico de TecnoTrade. Repararon el chasis de mi iPhone 16 Pro el mismo día y mantuvieron todos los componentes originales intactos. ¡Cien por ciento recomendados en Panamá!"</p>
                 </div>
             </div>
-        </div>
-
-        <!-- NUEVA SECCIÓN: REDES SOCIALES -->
-        <h3 class="module-section-header">Nuestras Redes</h3>
-        <div class="social-network-container">
-            <a href="https://www.instagram.com/" target="_blank" class="social-card">
-                <div class="social-icon-box">
-                    <svg viewBox="0 0 24 24">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
-                </div>
-                <div class="social-text">
-                    <h4>Síguenos en Instagram</h4>
-                    <p>Únete a nuestra comunidad, mira nuestras reparaciones y encuentra ofertas exclusivas.</p>
-                </div>
-            </a>
         </div>
 
         <h3 class="module-section-header">Garantía TecnoTrade</h3>
@@ -518,7 +571,6 @@
 
     </div> 
     
-    <!-- DOCK NAVBAR FLOTANTE (ESTANDARIZADO CON PESTAÑA INICIO ACTIVA) -->
     <nav class="interfacial-dock-nav">
         <a href="index.html" class="dock-action-tab tab-active">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -528,18 +580,17 @@
             <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
             <span class="dock-label-text">Catálogo</span>
         </a>
-        <a href="reparar.html" class="dock-action-tab core-spa-link">
-            <svg viewBox="0 0 24 24"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-            <span class="dock-label-text">Servicio</span>
+        <a href="#" class="dock-action-tab">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <span class="dock-label-text">Favoritos</span>
         </a>
         <a href="#" class="dock-action-tab">
             <div class="dock-cart-indicator">2</div>
             <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-            <span class="dock-label-text">Carrito</span>
+            <span class="nav-label-text dock-label-text">Carrito</span>
         </a>
     </nav>
 
-    <!-- NÚCLEO JS AVANZADO -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
@@ -720,15 +771,16 @@
             }
             initializingPromoTimer();
 
-            // --- NÚCLEO DE SCROLL OPTIMIZADO (SOLO ENFOQUE DIGITAL DE DETALLE) ---
+            // --- MOTOR DE ROTACIÓN SEGURO (PS5 WAVE ORBITAL) ---
+            const ps5Wheel = document.getElementById('ps5Wheel');
             let latestScrollY = 0;
             let ticking = false;
 
-            function updateBackgroundBlur(scrollPos) {
-                const maxBlur = 15; 
-                const sensitivity = 0.05; 
-                const calculatedBlur = Math.min(scrollPos * sensitivity, maxBlur);
-                document.documentElement.style.setProperty('--scroll-blur', `${calculatedBlur}px`);
+            function updateWheelRotation(scrollPos) {
+                const rotationDegrees = scrollPos * 0.07; 
+                if(ps5Wheel) {
+                    ps5Wheel.style.transform = `translate(-50%, -50%) rotateX(72deg) rotateZ(${rotationDegrees}deg)`;
+                }
             }
 
             window.addEventListener('scroll', () => {
@@ -736,7 +788,7 @@
 
                 if (!ticking) {
                     window.requestAnimationFrame(() => {
-                        updateBackgroundBlur(latestScrollY);
+                        updateWheelRotation(latestScrollY);
                         ticking = false;
                     });
                     ticking = true;
