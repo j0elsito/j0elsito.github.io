@@ -13,6 +13,7 @@
     <title>TecnoTrade | Tu Apple Specialist & Multimarcas en Panamá</title>
 
     <script>
+        // Sincronización del tema guardado en el navegador del usuario
         const savedTheme = localStorage.getItem('tecnotrade-theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
@@ -39,6 +40,7 @@
             --transition-fast: all 0.2s ease;
         }
 
+        /* --- PALETA MODO OSCURO DINÁMICA --- */
         [data-theme="dark"] {
             --bg-base: #000000;
             --text-primary: #f5f5f7;
@@ -51,9 +53,7 @@
             --border-subtle: rgba(255, 255, 255, 0.15);
         }
 
-        /* ==========================================================================
-           2. RESET GENERAL Y CONTENEDORES
-           ========================================================================== */
+        /* RESET GENERAL FORZADO A MODO CLARO */
         *, *::before, *::after {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -69,6 +69,7 @@
             overflow-x: hidden; overflow-y: auto;
             transition: background-color 0.4s ease, color 0.4s ease;
             
+            /* Fuerza matemática para centrar TODO el contenedor en pantallas de PC */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -81,7 +82,7 @@
         }
 
         /* ==========================================================================
-           3. MENÚ LATERAL (SIDEBAR) & TOGGLE
+           3. MENÚ LATERAL (SIDEBAR) CORREGIDO CON SUPERPOSICIÓN ANTE EL DOCK
            ========================================================================== */
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -107,14 +108,21 @@
         .close-menu-btn { background: transparent; border: none; font-size: 24px; color: var(--text-secondary); cursor: pointer; padding: 0; display: flex; align-items: center; }
 
         .sidebar-nav { display: flex; flex-direction: column; gap: 22px; flex-grow: 1; }
-        .sidebar-link { text-decoration: none; color: var(--text-primary); font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 14px; transition: color 0.2s; }
+        .sidebar-link {
+            text-decoration: none; color: var(--text-primary); font-size: 17px; font-weight: 700;
+            display: flex; align-items: center; gap: 14px; transition: color 0.2s;
+        }
         .sidebar-link:hover, .sidebar-link:active { color: var(--apple-blue); }
         .sidebar-link svg { width: 22px; height: 22px; fill: var(--text-secondary); }
         .sidebar-link:hover svg { fill: var(--apple-blue); }
 
-        .theme-toggle-box { background: var(--card-glass-pure); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; box-shadow: var(--shadow-sm); transition: background-color 0.4s ease, border-color 0.4s ease; }
-        .theme-toggle-label { font-size: 15px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 10px; }
-        .theme-toggle-label svg { width: 18px; height: 18px; fill: var(--apple-blue); }
+        .theme-toggle-box {
+            background: var(--card-glass-pure); border: 1px solid var(--border-subtle);
+            border-radius: 20px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; box-shadow: var(--shadow-sm); transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+        .theme-toggle-box .theme-toggle-label { font-size: 15px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 10px; }
+        .theme-toggle-box .theme-toggle-label svg { width: 18px; height: 18px; fill: var(--apple-blue); }
         
         .switch { position: relative; display: inline-block; width: 46px; height: 26px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -124,25 +132,49 @@
         input:checked + .slider:before { transform: translateX(20px); }
 
         /* ==========================================================================
-           4. FONDOS Y EFECTOS
+           4. FONDOS Y EFECTOS (RENDIMIENTO OPTIMIZADO)
            ========================================================================== */
-        .page-loader-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-base); z-index: 99999; pointer-events: none; opacity: 1; transition: background-color 0.5s ease; animation: forceFadeOut 0.6s 0.1s forwards cubic-bezier(0.16, 1, 0.3, 1); }
+        .page-loader-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-base); z-index: 99999;
+            pointer-events: none; opacity: 1; transition: background-color 0.5s ease;
+            animation: forceFadeOut 0.6s 0.1s forwards cubic-bezier(0.16, 1, 0.3, 1);
+        }
         @keyframes forceFadeOut { to { opacity: 0; visibility: hidden; } }
 
-        .ambient-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; background-color: var(--bg-base); overflow: hidden; pointer-events: none; transition: background-color 0.4s ease; }
+        .ambient-canvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; 
+            background-color: var(--bg-base); overflow: hidden; pointer-events: none; transition: background-color 0.4s ease;
+        }
         .liquid-orb { position: absolute; border-radius: 50%; opacity: 0.8; will-change: transform; animation: moveOrb 25s infinite alternate ease-in-out; }
         .orb-sapphire { width: 55vw; height: 55vw; background: radial-gradient(circle, rgba(0, 113, 227, 0.12) 0%, rgba(0, 113, 227, 0) 70%); top: -15%; left: -10%; }
         .orb-cyan     { width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(0, 198, 214, 0.10) 0%, rgba(0, 198, 214, 0) 70%); bottom: -25%; right: -15%; animation-delay: -6s; animation-duration: 28s; }
         .orb-amethyst { width: 48vw; height: 48vw; background: radial-gradient(circle, rgba(189, 0, 255, 0.05) 0%, rgba(189, 0, 255, 0) 70%); top: 35%; left: 25%; animation-delay: -12s; animation-duration: 32s; }
+
         @keyframes moveOrb { 0% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(6vw, 8vh, 0) scale(1.08); } 100% { transform: translate3d(-3vw, 4vh, 0) scale(0.92); } }
 
-        .ps5-wheel-canvas { position: fixed; top: 50%; left: 50%; width: 100vw; height: 100vh; background: url('file_0000000098dc71f5b7616aa89d7b3b66.png') center center no-repeat; background-size: cover; z-index: 2; pointer-events: none; transform: translate3d(-50%, -50%, 0); will-change: filter; opacity: 0.65; mix-blend-mode: multiply; filter: blur(var(--scroll-blur, 0px)); }
-        [data-theme="dark"] .ps5-wheel-canvas { opacity: 0.25; filter: invert(1) brightness(0.8) contrast(1.2) saturate(1.1) blur(var(--scroll-blur, 0px)); mix-blend-mode: screen; }
+        .ps5-wheel-canvas {
+            position: fixed; top: 50%; left: 50%; width: 100vw; height: 100vh; 
+            background: url('file_0000000098dc71f5b7616aa89d7b3b66.png') center center no-repeat;
+            background-size: cover; z-index: 2; pointer-events: none; 
+            transform: translate3d(-50%, -50%, 0); will-change: filter; opacity: 0.65; 
+            mix-blend-mode: multiply; filter: blur(var(--scroll-blur, 0px));
+        }
+
+        [data-theme="dark"] .ps5-wheel-canvas {
+            opacity: 0.25; filter: invert(1) brightness(0.8) contrast(1.2) saturate(1.1) blur(var(--scroll-blur, 0px));
+            mix-blend-mode: screen; 
+        }
 
         /* ==========================================================================
            5. NAVEGACIÓN SUPERIOR
            ========================================================================== */
-        .mac-navbar { display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; position: sticky; top: 0; z-index: 100; background: linear-gradient(to bottom, var(--bg-base) 0%, rgba(245,245,247,0) 100%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: background 0.4s ease; }
+        .mac-navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px 24px; position: sticky; top: 0; z-index: 100;
+            background: linear-gradient(to bottom, var(--bg-base) 0%, rgba(245,245,247,0) 100%);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: background 0.4s ease;
+        }
         .navbar-action-btn { background: transparent; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition-fast); }
         .navbar-action-btn:active { transform: scale(0.85); opacity: 0.7; }
         .navbar-action-btn svg { width: 24px; height: 24px; fill: var(--text-primary); transition: fill 0.4s ease; }
@@ -156,14 +188,21 @@
            6. BUSCADOR INTERACTIVO
            ========================================================================== */
         .search-engine-wrapper { position: relative; padding: 10px 24px 20px; z-index: 95; }
-        .search-inner-box { display: flex; align-items: center; gap: 12px; background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 14px 18px; backdrop-filter: blur(20px); transition: var(--transition-smooth); box-shadow: var(--shadow-sm); }
+        .search-inner-box {
+            display: flex; align-items: center; gap: 12px; background: var(--card-glass); border: 1px solid var(--border-subtle);
+            border-radius: 20px; padding: 14px 18px; backdrop-filter: blur(20px); transition: var(--transition-smooth); box-shadow: var(--shadow-sm);
+        }
         .search-inner-box:focus-within { border-color: var(--apple-blue); background: var(--card-glass-pure); box-shadow: 0 0 0 4px var(--apple-blue-glow); transform: translateY(-2px); }
         .search-inner-box svg { width: 20px; height: 20px; fill: var(--text-secondary); transition: var(--transition-fast); }
         .search-inner-box:focus-within svg { fill: var(--apple-blue); }
         .search-inner-box input { background: transparent; border: none; color: var(--text-primary); width: 100%; font-size: 15px; font-weight: 500; outline: none; }
         .search-inner-box input::placeholder { color: var(--text-secondary); font-weight: 400; }
         
-        .search-results-dropdown { position: absolute; top: calc(100% - 12px); left: 24px; right: 24px; background: var(--card-glass-pure); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 8px 0; backdrop-filter: blur(30px); max-height: 310px; overflow-y: auto; display: none; box-shadow: 0 25px 50px rgba(0,0,0,0.1); scrollbar-width: none; transition: background 0.4s ease, border-color 0.4s ease; }
+        .search-results-dropdown {
+            position: absolute; top: calc(100% - 12px); left: 24px; right: 24px; background: var(--card-glass-pure); border: 1px solid var(--border-subtle);
+            border-radius: 20px; padding: 8px 0; backdrop-filter: blur(30px); max-height: 310px; overflow-y: auto; display: none;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1); scrollbar-width: none; transition: background 0.4s ease, border-color 0.4s ease;
+        }
         .search-results-dropdown::-webkit-scrollbar { display: none; }
         .search-row-item { padding: 15px 22px; font-size: 14px; font-weight: 600; color: var(--text-primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); transition: var(--transition-fast); }
         .search-row-item:last-child { border-bottom: none; }
@@ -172,7 +211,7 @@
         .search-row-item:hover .search-row-item-arrow { color: var(--apple-blue); transform: translateX(4px); }
 
         /* ==========================================================================
-           7. ELEMENTOS DE CONTENIDO Y TARJETAS HERO (CORREGIDO PARA IMAGEN REAL)
+           7. ELEMENTOS DE CONTENIDO Y TARJETAS HERO (ESCALA CORREGIDA EXACTA)
            ========================================================================== */
         .hero-display-canvas { padding: 0 24px; margin-bottom: 32px; width: 100%; }
         
@@ -182,18 +221,12 @@
             border-radius: 32px; 
             padding: 36px 24px; 
             position: relative; 
-            overflow: hidden; /* CRÍTICO: Esto recorta el teléfono para que no se salga de la tarjeta */
+            overflow: hidden; 
             box-shadow: var(--shadow-md); 
             transition: background 0.4s ease, border 0.4s ease; 
-            min-height: 320px; /* Da espacio suficiente para que quepa el teléfono */
+            min-height: 320px; /* Asegura altura para móvil */
         }
-        
-        .hero-context-panel { 
-            position: relative; 
-            z-index: 2; /* Texto por encima del teléfono */
-            max-width: 60%; 
-        }
-        
+        .hero-context-panel { position: relative; z-index: 5; max-width: 55%; }
         .hero-badge-tag { background: var(--text-primary); color: var(--bg-base); font-size: 10px; font-weight: 800; padding: 5px 12px; border-radius: 12px; margin-bottom: 16px; text-transform: uppercase; display: inline-block; letter-spacing: 0.5px; }
         .hero-main-title { font-size: 28px; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.7px; line-height: 1.15; color: var(--text-primary); }
         .hero-p-desc { font-size: 13px; color: var(--text-secondary); margin: 0 0 24px 0; line-height: 1.45; }
@@ -201,18 +234,17 @@
         .hero-action-trigger:hover { background: var(--apple-blue-hover); transform: translateY(-1px); }
         .hero-action-trigger:active { transform: translateY(1px); box-shadow: 0 3px 8px rgba(0, 113, 227, 0.15); }
         
-        /* CORRECCIÓN: FOTOGRAFÍA REAL (Celulares) */
+        /* CORREGIDO EN ANDROID: Escala idéntica a tu edición 5468.jpg (Dominante y gigante) */
         .hero-mockup-image { 
             position: absolute; 
-            right: -40px; 
+            right: -30px; 
             bottom: -50px; 
-            width: 260px; /* <--- Tamaño enorme para móvil */
-            height: auto; /* <--- Evita que se aplaste o se deforme */
-            object-fit: contain;
+            width: 240px; /* <--- Subido de 150px a 240px para que tenga peso visual real */
+            height: auto; /* <--- IMPORTANTE: Impide que la imagen se estire o mutile */
             transform: rotate(-7deg); 
             z-index: 1; 
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            filter: drop-shadow(-10px 15px 25px rgba(0,0,0,0.15)); 
+            filter: drop-shadow(-12px -12px 35px rgba(0,0,0,0.08)); 
         }
         
         .hero-billboard-card:hover .hero-mockup-image {
@@ -226,11 +258,12 @@
         .matrix-glass-card:hover { transform: translateY(-4px); border-color: var(--apple-blue); background: var(--card-glass-pure); box-shadow: var(--shadow-lg); }
         .matrix-glass-card:active { transform: scale(0.95); }
         .vector-illustration-box { width: 100%; height: 75px; background: rgba(0,0,0,0.03); border-radius: 18px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition-fast); }
-        .matrix-glass-card:hover .vector-illustration-box { background: var(--apple-blue-glow); }
+        .categories-matrix-grid .matrix-glass-card:hover .vector-illustration-box { background: var(--apple-blue-glow); }
         .hifi-svg-icon { width: 36px; height: 36px; stroke: var(--text-primary); stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: var(--transition-fast); }
         .matrix-glass-card:hover .hifi-svg-icon { stroke: var(--apple-blue); transform: scale(1.05); }
         .matrix-card-title { font-size: 15px; font-weight: 700; margin: 0; text-align: center; letter-spacing: -0.2px; }
 
+        /* Módulos de Información y Promociones */
         .promo-ticking-wrapper { padding: 0 24px; margin-bottom: 36px; position: relative; z-index: 10; width: 100%; }
         .promo-ticking-card { background: var(--card-glass); border: 1px solid rgba(189, 0, 255, 0.3); border-radius: 26px; padding: 20px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px; position: relative; transition: background 0.4s ease, border-color 0.4s ease; text-decoration: none; color: inherit; }
         .promo-ticking-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: rgba(189, 0, 255, 0.6); }
@@ -256,6 +289,7 @@
         .trust-title { font-size: 11px; font-weight: 800; margin: 0 0 4px 0; text-transform: uppercase; letter-spacing: 0.3px; }
         .trust-desc { font-size: 10px; color: var(--text-secondary); margin: 0; line-height: 1.3; }
 
+        /* Estilo Exclusivo: Tarjeta de Redes Sociales y Ubicaciones */
         .social-network-container { padding: 0 24px; margin-bottom: 36px; position: relative; z-index: 10; width: 100%; }
         .social-card { display: flex; align-items: center; gap: 16px; background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 26px; padding: 20px; text-decoration: none; color: inherit; box-shadow: var(--shadow-sm); transition: var(--transition-smooth); margin-bottom: 16px; }
         .social-card:last-child { margin-bottom: 0; }
@@ -269,34 +303,6 @@
         .social-text p { margin: 0; font-size: 12px; color: var(--text-secondary); line-height: 1.3; }
 
         /* ==========================================================================
-           8. DOCK NAVBAR FLOTANTE
-           ========================================================================== */
-        .interfacial-dock-nav {
-            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 420px;
-            background: var(--card-glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--border-subtle); border-radius: 36px;
-            display: flex; justify-content: space-around; padding: 12px 10px; z-index: 10000;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
-            animation: slideDockUp 0.7s 0.6s forwards cubic-bezier(0.16, 1, 0.3, 1);
-            transition: background 0.4s ease, border-color 0.4s ease;
-        }
-        @keyframes slideDockUp { from { transform: translate3d(-50%, 120%, 0); } to { transform: translate3d(-50%, 0, 0); } }
-
-        .dock-action-tab { display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; color: var(--text-secondary); position: relative; transition: var(--transition-smooth); }
-        .dock-action-tab.tab-active { color: var(--apple-blue); transform: translateY(-4px); }
-        .dock-action-tab svg { width: 23px; height: 23px; fill: currentColor; transition: var(--transition-fast); }
-        .dock-action-tab:active svg { transform: scale(0.85); }
-        .dock-label-text { font-size: 10px; font-weight: 700; letter-spacing: -0.1px; }
-        
-        .dock-cart-indicator {
-            position: absolute; top: -6px; right: -8px; background: #ff3b30; color: #ffffff;
-            font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 10px rgba(255,59,48,0.3); border: 2px solid var(--bg-base); transition: border 0.4s ease;
-        }
-
-        /* ==========================================================================
            11. ADAPTACIÓN TOTAL ESCRITORIO DE GAMA ALTA (PC)
            ========================================================================== */
         @media (min-width: 768px) {
@@ -308,21 +314,22 @@
             .hero-display-canvas { margin-bottom: 48px; }
             .hero-billboard-card { 
                 display: flex; align-items: center; justify-content: space-between; 
-                padding: 60px 40px; 
-                min-height: 420px; /* <--- Altura en PC */
+                padding: 50px 60px; 
+                min-height: 400px; /* Da el espacio vertical de tu mockup */
             }
             .hero-context-panel { max-width: 50%; text-align: left; margin: 0; }
             .hero-main-title { font-size: 36px; }
             .hero-p-desc { font-size: 15px; }
             
-            /* CORRECCIÓN: Tamaño colosal y posicionamiento en PC */
+            /* CORREGIDO EN PC: Escala exacta coincidiendo al 100% con tu mockup de Photoshop 5466.jpg */
             .hero-mockup-image { 
                 position: absolute; 
-                right: -20px; 
-                bottom: -100px; 
+                right: 50px; /* <--- Despega del borde derecho lateral */
+                bottom: -70px; /* <--- Se hunde levemente abajo */
                 transform: rotate(-7deg); 
-                width: 400px; /* <--- Tamaño enorme para PC */
+                width: 420px; /* <--- Ancho masivo que llena el 40% de la ventana */
                 height: auto;
+                box-shadow: none;
             }
             .hero-billboard-card:hover .hero-mockup-image {
                 transform: rotate(-4deg) translateY(-10px);
