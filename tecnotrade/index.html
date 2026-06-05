@@ -53,9 +53,7 @@
             --border-subtle: rgba(255, 255, 255, 0.15);
         }
 
-        /* ==========================================================================
-           2. RESET GENERAL Y CONTENEDORES (CENTRADOS ABSOLUTOS)
-           ========================================================================== */
+        /* RESET GENERAL FORZADO A MODO CLARO */
         *, *::before, *::after {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -71,7 +69,7 @@
             overflow-x: hidden; overflow-y: auto;
             transition: background-color 0.4s ease, color 0.4s ease;
             
-            /* NUEVO: Fuerza matemática para centrar TODO el contenedor en la pantalla */
+            /* Fuerza matemática para centrar TODO el contenedor en pantallas de PC */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -84,19 +82,21 @@
         }
 
         /* ==========================================================================
-           3. MENÚ LATERAL (SIDEBAR) & TOGGLE
+           3. MENÚ LATERAL (SIDEBAR) CORREGIDO CON SUPERPOSICIÓN ANTE EL DOCK
            ========================================================================== */
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-            z-index: 20000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            z-index: 20000; 
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         .sidebar-overlay.active { opacity: 1; pointer-events: all; }
 
         .sidebar-menu {
             position: fixed; top: 0; left: 0; width: 80%; max-width: 300px; height: 100vh;
             background: var(--card-glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            z-index: 20001; padding: 30px 24px; display: flex; flex-direction: column;
+            z-index: 20001; 
+            padding: 30px 24px; display: flex; flex-direction: column;
             box-shadow: 10px 0 30px rgba(0,0,0,0.1); 
             transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             border-right: 1px solid var(--border-subtle);
@@ -153,6 +153,7 @@
 
         @keyframes moveOrb { 0% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(6vw, 8vh, 0) scale(1.08); } 100% { transform: translate3d(-3vw, 4vh, 0) scale(0.92); } }
 
+        /* Fondo Animado Estático con Blur Dinámico */
         .ps5-wheel-canvas {
             position: fixed; top: 50%; left: 50%; width: 100vw; height: 100vh; 
             background: url('file_0000000098dc71f5b7616aa89d7b3b66.png') center center no-repeat;
@@ -213,7 +214,7 @@
         /* ==========================================================================
            7. ELEMENTOS DE CONTENIDO Y TARJETAS
            ========================================================================== */
-        .hero-display-canvas { padding: 0 24px; margin-bottom: 32px; }
+        .hero-display-canvas { padding: 0 24px; margin-bottom: 32px; width: 100%; }
         .hero-billboard-card { background: linear-gradient(135deg, var(--card-glass-pure) 0%, var(--bg-base) 100%); border: 1px solid var(--border-subtle); border-radius: 32px; padding: 32px 24px; position: relative; overflow: hidden; box-shadow: var(--shadow-md); transition: background 0.4s ease, border 0.4s ease; }
         .hero-context-panel { position: relative; z-index: 5; max-width: 60%; }
         .hero-badge-tag { background: var(--text-primary); color: var(--bg-base); font-size: 10px; font-weight: 800; padding: 5px 12px; border-radius: 12px; margin-bottom: 16px; text-transform: uppercase; display: inline-block; letter-spacing: 0.5px; }
@@ -225,9 +226,9 @@
         .hero-mockup-render { position: absolute; right: -30px; bottom: -45px; width: 150px; height: 210px; background: linear-gradient(180deg, var(--card-glass-pure) 0%, var(--bg-base) 100%); border: 4px solid var(--card-glass-pure); border-radius: 30px; transform: rotate(-7deg); box-shadow: -12px -12px 35px rgba(0,0,0,0.08); z-index: 1; transition: background 0.4s ease, border 0.4s ease; }
         .hero-mockup-render::after { content: ''; position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 12px; background: rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); }
 
-        .module-section-header { font-size: 20px; font-weight: 800; padding: 0 24px; margin: 0 0 18px 0; letter-spacing: -0.5px; color: var(--text-primary); position: relative; z-index: 10; }
+        .module-section-header { font-size: 20px; font-weight: 800; padding: 0 24px; margin: 0 0 18px 0; letter-spacing: -0.5px; color: var(--text-primary); position: relative; z-index: 10; width: 100%; }
 
-        .categories-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 24px; margin-bottom: 36px; position: relative; z-index: 10; }
+        .categories-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 0 24px; margin-bottom: 36px; position: relative; z-index: 10; width: 100%; }
         .matrix-glass-card { background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 28px; padding: 24px 16px; text-decoration: none; color: var(--text-primary); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: var(--transition-smooth); box-shadow: var(--shadow-sm); }
         .matrix-glass-card:hover { transform: translateY(-4px); border-color: var(--apple-blue); background: var(--card-glass-pure); box-shadow: var(--shadow-lg); }
         .matrix-glass-card:active { transform: scale(0.95); }
@@ -238,7 +239,7 @@
         .matrix-card-title { font-size: 15px; font-weight: 700; margin: 0; text-align: center; letter-spacing: -0.2px; }
 
         /* Módulos de Información y Promociones */
-        .promo-ticking-wrapper { padding: 0 24px; margin-bottom: 36px; position: relative; z-index: 10; }
+        .promo-ticking-wrapper { padding: 0 24px; margin-bottom: 36px; position: relative; z-index: 10; width: 100%; }
         .promo-ticking-card { background: var(--card-glass); border: 1px solid rgba(189, 0, 255, 0.3); border-radius: 26px; padding: 20px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px; position: relative; transition: background 0.4s ease, border-color 0.4s ease; text-decoration: none; color: inherit; }
         .promo-ticking-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: rgba(189, 0, 255, 0.6); }
         .promo-header-info { display: flex; align-items: center; justify-content: space-between; width: 100%; }
@@ -248,7 +249,7 @@
         .promo-main-msg { font-size: 16px; font-weight: 800; margin: 0; line-height: 1.3; color: var(--text-primary); text-align: left; }
         .promo-sub-msg { font-size: 12px; color: var(--text-secondary); margin: 0; text-align: left; }
 
-        .feedback-slider-wrapper { padding: 0 24px; margin-bottom: 20px; position: relative; z-index: 10; }
+        .feedback-slider-wrapper { padding: 0 24px; margin-bottom: 20px; position: relative; z-index: 10; width: 100%; }
         .feedback-card { background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 22px; padding: 18px; box-shadow: var(--shadow-sm); transition: background 0.4s ease; }
         .feedback-user-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
         .user-stars { color: #ffcc00; font-size: 14px; letter-spacing: 1px; }
@@ -256,18 +257,22 @@
         .user-location-tag { font-size: 10px; color: var(--text-secondary); }
         .feedback-quote-text { font-size: 12px; color: var(--text-secondary); margin: 0; line-height: 1.45; font-style: italic; transition: color 0.4s ease; }
 
-        .trust-architecture-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px; margin-bottom: 40px; position: relative; z-index: 10; content-visibility: auto; contain-intrinsic-size: 150px;}
+        .trust-architecture-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px; margin-bottom: 40px; position: relative; z-index: 10; content-visibility: auto; contain-intrinsic-size: 150px; width: 100%; }
         .trust-capsule { background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 18px; padding: 16px 10px; text-align: center; box-shadow: var(--shadow-sm); transition: background 0.4s ease, border-color 0.4s ease; }
         .trust-icon-wrap { width: 28px; height: 28px; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; color: var(--apple-blue); }
         .trust-icon-wrap svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
         .trust-title { font-size: 11px; font-weight: 800; margin: 0 0 4px 0; text-transform: uppercase; letter-spacing: 0.3px; }
         .trust-desc { font-size: 10px; color: var(--text-secondary); margin: 0; line-height: 1.3; }
 
-        /* Estilo Exclusivo: Tarjeta de Redes Sociales */
-        .social-network-container { padding: 0 24px; margin-bottom: 36px; position: relative; z-index: 10; }
-        .social-card { display: flex; align-items: center; gap: 16px; background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 26px; padding: 20px; text-decoration: none; color: inherit; box-shadow: var(--shadow-sm); transition: var(--transition-smooth); }
-        .social-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); background: var(--card-glass-pure); border-color: rgba(189, 0, 255, 0.3); }
+        /* Estilo Exclusivo: Tarjeta de Redes Sociales y Ubicaciones */
+        .social-network-container { padding: 0 24px; margin-bottom: 36px; position: relative; z-index: 10; width: 100%; }
+        .social-card { display: flex; align-items: center; gap: 16px; background: var(--card-glass); border: 1px solid var(--border-subtle); border-radius: 26px; padding: 20px; text-decoration: none; color: inherit; box-shadow: var(--shadow-sm); transition: var(--transition-smooth); margin-bottom: 16px; }
+        .social-card:last-child { margin-bottom: 0; }
+        .social-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); background: var(--card-glass-pure); border-color: var(--apple-blue); }
+        
         .social-icon-box { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); width: 60px; height: 60px; border-radius: 18px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .social-icon-box.maps-gradient { background: linear-gradient(45deg, #0071e3 0%, #00c6d6 100%); }
+        
         .social-icon-box svg { stroke: #ffffff; width: 30px; height: 30px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .social-text h4 { margin: 0 0 4px 0; font-size: 16px; font-weight: 800; color: var(--text-primary); }
         .social-text p { margin: 0; font-size: 12px; color: var(--text-secondary); line-height: 1.3; }
@@ -303,16 +308,15 @@
         /* ==========================================================================
            11. ADAPTACIÓN TOTAL ESCRITORIO DE GAMA ALTA (PC) Y CORRECCIONES DE SIMETRÍA
            ========================================================================== */
-        .categories-matrix-grid, .lower-modules-pc-flex, .trust-architecture-row { content-visibility: auto; contain-intrinsic-size: 400px; }
-
         @media (min-width: 768px) {
-            .app-layout-container { max-width: 1120px; padding-top: 40px; padding-bottom: 16px; }
+            .app-layout-container { max-width: 1120px; padding-top: 40px; padding-bottom: 16px; margin: 0 auto; }
             .mac-navbar { border-radius: 24px; margin: 0 24px 36px 24px; top: 24px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
             .search-engine-wrapper { max-width: 650px; margin: 0 auto 36px auto; width: 100%; }
             .search-results-dropdown { left: 50%; transform: translateX(-50%); width: 100%; max-width: 650px; }
             
             .hero-display-canvas { margin-bottom: 48px; }
-            /* NUEVO CORREGIDO: Reequilibrio del Banner Hero en PC */
+            
+            /* CORREGIDO: Reequilibrio del Banner Hero para centrar simétricamente su contenido */
             .hero-billboard-card { 
                 display: flex; align-items: center; justify-content: center; gap: 80px; 
                 padding: 60px 40px; 
@@ -329,15 +333,16 @@
             .matrix-glass-card { padding: 32px 20px; border-radius: 32px; }
             .vector-illustration-box { height: 90px; }
             
-            /* NUEVO CORREGIDO: Centramos simétricamente los títulos en PC */
+            /* CORREGIDO: Centramos los títulos de secciones en PC */
             .module-section-header { font-size: 24px; margin-bottom: 24px; text-align: center; }
             
             .lower-modules-pc-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 0 24px; margin-bottom: 48px; }
             .promo-ticking-wrapper, .feedback-slider-wrapper { padding: 0; margin-bottom: 0; }
             .promo-ticking-card, .feedback-card { height: 100%; justify-content: center; }
             
-            /* NUEVO CORREGIDO: Ajustamos el tamaño y centramos la tarjeta de Instagram en PC */
-            .social-card { max-width: 650px; margin: 0 auto; }
+            /* CORREGIDO: Limitamos el ancho y centramos simétricamente las tarjetas de contacto */
+            .social-card { max-width: 650px; margin: 0 auto 16px auto; }
+            .social-card:last-child { margin-bottom: 0; }
             
             .trust-architecture-row { gap: 20px; margin-bottom: 48px; }
             .interfacial-dock-nav { max-width: 480px; padding: 14px 24px; border-radius: 40px; bottom: 32px; }
@@ -361,7 +366,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <aside class="sidebar-menu" id="sidebarMenu">
         <div class="sidebar-header">
-            <h2>Menú</h2>
+            <h2>Menu</h2>
             <button class="close-menu-btn" id="closeMenuBtn" aria-label="Cerrar menú">
                 <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
             </button>
@@ -462,7 +467,7 @@
 
         <div class="lower-modules-pc-flex">
             <div class="promo-ticking-wrapper">
-                <a href="https://www.instagram.com/" class="promo-ticking-card" target="_blank">
+                <a href="https://www.instagram.com/tecnotradepty/" class="promo-ticking-card" target="_blank">
                     <div class="promo-header-info">
                         <span class="promo-badge">Promo Instagram</span>
                         <div class="countdown-clock" id="promoTimer">Cargando...</div>
@@ -486,9 +491,9 @@
             </div>
         </div>
 
-        <h3 class="module-section-header">Nuestras Redes</h3>
+        <h3 class="module-section-header">Contacto y Ubicación</h3>
         <div class="social-network-container">
-            <a href="https://www.instagram.com/" target="_blank" class="social-card">
+            <a href="https://www.instagram.com/tecnotradepty/" target="_blank" class="social-card">
                 <div class="social-icon-box">
                     <svg viewBox="0 0 24 24">
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -499,6 +504,19 @@
                 <div class="social-text">
                     <h4>Síguenos en Instagram</h4>
                     <p>Únete a nuestra comunidad, mira nuestras reparaciones y encuentra ofertas exclusivas.</p>
+                </div>
+            </a>
+
+            <a href="https://maps.app.goo.gl/xkfKoTGzPS1Mo7QRA" target="_blank" class="social-card">
+                <div class="social-icon-box maps-gradient">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                </div>
+                <div class="social-text">
+                    <h4>Nuestra Ubicación</h4>
+                    <p>Encuentra nuestro laboratorio físico en Ciudad de Panamá. ¡Toca aquí para abrir Google Maps!</p>
                 </div>
             </a>
         </div>
