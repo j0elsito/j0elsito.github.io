@@ -53,7 +53,9 @@
             --border-subtle: rgba(255, 255, 255, 0.15);
         }
 
-        /* RESET GENERAL FORZADO A MODO CLARO */
+        /* ==========================================================================
+           2. RESET GENERAL Y CONTENEDORES (CENTRADOS ABSOLUTOS)
+           ========================================================================== */
         *, *::before, *::after {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -68,24 +70,33 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden; overflow-y: auto;
             transition: background-color 0.4s ease, color 0.4s ease;
+            
+            /* NUEVO: Fuerza matemática para centrar TODO el contenedor en la pantalla */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .app-layout-container {
+            width: 100%; max-width: 480px; 
+            margin: 0 auto; padding-bottom: 140px; 
+            position: relative; z-index: 10; 
         }
 
         /* ==========================================================================
-           3. MENÚ LATERAL (SIDEBAR) CORREGIDO CON SUPERPOSICIÓN ANTE EL DOCK
+           3. MENÚ LATERAL (SIDEBAR) & TOGGLE
            ========================================================================== */
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-            z-index: 20000; 
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            z-index: 20000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         .sidebar-overlay.active { opacity: 1; pointer-events: all; }
 
         .sidebar-menu {
             position: fixed; top: 0; left: 0; width: 80%; max-width: 300px; height: 100vh;
             background: var(--card-glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            z-index: 20001; 
-            padding: 30px 24px; display: flex; flex-direction: column;
+            z-index: 20001; padding: 30px 24px; display: flex; flex-direction: column;
             box-shadow: 10px 0 30px rgba(0,0,0,0.1); 
             transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             border-right: 1px solid var(--border-subtle);
@@ -142,7 +153,6 @@
 
         @keyframes moveOrb { 0% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(6vw, 8vh, 0) scale(1.08); } 100% { transform: translate3d(-3vw, 4vh, 0) scale(0.92); } }
 
-        /* Fondo Animado Estático con Blur Dinámico */
         .ps5-wheel-canvas {
             position: fixed; top: 50%; left: 50%; width: 100vw; height: 100vh; 
             background: url('file_0000000098dc71f5b7616aa89d7b3b66.png') center center no-repeat;
@@ -293,17 +303,28 @@
         /* ==========================================================================
            11. ADAPTACIÓN TOTAL ESCRITORIO DE GAMA ALTA (PC) Y CORRECCIONES DE SIMETRÍA
            ========================================================================== */
+        .categories-matrix-grid, .lower-modules-pc-flex, .trust-architecture-row { content-visibility: auto; contain-intrinsic-size: 400px; }
+
         @media (min-width: 768px) {
             .app-layout-container { max-width: 1120px; padding-top: 40px; padding-bottom: 16px; }
             .mac-navbar { border-radius: 24px; margin: 0 24px 36px 24px; top: 24px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
             .search-engine-wrapper { max-width: 650px; margin: 0 auto 36px auto; width: 100%; }
             .search-results-dropdown { left: 50%; transform: translateX(-50%); width: 100%; max-width: 650px; }
+            
             .hero-display-canvas { margin-bottom: 48px; }
-            .hero-billboard-card { display: flex; align-items: center; justify-content: space-between; padding: 48px 64px; }
-            .hero-context-panel { max-width: 55%; }
+            /* NUEVO CORREGIDO: Reequilibrio del Banner Hero en PC */
+            .hero-billboard-card { 
+                display: flex; align-items: center; justify-content: center; gap: 80px; 
+                padding: 60px 40px; 
+            }
+            .hero-context-panel { max-width: 450px; text-align: left; margin: 0; }
             .hero-main-title { font-size: 36px; }
             .hero-p-desc { font-size: 15px; }
-            .hero-mockup-render { position: relative; right: 0; bottom: 0; transform: rotate(-4deg); width: 180px; height: 250px; }
+            .hero-mockup-render { 
+                position: relative; right: auto; bottom: auto; 
+                transform: rotate(-4deg); width: 180px; height: 250px; flex-shrink: 0; 
+            }
+            
             .categories-matrix-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px; }
             .matrix-glass-card { padding: 32px 20px; border-radius: 32px; }
             .vector-illustration-box { height: 90px; }
@@ -532,7 +553,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // LÓGICA DEL TEMA (DARK/LIGHT MODE)
             const themeCheckbox = document.getElementById('themeToggleCheckbox');
             const currentTheme = localStorage.getItem('tecnotrade-theme') || 'light';
             
@@ -550,7 +570,6 @@
                 }
             });
 
-            // LÓGICA DEL MENÚ LATERAL (SIDEBAR)
             const openMenuBtn = document.getElementById('openMenuBtn');
             const closeMenuBtn = document.getElementById('closeMenuBtn');
             const sidebarMenu = document.getElementById('sidebarMenu');
@@ -570,7 +589,6 @@
             closeMenuBtn.addEventListener('click', closeSidebar);
             sidebarOverlay.addEventListener('click', closeSidebar);
 
-            // CONTROLADOR SPA DE APERTURA INTEGRAL (FADE TRANSITION)
             const systemLoader = document.getElementById('globalPageLoader');
             setTimeout(() => { 
                 systemLoader.style.opacity = '0'; 
@@ -592,7 +610,6 @@
                 });
             });
 
-            // BASE DE DATOS DEL INVENTARIO 1:1 CON EL CATÁLOGO (36 MODELOS)
             const tecnotradeInventoryDatabase = [
                 { name: "Samsung Galaxy Series", id: "android-samsung" },
                 { name: "Honor Multi-Brand", id: "android-honor" },
@@ -636,7 +653,6 @@
             const searchDropdownEngine = document.getElementById('searchDropdownEngine');
             const transitionOverlayFrame = document.getElementById('globalPageLoader'); 
 
-            // MOTOR LOGÍSTICO DE FILTRADO CON CONTEXTO
             coreSearchInput.addEventListener('input', function() {
                 const dataStringQuery = this.value.toLowerCase().trim();
                 searchDropdownEngine.innerHTML = ''; 
@@ -679,7 +695,6 @@
                 }
             });
 
-            // SISTEMA DINÁMICO DE CUENTA REGRESIVA DE CUPONES
             function initializingPromoTimer() {
                 const currentServerDate = new Date();
                 const targetDeadlineLimit = new Date();
@@ -709,7 +724,6 @@
             }
             initializingPromoTimer();
 
-            // --- NÚCLEO DE SCROLL OPTIMIZADO (SOLO ENFOQUE DIGITAL DE DETALLE) ---
             let latestScrollY = 0;
             let ticking = false;
 
