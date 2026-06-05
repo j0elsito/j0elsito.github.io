@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
+    <!-- ETIQUETAS ANTI-CACHÉ Y TEMA -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -53,7 +54,9 @@
             --border-subtle: rgba(255, 255, 255, 0.15);
         }
 
-        /* RESET GENERAL FORZADO A MODO CLARO */
+        /* ==========================================================================
+           2. RESET GENERAL Y CONTENEDORES
+           ========================================================================== */
         *, *::before, *::after {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -69,7 +72,6 @@
             overflow-x: hidden; overflow-y: auto;
             transition: background-color 0.4s ease, color 0.4s ease;
             
-            /* Fuerza matemática para centrar TODO el contenedor en pantallas de PC */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -82,7 +84,7 @@
         }
 
         /* ==========================================================================
-           3. MENÚ LATERAL (SIDEBAR) CORREGIDO CON SUPERPOSICIÓN ANTE EL DOCK
+           3. MENÚ LATERAL (SIDEBAR) & TOGGLE
            ========================================================================== */
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -153,7 +155,6 @@
 
         @keyframes moveOrb { 0% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(6vw, 8vh, 0) scale(1.08); } 100% { transform: translate3d(-3vw, 4vh, 0) scale(0.92); } }
 
-        /* Fondo Animado Estático con Blur Dinámico */
         .ps5-wheel-canvas {
             position: fixed; top: 50%; left: 50%; width: 100vw; height: 100vh; 
             background: url('file_0000000098dc71f5b7616aa89d7b3b66.png') center center no-repeat;
@@ -212,10 +213,19 @@
         .search-row-item:hover .search-row-item-arrow { color: var(--apple-blue); transform: translateX(4px); }
 
         /* ==========================================================================
-           7. ELEMENTOS DE CONTENIDO Y TARJETAS
+           7. ELEMENTOS DE CONTENIDO Y TARJETAS (ACTUALIZADO CON FOTO REAL)
            ========================================================================== */
         .hero-display-canvas { padding: 0 24px; margin-bottom: 32px; width: 100%; }
-        .hero-billboard-card { background: linear-gradient(135deg, var(--card-glass-pure) 0%, var(--bg-base) 100%); border: 1px solid var(--border-subtle); border-radius: 32px; padding: 32px 24px; position: relative; overflow: hidden; box-shadow: var(--shadow-md); transition: background 0.4s ease, border 0.4s ease; }
+        .hero-billboard-card { 
+            background: linear-gradient(135deg, var(--card-glass-pure) 0%, var(--bg-base) 100%); 
+            border: 1px solid var(--border-subtle); 
+            border-radius: 32px; 
+            padding: 32px 24px; 
+            position: relative; 
+            overflow: hidden; /* Esto recorta la imagen perfectamente en los bordes */
+            box-shadow: var(--shadow-md); 
+            transition: background 0.4s ease, border 0.4s ease; 
+        }
         .hero-context-panel { position: relative; z-index: 5; max-width: 60%; }
         .hero-badge-tag { background: var(--text-primary); color: var(--bg-base); font-size: 10px; font-weight: 800; padding: 5px 12px; border-radius: 12px; margin-bottom: 16px; text-transform: uppercase; display: inline-block; letter-spacing: 0.5px; }
         .hero-main-title { font-size: 28px; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.7px; line-height: 1.15; color: var(--text-primary); }
@@ -223,8 +233,24 @@
         .hero-action-trigger { background: var(--apple-blue); color: #ffffff; border: none; border-radius: 22px; padding: 12px 26px; font-size: 13px; font-weight: 700; display: inline-block; text-decoration: none; transition: var(--transition-fast); box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25); }
         .hero-action-trigger:hover { background: var(--apple-blue-hover); transform: translateY(-1px); }
         .hero-action-trigger:active { transform: translateY(1px); box-shadow: 0 3px 8px rgba(0, 113, 227, 0.15); }
-        .hero-mockup-render { position: absolute; right: -30px; bottom: -45px; width: 150px; height: 210px; background: linear-gradient(180deg, var(--card-glass-pure) 0%, var(--bg-base) 100%); border: 4px solid var(--card-glass-pure); border-radius: 30px; transform: rotate(-7deg); box-shadow: -12px -12px 35px rgba(0,0,0,0.08); z-index: 1; transition: background 0.4s ease, border 0.4s ease; }
-        .hero-mockup-render::after { content: ''; position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 12px; background: rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); }
+        
+        /* NUEVA CLASE PARA LA FOTOGRAFÍA REAL DEL iPHONE */
+        .hero-mockup-image { 
+            position: absolute; 
+            right: -35px; /* Empuja la imagen hacia la derecha para asomarla */
+            bottom: -50px; /* Empuja la imagen hacia abajo para ocultar la parte inferior */
+            width: 190px; /* Controla el tamaño general del teléfono */
+            height: auto; 
+            transform: rotate(-7deg); /* Inclinación exacta que solicitaste */
+            z-index: 1; 
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(-10px 15px 25px rgba(0,0,0,0.15)); /* Añade una sombra suave para dar profundidad 3D */
+        }
+        
+        /* Pequeña animación interactiva al pasar el mouse sobre la tarjeta */
+        .hero-billboard-card:hover .hero-mockup-image {
+            transform: rotate(-4deg) translateY(-5px);
+        }
 
         .module-section-header { font-size: 20px; font-weight: 800; padding: 0 24px; margin: 0 0 18px 0; letter-spacing: -0.5px; color: var(--text-primary); position: relative; z-index: 10; width: 100%; }
 
@@ -306,7 +332,7 @@
         }
 
         /* ==========================================================================
-           11. ADAPTACIÓN TOTAL ESCRITORIO DE GAMA ALTA (PC) Y CORRECCIONES DE SIMETRÍA
+           11. ADAPTACIÓN TOTAL ESCRITORIO DE GAMA ALTA (PC)
            ========================================================================== */
         @media (min-width: 768px) {
             .app-layout-container { max-width: 1120px; padding-top: 40px; padding-bottom: 16px; margin: 0 auto; }
@@ -315,8 +341,6 @@
             .search-results-dropdown { left: 50%; transform: translateX(-50%); width: 100%; max-width: 650px; }
             
             .hero-display-canvas { margin-bottom: 48px; }
-            
-            /* CORREGIDO: Reequilibrio del Banner Hero para centrar simétricamente su contenido */
             .hero-billboard-card { 
                 display: flex; align-items: center; justify-content: center; gap: 80px; 
                 padding: 60px 40px; 
@@ -324,23 +348,26 @@
             .hero-context-panel { max-width: 450px; text-align: left; margin: 0; }
             .hero-main-title { font-size: 36px; }
             .hero-p-desc { font-size: 15px; }
-            .hero-mockup-render { 
+            
+            /* Ajuste de la foto real en pantallas de PC */
+            .hero-mockup-image { 
                 position: relative; right: auto; bottom: auto; 
-                transform: rotate(-4deg); width: 180px; height: 250px; flex-shrink: 0; 
+                transform: rotate(-7deg); width: 240px; flex-shrink: 0; 
+            }
+            .hero-billboard-card:hover .hero-mockup-image {
+                transform: rotate(-4deg) translateY(-5px);
             }
             
             .categories-matrix-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px; }
             .matrix-glass-card { padding: 32px 20px; border-radius: 32px; }
             .vector-illustration-box { height: 90px; }
             
-            /* CORREGIDO: Centramos los títulos de secciones en PC */
             .module-section-header { font-size: 24px; margin-bottom: 24px; text-align: center; }
             
             .lower-modules-pc-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 0 24px; margin-bottom: 48px; }
             .promo-ticking-wrapper, .feedback-slider-wrapper { padding: 0; margin-bottom: 0; }
             .promo-ticking-card, .feedback-card { height: 100%; justify-content: center; }
             
-            /* CORREGIDO: Limitamos el ancho y centramos simétricamente las tarjetas de contacto */
             .social-card { max-width: 650px; margin: 0 auto 16px auto; }
             .social-card:last-child { margin-bottom: 0; }
             
@@ -361,12 +388,14 @@
         <div class="liquid-orb orb-amethyst"></div>
     </div>
 
+    <!-- FONDO ABSTRACTO ESTÁTICO (EFECTO PROGRESIVO DE SCROLL BLUR) -->
     <div class="ps5-wheel-canvas" id="ps5Wheel"></div>
 
+    <!-- MENÚ LATERAL (SIDEBAR) -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <aside class="sidebar-menu" id="sidebarMenu">
         <div class="sidebar-header">
-            <h2>Menu</h2>
+            <h2>Menú</h2>
             <button class="close-menu-btn" id="closeMenuBtn" aria-label="Cerrar menú">
                 <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
             </button>
@@ -399,6 +428,7 @@
         </div>
     </aside>
 
+    <!-- CONTENEDOR PRINCIPAL -->
     <div class="app-layout-container">
         
         <header class="mac-navbar">
@@ -430,7 +460,10 @@
                     <p class="hero-p-desc">Diseñado con titanio de grado aeroespacial. Trae tu equipo actual y úsalo como abono directo.</p>
                     <a href="catalogo.html#iphone-16-pro" class="hero-action-trigger core-spa-link">Comprar ahora</a>
                 </div>
-                <div class="hero-mockup-render"></div>
+                
+                <!-- NUEVO: INSERCIÓN DE LA FOTOGRAFÍA REAL DEL iPHONE -->
+                <img src="5310.png" class="hero-mockup-image" alt="iPhone 16 Pro Blanco">
+                
             </div>
         </section>
 
@@ -548,6 +581,7 @@
 
     </div> 
     
+    <!-- DOCK NAVBAR FLOTANTE SINCRONIZADO -->
     <nav class="interfacial-dock-nav">
         <a href="index.html" class="dock-action-tab tab-active">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -568,6 +602,7 @@
         </a>
     </nav>
 
+    <!-- NÚCLEO JS AVANZADO -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
