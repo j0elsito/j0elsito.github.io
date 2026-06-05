@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- ETIQUETAS ANTI-CACHÉ Y TEMA -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -54,9 +53,7 @@
             --border-subtle: rgba(255, 255, 255, 0.15);
         }
 
-        /* ==========================================================================
-           2. RESET GENERAL Y CONTENEDORES
-           ========================================================================== */
+        /* RESET GENERAL FORZADO A MODO CLARO */
         *, *::before, *::after {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -84,7 +81,7 @@
         }
 
         /* ==========================================================================
-           3. MENÚ LATERAL (SIDEBAR) & TOGGLE
+           3. MENÚ LATERAL (SIDEBAR) CORREGIDO CON SUPERPOSICIÓN ANTE EL DOCK
            ========================================================================== */
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -213,7 +210,7 @@
         .search-row-item:hover .search-row-item-arrow { color: var(--apple-blue); transform: translateX(4px); }
 
         /* ==========================================================================
-           7. ELEMENTOS DE CONTENIDO Y TARJETAS (ACTUALIZADO CON FOTO REAL)
+           7. ELEMENTOS DE CONTENIDO Y TARJETAS
            ========================================================================== */
         .hero-display-canvas { padding: 0 24px; margin-bottom: 32px; width: 100%; }
         .hero-billboard-card { 
@@ -222,7 +219,7 @@
             border-radius: 32px; 
             padding: 32px 24px; 
             position: relative; 
-            overflow: hidden; /* Esto recorta la imagen perfectamente en los bordes */
+            overflow: hidden; 
             box-shadow: var(--shadow-md); 
             transition: background 0.4s ease, border 0.4s ease; 
         }
@@ -234,20 +231,19 @@
         .hero-action-trigger:hover { background: var(--apple-blue-hover); transform: translateY(-1px); }
         .hero-action-trigger:active { transform: translateY(1px); box-shadow: 0 3px 8px rgba(0, 113, 227, 0.15); }
         
-        /* NUEVA CLASE PARA LA FOTOGRAFÍA REAL DEL iPHONE */
+        /* CLASE OPTIMIZADA CON LA RUTA DEFINITIVA DE LA IMAGEN */
         .hero-mockup-image { 
             position: absolute; 
-            right: -35px; /* Empuja la imagen hacia la derecha para asomarla */
-            bottom: -50px; /* Empuja la imagen hacia abajo para ocultar la parte inferior */
-            width: 190px; /* Controla el tamaño general del teléfono */
+            right: -35px; 
+            bottom: -50px; 
+            width: 190px; 
             height: auto; 
-            transform: rotate(-7deg); /* Inclinación exacta que solicitaste */
+            transform: rotate(-7deg); 
             z-index: 1; 
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            filter: drop-shadow(-10px 15px 25px rgba(0,0,0,0.15)); /* Añade una sombra suave para dar profundidad 3D */
+            filter: drop-shadow(-10px 15px 25px rgba(0,0,0,0.15)); 
         }
         
-        /* Pequeña animación interactiva al pasar el mouse sobre la tarjeta */
         .hero-billboard-card:hover .hero-mockup-image {
             transform: rotate(-4deg) translateY(-5px);
         }
@@ -349,7 +345,6 @@
             .hero-main-title { font-size: 36px; }
             .hero-p-desc { font-size: 15px; }
             
-            /* Ajuste de la foto real en pantallas de PC */
             .hero-mockup-image { 
                 position: relative; right: auto; bottom: auto; 
                 transform: rotate(-7deg); width: 240px; flex-shrink: 0; 
@@ -388,10 +383,8 @@
         <div class="liquid-orb orb-amethyst"></div>
     </div>
 
-    <!-- FONDO ABSTRACTO ESTÁTICO (EFECTO PROGRESIVO DE SCROLL BLUR) -->
     <div class="ps5-wheel-canvas" id="ps5Wheel"></div>
 
-    <!-- MENÚ LATERAL (SIDEBAR) -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <aside class="sidebar-menu" id="sidebarMenu">
         <div class="sidebar-header">
@@ -428,7 +421,6 @@
         </div>
     </aside>
 
-    <!-- CONTENEDOR PRINCIPAL -->
     <div class="app-layout-container">
         
         <header class="mac-navbar">
@@ -461,8 +453,7 @@
                     <a href="catalogo.html#iphone-16-pro" class="hero-action-trigger core-spa-link">Comprar ahora</a>
                 </div>
                 
-                <!-- NUEVO: INSERCIÓN DE LA FOTOGRAFÍA REAL DEL iPHONE -->
-                <img src="5310.png" class="hero-mockup-image" alt="iPhone 16 Pro Blanco">
+                <img src="https://raw.githubusercontent.com/j0elsito/j0elsito.github.io/da4666035ea6f11c10a466f128f9be084d273bbf/tecnotrade/1780681433385.png" class="hero-mockup-image" alt="iPhone 16 Pro Blanco">
                 
             </div>
         </section>
@@ -581,7 +572,6 @@
 
     </div> 
     
-    <!-- DOCK NAVBAR FLOTANTE SINCRONIZADO -->
     <nav class="interfacial-dock-nav">
         <a href="index.html" class="dock-action-tab tab-active">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -602,7 +592,6 @@
         </a>
     </nav>
 
-    <!-- NÚCLEO JS AVANZADO -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
